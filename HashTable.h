@@ -18,13 +18,13 @@ class HashTable
 
         void resize();
 
-        int hashFunc(int num) {return num % size;};
+        int hashFunc(int num) {return num % size;}
 
     public:
         HashTable(int size = DEFAULT_TABLE_SIZE);
         
-        HashTable(cosnt HashTable& other) = delete;
-        HashTable& operator=(cosnt HashTable& other) = delete;
+        HashTable(const HashTable& other) = delete;
+        HashTable& operator=(const HashTable& other) = delete;
         ~HashTable();
 
         void insert(Costumer& item);
