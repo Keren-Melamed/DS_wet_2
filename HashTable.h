@@ -1,69 +1,88 @@
 #ifndef HASHTABLE_H_
 #define HASHTABLE_H_
 
-#include "listNode.h"
+#include "AVLTree.h"
+#include "Costumer.h"
 #include "exception.h"
 
 const int DEFAULT_TABLE_SIZE = 64;
 
-template<class T>
+template<class Costumer>
 class HashTable
 {
     private:
         int size;
         int maxCurrentSize;
         int currentSize;
-        ListNode<T>** data;
+        AVLTree<Costumer>** data;
 
         void resize();
 
         int hashFunc(int num) {return num % size;};
 
-        
-    
     public:
-        HashTable();
-        HashTable(const HashTable& other) = delete;
-        HashTable& operator=(const HashTable& other) = delete;
+        HashTable(int size = DEFAULT_TABLE_SIZE);
+        
+        HashTable(cosnt HashTable& other) = delete;
+        HashTable& operator=(cosnt HashTable& other) = delete;
         ~HashTable();
-        bool isInTable(int key); 
 
-        const T& get(int key); 
-        void insert(int key, const T& data);
-        //void remove(int key); //TODO
+        void insert(Costumer& item);
+        Node<Costumer> getCostumer(Costumer& item);
+        void addTo(AVLTree<Costumer>* tree, Node<Costumer>* node);
 
+        ostream& print(ostream& os);
+        
 };
 
-/* ------------------------ function implementetion ---------------------*/
-
-template<class T>
-HashTable<T>::HashTable()
-{
-    this->size = DEFAULT_TABLE_SIZE;
+HashTable<Costumer>::HashTable(int size = DEFAULT_TABLE_SIZE){
+    this->size = size;
     currentSize = 0;
     maxCurrentSize = DEFAULT_TABLE_SIZE;
-    this->data = new ListNode<T>*[DEFAULT_TABLE_SIZE]();
+    this->data = new AVLTree<Costumer>*[DEFAULT_TABLE_SIZE]();
 }
 
-template<class T>
-void HashTable<T>::resize()
+HashTable<Costumer>::~HashTable(){
+    for (int i = 0; i < size; i++)
+    {
+        AVLTree<Costumer>* curr = (this->data)[i];
+        if(curr != nullptr){
+            delete curr;
+        }
+    }
+    delete[] this->data;
+    
+}
+
+void HashTable<Costumer>::addTo(AVLTree<Costumer>* tree, Node<Costumer>* node){
+    if(node == nullptr){
+        return;
+    }
+    addTo(tree, node->getLeftNode());
+    tree->insertValue(node->getValue());
+    addTo(tree, node->getRightNode());
+}
+
+void HashTable<Costumer>::resize()
 {
     int newSize = this->size * 2;
     int oldSize = this->size;
     this->size = newSize;
-    ListNode<T>** newData = new ListNode<T>*[newSize]();
+    AVLTree<Costumer>** newData = new AVLTree<Costumer>*[newSize]();
+
+    for (int i = 0; i < size; i++)
+    {
+        newData[i]->setRoot(nullptr);
+    }
+    
+
     for (int i = 0; i < oldSize; i++)
     {
-        ListNode<T>* currentNode = (this->data)[i];
-        while (currentNode != nullptr)
-        {
-            ListNode<T>* temp = currentNode->getNext();
-            currentNode->setNext(nullptr);
-            if(newData[hashFunc(currentNode->getId())] != nullptr)
-                newData[hashFunc(currentNode->getId())]->insert(currentNode);
-            else
-                newData[hashFunc(currentNode->getId())] = currentNode;
-            currentNode = temp;
+        AVLTree<Costumer>* currTree = data[i];
+        int currIndex = hashFunc(currTree->getRoot()->getValue()->getId());
+
+        if(data[i] != nullptr){
+            addTo(newData[currIndex], currTree->getRoot());
         }
     }
 
@@ -72,91 +91,64 @@ void HashTable<T>::resize()
     this->data = newData;
 }
 
-template<class T>
-HashTable<T>::~HashTable()
-{
-    for(int i=0; i< size; i++)
-    {
-        ListNode<T>* currentNode = (this->data)[i];
-        //if(currentNode != nullptr)
-        //    currentNode = currentNode->getNext();
-        while(currentNode != nullptr)
-        {
-            ListNode<T>* temp = currentNode->getNext();
-            if(currentNode->getData() != nullptr) // assume the data in the linked list is pointer
-                delete currentNode->getData();
-            delete currentNode;
-            currentNode = temp;
+void HashTable<Costumer>::insert(Costumer& costumer){
+
+    int index = hashFunc(costumer.getId());
+
+    AVLTree<Costumer>* tree = data[index];//the tree we need to add to
+
+    Node<Costumer>* newCostumer = new Node<Costumer>(&costumer);
+
+    if(newCostumer == nullptr){
+        throw BadAllocation();
+    }
+
+    if(tree->getRoot() == nullptr){
+        tree->setRoot(newCostumer);
+        currentSize++;
+    }
+
+    else{
+        Node<Costumer>* temp = tree->findObject(tree->getRoot(), newCostumer->getValue());
+
+        if(temp == nullptr){
+            tree->insertValue(newCostumer->getValue());
+            currentSize++;
+        }
+
+        else{
+            throw NodeAlreadyExists();
         }
     }
 
-    delete[] this->data;
-}
-
-template<class T>
-const T& HashTable<T>::get(int key)
-{
-    ListNode<T>* currentNode = this->data[hashFunc(key)];
-    if(currentNode == nullptr)
-        throw NoKeyFounded(); // cant return "default" value casue dont know what T is
-    if(currentNode->isInList(key))
-    {
-        while (currentNode != nullptr)
-        {
-            if(currentNode->getId() == key)
-                return currentNode->getData();
-            else
-                currentNode = currentNode->getNext();
-        }
-    }
-
-    throw NoKeyFounded();
-}
-
-template<class T>
-bool HashTable<T>::isInTable(int key)
-{
-    ListNode<T>* currentNode = this->data[hashFunc(key)];
-    if(currentNode == nullptr)
-    {
-        return false;
-    }
-        
-    if(currentNode->isInList(key))
-        return true;
-    return false;
-}
-
-template<class T>
-void HashTable<T>::insert(int key, const T& data)
-{
-    if(isInTable(key))
-    {
-        return;
-    }
-        
-    ListNode<T>* currentNode = nullptr;
-    currentNode = (this->data)[hashFunc(key)];
-    if(currentNode == nullptr)
-    {
-        ListNode<T>* list = new ListNode<T>(data, key);
-        currentNode = list;
-        (this->data)[hashFunc(key)] = currentNode;
-    }
-        
-    else
-    {
-        currentNode->insert(new ListNode<T>(data, key));
-    }
-        //currentNode->insert(new ListNode<T>(data, key));
-    currentSize++;
-    if(currentSize == maxCurrentSize)
+    if(currentSize == maxCurrentSize){
         resize();
+    }
+}
+
+Node<Costumer> HashTable<Costumer>::getCostumer(Costumer& costumer){
+    int index = hashFunc(costumer.getId());
+    AVLTree<Costumer>* tree = data[index];
+    tree->findObject(tree->getRoot(), &costumer);
+}
+
+ostream& HashTable<Costumer>::print(ostream& os)
+{
+    for (int i = 0; i < size; i++)
+    {
+        os << "tree number " << i;
+        data[i]->inOrder(os, data[i]->getRoot());
+    }
     
 }
 
 
-/* ----------------------------------------------------------------------*/
 
 
-#endif // HASHTABLE_H_
+
+
+
+
+
+
+#endif

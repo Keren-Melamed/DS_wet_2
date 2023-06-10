@@ -4,9 +4,7 @@
 #include "Node.h"
 #include <iostream>
 #include "exception.h"
-#include "Movie.h"
 
-#include "Movie.h"
 
 using namespace std;
 

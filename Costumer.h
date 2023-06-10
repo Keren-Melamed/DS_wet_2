@@ -2,7 +2,7 @@
 #define DS_WET_2_COSTUMER_H
 
 #include "utilesWet2.h"
-
+#include <iostream>
 class Costumer
 {
     private:
@@ -32,6 +32,7 @@ class Costumer
         bool operator<(const Costumer& other) const;
         bool operator>(const Costumer& other) const;
 
+        void print(std::ostream& os) const;
 };
 
 

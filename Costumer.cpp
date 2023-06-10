@@ -1,5 +1,5 @@
 #include "Costumer.h"
-
+#include <iostream>
 
 Costumer::Costumer(int id, int phoneNumber):
 m_id(id), m_phoneNumber(phoneNumber), m_expenses(0), m_isMember(false)
@@ -80,3 +80,8 @@ bool Costumer::operator>(const Costumer &other) const
         return false;
     }
 }
+
+void Costumer::print(std::ostream& os) const{
+    os<< m_id <<" ";
+}
+
