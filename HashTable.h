@@ -146,6 +146,7 @@ ostream& HashTable<Costumer>::print(ostream& os)
         os << "tree number " << i;
         data[i]->inOrder(os, data[i]->getRoot());
     }
+    return os;
     
 }
 
