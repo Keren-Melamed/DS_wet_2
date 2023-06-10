@@ -83,10 +83,12 @@ void HashTable<Costumer>::resize()
     for (int i = 0; i < oldSize; i++)
     {
         AVLTree<Costumer>* currTree = data[i];
-        int currIndex = hashFunc(currTree->getRoot()->getValue()->getId());
+        if(currTree != nullptr){
+            int currIndex = hashFunc(currTree->getRoot()->getValue()->getId());
 
-        if(data[i] != nullptr){
-            addTo(newData[currIndex], currTree->getRoot());
+            if(data[i] != nullptr){
+                addTo(newData[currIndex], currTree->getRoot());
+            }
         }
     }
 
@@ -135,7 +137,9 @@ template<class Costumer>
 Node<Costumer> HashTable<Costumer>::getCostumer(Costumer& costumer){
     int index = hashFunc(costumer.getId());
     AVLTree<Costumer>* tree = data[index];
-    tree->findObject(tree->getRoot(), &costumer);
+    if(tree != nullptr){
+        tree->findObject(tree->getRoot(), &costumer);
+    }
 }
 
 template<class Costumer>
@@ -144,7 +148,9 @@ ostream& HashTable<Costumer>::print(ostream& os)
     for (int i = 0; i < size; i++)
     {
         os << "tree number " << i;
-        data[i]->inOrder(os, data[i]->getRoot());
+        if(data[i] != nullptr){
+            data[i]->inOrder(os, data[i]->getRoot());
+        }
     }
     return os;
     
