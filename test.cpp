@@ -1,6 +1,7 @@
 #include "HashTable.h"
 
-int main(){
+int main()
+{
 
     HashTable<Costumer>* obj = new HashTable<Costumer>(2);
 

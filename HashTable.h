@@ -110,7 +110,7 @@ void HashTable<Costumer>::insert(Costumer& costumer){
         throw BadAllocation();
     }
 
-    if(tree == nullptr){
+    if(tree == NULL){
         tree->setRoot(newCostumer);
         currentSize++;
     }
