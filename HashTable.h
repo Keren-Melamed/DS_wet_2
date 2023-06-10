@@ -42,8 +42,8 @@ HashTable<Costumer>::HashTable(int size){
     maxCurrentSize = DEFAULT_TABLE_SIZE;
     for (int i = 0; i < size; i++)
     {
-        AVLTree<Costumer>* temp = new AVLTree<Costumer>();
-        data[i] = *temp;
+        AVLTree<Costumer>** temp = new AVLTree<Costumer>*();
+        data[i] = temp;
     }
     
 }
