@@ -40,7 +40,11 @@ HashTable<Costumer>::HashTable(int size){
     this->size = size;
     currentSize = 0;
     maxCurrentSize = DEFAULT_TABLE_SIZE;
-    this->data = new AVLTree<Costumer>*[DEFAULT_TABLE_SIZE]();
+    for (int i = 0; i < size; i++)
+    {
+        data[i] = new AVLTree<Costumer>*();
+    }
+    
 }
 
 template<class Costumer>
