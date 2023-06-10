@@ -4,9 +4,13 @@ int main2(){
 
     HashTable<Costumer>* obj = new HashTable<Costumer>(2);
 
-    obj->insert(Costumer(123, 123465));
-    obj->insert(Costumer(456, 123465));
-    obj->insert(Costumer(789, 123465));
+    Costumer a(123, 123465);
+    Costumer b(456, 123465);
+    Costumer c(789, 123465);
+
+    obj->insert(a);
+    obj->insert(b);
+    obj->insert(c);
 
     obj->print(cout);
 

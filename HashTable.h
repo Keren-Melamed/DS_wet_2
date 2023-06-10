@@ -35,6 +35,7 @@ class HashTable
         
 };
 
+template<class Costumer>
 HashTable<Costumer>::HashTable(int size = DEFAULT_TABLE_SIZE){
     this->size = size;
     currentSize = 0;
@@ -42,6 +43,7 @@ HashTable<Costumer>::HashTable(int size = DEFAULT_TABLE_SIZE){
     this->data = new AVLTree<Costumer>*[DEFAULT_TABLE_SIZE]();
 }
 
+template<class Costumer>
 HashTable<Costumer>::~HashTable(){
     for (int i = 0; i < size; i++)
     {
@@ -54,6 +56,7 @@ HashTable<Costumer>::~HashTable(){
     
 }
 
+template<class Costumer>
 void HashTable<Costumer>::addTo(AVLTree<Costumer>* tree, Node<Costumer>* node){
     if(node == nullptr){
         return;
@@ -63,6 +66,7 @@ void HashTable<Costumer>::addTo(AVLTree<Costumer>* tree, Node<Costumer>* node){
     addTo(tree, node->getRightNode());
 }
 
+template<class Costumer>
 void HashTable<Costumer>::resize()
 {
     int newSize = this->size * 2;
@@ -91,6 +95,7 @@ void HashTable<Costumer>::resize()
     this->data = newData;
 }
 
+template<class Costumer>
 void HashTable<Costumer>::insert(Costumer& costumer){
 
     int index = hashFunc(costumer.getId());
@@ -126,12 +131,14 @@ void HashTable<Costumer>::insert(Costumer& costumer){
     }
 }
 
+template<class Costumer>
 Node<Costumer> HashTable<Costumer>::getCostumer(Costumer& costumer){
     int index = hashFunc(costumer.getId());
     AVLTree<Costumer>* tree = data[index];
     tree->findObject(tree->getRoot(), &costumer);
 }
 
+template<class Costumer>
 ostream& HashTable<Costumer>::print(ostream& os)
 {
     for (int i = 0; i < size; i++)
