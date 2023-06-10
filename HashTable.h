@@ -36,7 +36,7 @@ class HashTable
 };
 
 template<class Costumer>
-HashTable<Costumer>::HashTable(int size = DEFAULT_TABLE_SIZE){
+HashTable<Costumer>::HashTable(int size){
     this->size = size;
     currentSize = 0;
     maxCurrentSize = DEFAULT_TABLE_SIZE;
