@@ -36,16 +36,15 @@ class HashTable
 };
 
 template<class Costumer>
-HashTable<Costumer>::HashTable(int size){
+HashTable<Costumer>::HashTable(int size){ //////////////doesnt work
     this->size = size;
     currentSize = 0;
     maxCurrentSize = DEFAULT_TABLE_SIZE;
     for (int i = 0; i < size; i++)
     {
-        AVLTree<Costumer>** temp = new AVLTree<Costumer>*();
-        data[i] = temp;
+        AVLTree<Costumer>* temp = new AVLTree<Costumer>();
+        data[i] = *temp;
     }
-    
 }
 
 template<class Costumer>
