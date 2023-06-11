@@ -76,7 +76,7 @@ void HashTable<Costumer>::resize()
 
     for (int i = 0; i < size; i++)
     {
-        newData[i]->setRoot(nullptr);
+        newData[i] = new AVLTree<Costumer>();
     }
     
 
