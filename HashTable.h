@@ -5,7 +5,7 @@
 #include "Costumer.h"
 #include "exception.h"
 
-const int DEFAULT_TABLE_SIZE = 64;
+const int DEFAULT_TABLE_SIZE = 2;
 
 template<class Costumer>
 class HashTable
@@ -36,7 +36,7 @@ class HashTable
 };
 
 template<class Costumer>
-HashTable<Costumer>::HashTable(int size){ //////////////doesnt work
+HashTable<Costumer>::HashTable(int size){
     this->size = size;
     currentSize = 0;
     maxCurrentSize = DEFAULT_TABLE_SIZE;
