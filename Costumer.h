@@ -2,7 +2,7 @@
 #define DS_WET_2_COSTUMER_H
 
 #include "utilesWet2.h"
-#include <iostream>
+
 class Costumer
 {
     private:
@@ -25,6 +25,7 @@ class Costumer
 
         /*** Methods ***/
         void buyRecord(double price);
+        void updateExpenses(double expense);
         StatusType_t setMember();
 
         /*** Operators ***/
@@ -32,7 +33,13 @@ class Costumer
         bool operator<(const Costumer& other) const;
         bool operator>(const Costumer& other) const;
 
-        void print(std::ostream& os) const;
+        bool operator<(const int& num) const;
+        bool operator>(const int& num) const;
+        bool operator<=(const int& num) const;
+        bool operator>=(const int& num) const;
+        friend bool operator==(const Costumer& a, const int& b);
+        friend bool operator==(const int& a, const Costumer& b);
+
 };
 
 

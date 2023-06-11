@@ -1,5 +1,5 @@
 #include "Costumer.h"
-#include <iostream>
+
 
 Costumer::Costumer(int id, int phoneNumber):
 m_id(id), m_phoneNumber(phoneNumber), m_expenses(0), m_isMember(false)
@@ -20,6 +20,14 @@ double Costumer::getExpenses() const
     return m_expenses;
 }
 
+void Costumer::updateExpenses(double expense)
+{
+    if(m_isMember == true)
+    {
+        m_expenses += expense;
+    }
+}
+
 bool Costumer::getIsMember() const
 {
     return m_isMember;
@@ -27,10 +35,7 @@ bool Costumer::getIsMember() const
 
 void Costumer::buyRecord(double price)
 {
-    if(m_isMember == true)
-    {
-        m_expenses += price;
-    }
+    updateExpenses(price);
 }
 
 StatusType_t Costumer::setMember()
@@ -81,7 +86,80 @@ bool Costumer::operator>(const Costumer &other) const
     }
 }
 
-void Costumer::print(std::ostream& os) const{
-    os<< m_id <<" ";
+bool Costumer::operator<(const int& num) const
+{
+    if(m_id < num)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
+
+bool Costumer::operator>(const int& num) const
+{
+    if(m_id > num)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool Costumer::operator<=(const int &num) const
+{
+    if(m_id < num || m_id == num)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool Costumer::operator>=(const int &num) const
+{
+    if(m_id > num || m_id == num)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool operator==(const Costumer &a, const int &b)
+{
+    if(a.getId() == b)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool operator==(const int &a, const Costumer &b)
+{
+    if(a == b.getId())
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+
+
+
+
 
