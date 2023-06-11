@@ -111,6 +111,7 @@ void HashTable<Costumer>::insert(Costumer& costumer){
     }
 
     if(tree == NULL){
+        tree = new AVLTree<Costumer>*();
         tree->setRoot(newCostumer);
         currentSize++;
     }
