@@ -159,11 +159,4 @@ ostream& HashTable<Costumer>::print(ostream& os)
 
 
 
-
-
-
-
-
-
-
 #endif
