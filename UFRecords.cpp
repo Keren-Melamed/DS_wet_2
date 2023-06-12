@@ -29,7 +29,7 @@ void UFRecords::Union(int below, int above){
     ReversedNode* B = m_parents[below];
 
     //updating the parent of above to be the parent pf below
-    A->setParent(B->getParent());
+    A->getParent()->setParent(B->getParent());
 
     //change height of above to be + height of below
     A->getValue()->UpdateHeight(B->getValue()->getHeight());
