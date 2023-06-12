@@ -18,7 +18,7 @@ int main()
     
 */
    int records_stocks[4] = {1, 2, 3, 4};
-   UFRecords* obj = new UFRecords(records_stocks, sizeof(records_stocks));
+   UFRecords* obj = new UFRecords(records_stocks, 4);
 
     obj->print(cout);
 
