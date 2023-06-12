@@ -76,14 +76,10 @@ void UFRecords::print(std::ostream& os){
     
 
 
-void UFRecords::DeleteHeap(int index){
-    ReversedNode *end = m_parents[index];
-    ReversedNode *prev = NULL;
-    while(end->getParent() != nullptr)
-    {
-        prev = end;
-        end = end->getParent();
+void UFRecords::DeleteHeap(int r_id){
+    while(m_parents[r_id]->getValue()->getId() != r_id){
+        m_parents[r_id]->setParent(nullptr);
+        r_id = m_parents[r_id]->getValue()->getId();
     }
-    prev->setParent(NULL);
-    delete end;
+
 }
