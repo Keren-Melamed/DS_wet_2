@@ -22,7 +22,7 @@ class ReversedNode{
             m_parent = newParent;
         }
 
-        void print(ostream& os){
+        void print(std::ostream& os){
             os << m_value;
         }
 };
