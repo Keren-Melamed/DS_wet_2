@@ -62,7 +62,7 @@ void UFRecords::print(std::ostream& os){
         os << " with records ";
         temp->getValue()->print(os);
 
-        while(temp != nullptr){
+        while(temp->getParent() != nullptr){
             temp->getValue()->print(os);
             os << "\n";
             temp = temp->getParent();
