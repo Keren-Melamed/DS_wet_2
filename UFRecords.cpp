@@ -1,13 +1,14 @@
 # include "UFRecords.h"
 
 UFRecords::UFRecords(int *records_stocks, int num_of_records){
-    ReversedNode<Record>** parents = new ReversedNode<Record>*[num_of_records];
+    int len = sizeof(records_stocks);
+    ReversedNode<Record>** parents = new ReversedNode<Record>*[len];
     this->m_parents = parents;
 
-    int* sizes = new int[num_of_records];
+    int* sizes = new int[len];
     this->m_sizes = sizes;
 
-    for (int r_id = 0; r_id < num_of_records; r_id++)
+    for (int r_id = 0; r_id < len; r_id++)
     {
         Record* tempRecord = new Record(r_id, 0, records_stocks[r_id]);
         m_parents[r_id] = new ReversedNode<Record>(tempRecord);
