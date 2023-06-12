@@ -15,7 +15,7 @@ int main()
     obj->insert(c);
 
     obj->print(cout);
-    */
+    
 
    int records_stocks[4] = {1, 2, 3, 4};
    UFRecords* obj = new UFRecords(records_stocks, 10);
@@ -27,6 +27,13 @@ int main()
 
     obj->Union(1 ,2);
     obj->print(cout);
+*/
+
+    Record* tempRecord = new Record(1, 0, 3);
+    ReversedNode<Record>* tempNode = new ReversedNode<Record>(tempRecord);
+
+    tempNode->print(cout);
+
 
    return 0;
 }

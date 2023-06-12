@@ -21,4 +21,8 @@ class ReversedNode{
         void setParent(ReversedNode* newParent){
             m_parent = newParent;
         }
+
+        void print(ostream& os){
+            os << m_value;
+        }
 };
