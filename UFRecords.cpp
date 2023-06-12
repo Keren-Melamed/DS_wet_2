@@ -83,7 +83,7 @@ void UFRecords::DeleteHeap(int r_id){
     while(current->getValue()->getId() != r_id){
         next = current->getParent();
         delete current;
-        r_id = m_parents[r_id]->getValue()->getId();
+        r_id = next->getValue()->getId();
     }
 
 }
