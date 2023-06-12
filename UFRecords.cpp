@@ -58,15 +58,13 @@ void UFRecords::print(std::ostream& os){
     for (int i = 0; i < abs(sizeof(m_parents)); i++)
     {
         os << " group number " << i << "\n";
-        ReversedNode* temp = m_parents[i]->getParent();
+        ReversedNode* temp = m_parents[i];
         os << " with records ";
-        temp->getValue()->print(os);
-
-        while(temp->getParent() != nullptr){
+        
+        while(temp != nullptr){
             temp->getValue()->print(os);
             os << "\n";
             temp = temp->getParent();
-            
         }
         os << "\n \n ";
         
