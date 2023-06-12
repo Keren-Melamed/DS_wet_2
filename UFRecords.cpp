@@ -38,7 +38,7 @@ void UFRecords::Union(int below, int above){
     updateSize(below, getSize(above));
 
     //killing original A
-    DeleteHeap(above);
+    delete m_parents[above];
     updateSize(above, 0);
 }
 
@@ -77,12 +77,5 @@ void UFRecords::print(std::ostream& os){
 }
 
 void UFRecords::DeleteHeap(int index){
-    ReversedNode* current = m_parents[index];
-    ReversedNode* next = new ReversedNode();;
 
-    while(next != nullptr){
-        next = current->getParent();
-        free(current);
-        current = next;
-    }
 }
