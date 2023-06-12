@@ -86,5 +86,6 @@ void UFRecords::DeleteHeap(int index){
     }
     prev->setParent(NULL);
     delete end;
+    m_parents[index] = nullptr;
 
 }
