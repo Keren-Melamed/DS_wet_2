@@ -82,9 +82,9 @@ void UFRecords::DeleteHeap(int r_id){
     ReversedNode* next = new ReversedNode();
 
     while(curr != NULL){
-        next = curr->getParent();
-        delete curr;
-        curr = next;
+        next = curr;
+        curr = curr->getParent();
+        delete next;
     }
 
 }
