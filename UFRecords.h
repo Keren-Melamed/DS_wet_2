@@ -11,6 +11,7 @@ class UFRecords{
         ReversedNode** m_parents;
         int* m_sizes;
         int MAX_SIZE = 0;
+        void DeleteHeap(int index);
 
     public:
         UFRecords(int *records_stocks, int num_of_records);
@@ -29,6 +30,8 @@ class UFRecords{
         bool isDisjoint(int r_id1, int r_id2);
 
         void print(std::ostream& os);
+
+        
 };
 
 #endif
