@@ -1,14 +1,16 @@
 
 #include <iostream>
+#include "Record.h"
 
 class ReversedNode{
     private:
-        Record *m_value;
+        Record* m_value;
         ReversedNode* m_parent;
+    
     public:
         ReversedNode();
 
-        ReversedNode(Record *value){
+        ReversedNode(Record* value){
             m_value = value;
             m_parent = nullptr;
         }
