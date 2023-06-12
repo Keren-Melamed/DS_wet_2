@@ -8,9 +8,12 @@ class ReversedNode{
         ReversedNode* m_parent;
     
     public:
-        ReversedNode();
+        ReversedNode(){
+            m_value = nullptr;
+            m_parent = nullptr;
+        }
         ~ReversedNode() = default;
-        
+
         ReversedNode(Record* value){
             m_value = value;
             m_parent = nullptr;
