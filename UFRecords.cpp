@@ -38,7 +38,6 @@ void UFRecords::Union(int below, int above){
     updateSize(below, getSize(above));
 
     //killing original A
-    delete A;
     updateSize(above, 0);
 }
 

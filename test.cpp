@@ -26,6 +26,7 @@ int main()
     cout << obj->Find(2) << endl;
 
     obj->Union(1 ,2);
+    obj->Union(2, 3);
     obj->print(cout);
 
 
