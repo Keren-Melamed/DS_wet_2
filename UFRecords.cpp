@@ -5,7 +5,7 @@ UFRecords::UFRecords(int *records_stocks, int num_of_records){
     {
         Record* tempRecord = new Record(r_id, 0, records_stocks[r_id]);
         m_parents[r_id] = new ReversedNode<Record>(tempRecord);
-        m_sizes[r_id] = records_stocks[r_id];
+        //m_sizes[r_id] = records_stocks[r_id];
     }
     
 }
