@@ -39,7 +39,6 @@ void UFRecords::Union(int below, int above){
 
     //killing original A
     //DeleteHeap(above);
-    m_parents[above] = nullptr;
     updateSize(above, 0);
 }
 
