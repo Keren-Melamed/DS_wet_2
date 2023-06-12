@@ -8,7 +8,7 @@
 
 class UFRecords{
     private:
-        ReversedNode<Record>** m_parents;
+        ReversedNode** m_parents;
         int* m_sizes;
 
     public:

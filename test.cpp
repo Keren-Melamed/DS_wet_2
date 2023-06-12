@@ -30,7 +30,7 @@ int main()
 */
 
     Record* tempRecord = new Record(1, 0, 3);
-    ReversedNode<Record>* tempNode = new ReversedNode<Record>(tempRecord);
+    ReversedNode* tempNode = new ReversedNode(tempRecord);
 
     tempNode->print(cout);
 

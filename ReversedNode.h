@@ -1,18 +1,18 @@
 
 #include <iostream>
-template <class T>
+
 class ReversedNode{
     private:
-        T* m_value;
+        Record* m_value;
         ReversedNode* m_parent;
     public:
         ReversedNode();
-        ReversedNode(T* value){
+        ReversedNode(Record* value){
             m_value = value;
             m_parent = nullptr;
         }
 
-        T* getValue(){
+        Record* getValue(){
             return m_value;
         }
 
@@ -25,6 +25,6 @@ class ReversedNode{
         }
 
         void print(std::ostream& os){
-            os << m_value;
+            os << m_value->getId();
         }
 };
