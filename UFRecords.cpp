@@ -64,7 +64,7 @@ void UFRecords::print(std::ostream& os){
         ReversedNode* temp = m_parents[i];
         os << " with records ";
         
-        while(temp != nullptr){
+        while(temp != NULL){
             temp->getValue()->print(os);
             os << "\n";
             temp = temp->getParent();
