@@ -10,6 +10,7 @@ class UFRecords{
     private:
         ReversedNode** m_parents;
         int* m_sizes;
+        int MAX_SIZE = 0;
 
     public:
         UFRecords(int *records_stocks, int num_of_records);
