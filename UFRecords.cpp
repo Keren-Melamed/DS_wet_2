@@ -6,7 +6,7 @@ UFRecords::UFRecords(int *records_stocks, int num_of_records){
 
     int* sizes = new int[num_of_records];
     this->m_sizes = sizes;
-    
+
     for (int r_id = 0; r_id < num_of_records; r_id++)
     {
         Record* tempRecord = new Record(r_id, 0, records_stocks[r_id]);
@@ -57,14 +57,17 @@ bool UFRecords::isDisjoint(int r_id1, int r_id2){
 void UFRecords::print(std::ostream& os){
     for (int i = 0; i < abs(sizeof(m_parents)); i++)
     {
-        os << " group number " << i;
+        os << " group number " << i << "//n";
         ReversedNode<Record>* temp = m_parents[i]->getParent();
         os << " with records ";
         
         while(temp != nullptr){
             temp->getValue()->print(os);
+            os << "//n";
             temp = temp->getParent();
         }
+        os << "//n //n ";
+        
 
     }
     
