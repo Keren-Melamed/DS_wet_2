@@ -17,7 +17,7 @@ UFRecords::UFRecords(int num_of_records){
 }
 
 void UFRecords::addRecords(int *record_stocks){
-    if(abs(sizeof(record_stocks)/sizeof(record_stocks[0])) < MAX_SIZE){
+    if(abs(sizeof(record_stocks)/sizeof(record_stocks[0])) > MAX_SIZE){
         throw BadAllocation();
     }
 
