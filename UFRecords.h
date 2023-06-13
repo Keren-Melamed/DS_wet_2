@@ -13,10 +13,12 @@ class UFRecords{
         int MAX_SIZE = 0;
 
     public:
-        UFRecords(int *records_stocks, int num_of_records);
+        UFRecords(int num_of_records);
         UFRecords(const UFRecords& other) = delete;
         UFRecords& operator=(const UFRecords& other) = delete;
         ~UFRecords();
+
+        void addRecords(int *record_stocks);
 
         int getSize(int index);
 

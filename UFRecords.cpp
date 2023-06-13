@@ -1,6 +1,6 @@
 # include "UFRecords.h"
 
-UFRecords::UFRecords(int *records_stocks, int num_of_records){
+UFRecords::UFRecords(int num_of_records){
     
     int* sizes = new int[num_of_records];
     this->m_sizes = sizes;
@@ -9,19 +9,24 @@ UFRecords::UFRecords(int *records_stocks, int num_of_records){
     m_parents = parents;
     for (int i = 0; i < num_of_records; i++)
     {
-        m_parents[i] = new ReversedNode(new Record(0, 0, 0));
+        m_parents[i] = new ReversedNode(new Record(i, 0, 0));
     }
 
-    for (int r_id = 0; r_id < num_of_records; r_id++)
-    {
-        Record* tempRecord = new Record(r_id, 0, records_stocks[r_id]);
-        ReversedNode* recordNode = new ReversedNode(tempRecord);
-        recordNode->setParent(m_parents[r_id]);
-        m_sizes[r_id] = records_stocks[r_id];
-    }
-    
     MAX_SIZE = num_of_records;
    
+}
+
+void UFRecords::addRecords(int *record_stocks){
+    if(sizeof(record_stocks)/sizeof(record_stocks[0]) < MAX_SIZE){
+        throw BadAllocation();
+    }
+
+    for (size_t i = 0; i < MAX_SIZE; i++)
+    {
+        ReversedNode* record = new ReversedNode(new Record(i, 0, record_stocks[i]));
+        record->setParent(m_parents[i]);
+    }
+    
 }
 
 int UFRecords::getSize(int index){
