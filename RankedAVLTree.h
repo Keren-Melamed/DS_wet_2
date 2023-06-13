@@ -35,8 +35,6 @@ class RankedAVLTree
 
         RankedNode<T>* getRoot();
 
-        void setRoot(RankedNode<T>* root);
-        
         /**** Methods ****/
 
         /*
@@ -113,6 +111,8 @@ class RankedAVLTree
         RankedNode<T>* findObjectHelper(RankedNode<T>* node, T* value);
 
         void numOfNodes(RankedNode<T>* node, int* counter);
+
+        void setRoot(RankedNode<T>* root);
 
         /*
         * different methods for balancing an RankedAVLTree

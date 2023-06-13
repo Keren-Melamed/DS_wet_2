@@ -11,7 +11,7 @@ RecordsCompany::RecordsCompany() : m_numberOfRecords(0)
 
 RecordsCompany::~RecordsCompany()
 {
-
+    m_members.setAllToNullptr(m_members.getRoot());
 }
 
 StatusType RecordsCompany::newMonth(int* records_stocks, int number_of_records)
@@ -35,16 +35,17 @@ StatusType RecordsCompany::addCostumer(int c_id, int phone)
         return StatusType::INVALID_INPUT;
     }
     Costumer newCostumer(c_id, phone);
-    Node<Costumer>* newNode = m_costumers.getCostumer(newCostumer);
+    Node<Costumer>* newNode = m_costumers.getCostumer(c_id);
     if(newNode != nullptr)
     {
+        cout << "costumer already exists" << endl;
         return StatusType::ALREADY_EXISTS;
     }
     else
     {
         try
         {
-            m_costumers.insert(newCostumer);
+            m_costumers.insert(c_id, phone);
             return StatusType::SUCCESS;
         }
         catch (BadAllocation &e)
@@ -73,7 +74,7 @@ Output_t<int> RecordsCompany::getPhone(int c_id)
         return StatusType::INVALID_INPUT;
     }
     Costumer newCostumer(c_id, 0);
-    Node<Costumer>* newNode = m_costumers.getCostumer(newCostumer);
+    Node<Costumer>* newNode = m_costumers.getCostumer(c_id);
     if(newNode == nullptr)
     {
         return StatusType::DOESNT_EXISTS;
@@ -93,8 +94,7 @@ StatusType RecordsCompany::makeMember(int c_id)
         return StatusType ::INVALID_INPUT;
     }
 
-    Costumer newCostumer(c_id, 0);
-    Node<Costumer>* newNode = m_costumers.getCostumer(newCostumer);
+    Node<Costumer>* newNode = m_costumers.getCostumer(c_id);
     if(newNode == nullptr)
     {
         return StatusType::DOESNT_EXISTS;
@@ -126,8 +126,7 @@ Output_t<bool> RecordsCompany::isMember(int c_id)
         return StatusType::INVALID_INPUT;
     }
 
-    Costumer newCostumer(c_id, 0);
-    Node<Costumer>* newNode = m_costumers.getCostumer(newCostumer);
+    Node<Costumer>* newNode = m_costumers.getCostumer(c_id);
     if(newNode == nullptr)
     {
         return StatusType::DOESNT_EXISTS;
@@ -151,8 +150,7 @@ StatusType RecordsCompany::buyRecord(int c_id, int r_id)
         return StatusType::DOESNT_EXISTS;
     }
 
-    Costumer tmpCostumer(c_id, 0);
-    Node<Costumer>* newCostumerNode = m_costumers.getCostumer(tmpCostumer);
+    Node<Costumer>* newCostumerNode = m_costumers.getCostumer(c_id);
     if(newCostumerNode == nullptr)
     {
         return StatusType::DOESNT_EXISTS;

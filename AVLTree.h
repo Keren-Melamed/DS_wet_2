@@ -36,8 +36,6 @@ public:
 
     Node<T>* getRoot();
 
-    void setRoot(Node<T>* root);
-
     /**** Methods ****/
 
     /*
@@ -119,8 +117,9 @@ private:
 
     Node<T> *findMaximumValue(Node<T> *node);
 
-
     void numOfNodes(Node<T>* node, int* counter);
+
+    void setRoot(Node<T>* root);
 
     /*
     * different methods for balancing an AVLTree

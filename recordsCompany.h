@@ -13,7 +13,6 @@ class RecordsCompany {
   private:
 
     int m_numberOfRecords;
-    HashTable<Costumer> m_costumers;
 
     void addPrizeHelper(int c_id1, int c_id2, double amount, RankedNode<Costumer>* node);
     void addPrizeHelperLeft(int c_id1, int c_id2, double amount, RankedNode<Costumer>* node);
@@ -25,6 +24,7 @@ class RecordsCompany {
 
   public:
 
+    HashTable<Costumer> m_costumers;
     RankedAVLTree<Costumer> m_members;
 
     RecordsCompany();
