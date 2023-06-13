@@ -9,14 +9,12 @@
 class UFRecords{
     private:
 
-        int MAX_SIZE = 0;
         Record** m_records;
         int* m_parents;
         int* m_sizes;
+        int MAX_SIZE = 0;
         
     public:
-
-
 
         UFRecords(int *record_stocks, int num_of_records);
         UFRecords(const UFRecords& other) = delete;
@@ -35,10 +33,10 @@ class UFRecords{
 
         bool isDisjoint(int r_id1, int r_id2);
 
-        void print(std::ostream& os);
-        void printHelper(std::ostream& os, int i);
+        void printParents(std::ostream& os, int r_id);
+        void printAllParents(std::ostream& os);
 
-        
+        int getRecordHeight(int r_id);
 };
 
 #endif

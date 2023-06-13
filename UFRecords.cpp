@@ -22,8 +22,6 @@ UFRecords::UFRecords(int *record_stocks, int num_of_records){
    
 }
 
-
-
 int UFRecords::getSize(int index){
     return m_sizes[index];
 }
@@ -38,7 +36,11 @@ void UFRecords::Union(int below, int above){
     }
 
     m_parents[below] = above;
-    m_records[above]->UpdateHeight(m_records[below]->getNumOfCopies());
+
+    m_records[above]->UpdateHeight(m_sizes[below]);
+
+    m_sizes[below] += m_sizes[above];
+    m_sizes[above] = 0;
 }
 
 int UFRecords::Find(int r_id){
@@ -56,29 +58,27 @@ bool UFRecords::isDisjoint(int r_id1, int r_id2){
     return false;
 }
 
-void UFRecords::print(std::ostream& os){
+void UFRecords::printParents(std::ostream& os, int r_id){
+    while(m_parents[r_id] != -1){
+        os << m_records[r_id] << "\n";
+        r_id = m_parents[r_id];
+    }
+    if(m_parents[r_id] == -1){
+        os << "no parents, printing only the record: \n";
+        os << m_records[r_id] << "\n \n ";
+
+    }
+}
+
+void UFRecords::printAllParents(std::ostream& os){
     for (int i = 0; i < MAX_SIZE; i++)
     {
-        os<< " group number: " << i << "\n";
-        printHelper(os, i);
+        printParents(os, i);
     }
     
 }
 
-void UFRecords::printHelper(std::ostream& os, int i){
-    
-    m_records[i]->print(os);
-    os << "\n";
-
-    if (m_parents[i] != -1){
-
-        printHelper(os, m_parents[i]);
-    }
-    else{
-        return;
-    }
-    
+int UFRecords::getRecordHeight(int r_id){
+    return m_records[r_id]->getHeight();
 }
-    
-
     

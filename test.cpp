@@ -1,35 +1,45 @@
 #include "HashTable.h"
 #include "UFRecords.h"
 
+void union_aux(UFRecords* records, int below, int above){
+    cout << "stacking heap " << above << " above heap " << below << endl;
+    records->Union(below, above);
+}
+
+void find_aux(UFRecords* records, int r_id){
+
+    cout << " record " << r_id << " is in heap " << records->Find(r_id) << endl;
+}
+
+void size_aux(UFRecords* records, int group){
+    cout << "group " << group << " is of size " << records->getSize(group) << endl;
+}
+
+void height_aux(UFRecords* records, int r_id){
+    cout << "the height of record " << r_id << " is " << records->getRecordHeight(r_id) << endl;
+}
+
+
 int main()
 {
-/*
-    HashTable<Costumer>* obj = new HashTable<Costumer>(2);
 
-    Costumer a(123, 123465);
-    Costumer b(456, 123465);
-    Costumer c(789, 123465);
+    int records_stocks[5] = {10, 20, 30, 40, 50};
+    int len = abs(sizeof(records_stocks)/sizeof(records_stocks[0]));
 
-    obj->insert(a);
-    obj->insert(b);
-    obj->insert(c);
+    UFRecords* obj = new UFRecords(records_stocks, len);
 
-    obj->print(cout);
-    
-*/
-    int records_stocks[4] = {1, 2, 3, 4};
-    UFRecords* obj = new UFRecords(records_stocks, 4);
+    obj->printAllParents(cout);
 
+    union_aux(obj, 1, 2);
+    union_aux(obj, 1, 3);
 
-    obj->print(cout);
+    find_aux(obj, 1);
 
-    cout << "\n 3 is in: " << obj->Find(3) << endl;
-    cout << "\n 2 is in: " << obj->Find(2) << endl;
+    obj->printParents(cout, 1);
 
-    obj->Union(1 ,2);
-    obj->Union(2, 3);
-    cout << "\n 1 is in: " << obj->Find(1) << endl;
-    obj->print(cout);
+    height_aux(obj, 1);
+
+    size_aux(obj, 1);
 
 
    return 0;
