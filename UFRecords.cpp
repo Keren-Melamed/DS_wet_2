@@ -42,7 +42,7 @@ void UFRecords::Union(int below, int above){
 }
 
 int UFRecords::Find(int r_id){
-    if (r_id == m_parents[r_id]){
+    if (m_parents[r_id] == -1){
         return r_id;
     }
     return m_parents[r_id] = Find(m_parents[r_id]);
