@@ -23,12 +23,12 @@ int main()
 
     obj->print(cout);
 
-    cout << obj->Find(3) << endl;
-    cout << obj->Find(2) << endl;
+    cout << "\n 3 is in: " << obj->Find(3) << endl;
+    cout << "\n 2 is in: " << obj->Find(2) << endl;
 
     obj->Union(1 ,2);
     obj->Union(2, 3);
-    cout << obj->Find(3) << endl;
+    cout << "\n 1 is in: " << obj->Find(1) << endl;
     obj->print(cout);
 
 
