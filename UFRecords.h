@@ -10,12 +10,13 @@ class UFRecords{
     private:
 
         int MAX_SIZE = 0;
-
-    public:
-
         Record** m_records;
         int* m_parents;
         int* m_sizes;
+        void UFRecords::printHelper(std::ostream& os, int i);
+    public:
+
+
 
         UFRecords(int *record_stocks, int num_of_records);
         UFRecords(const UFRecords& other) = delete;

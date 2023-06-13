@@ -57,24 +57,19 @@ bool UFRecords::isDisjoint(int r_id1, int r_id2){
 }
 
 void UFRecords::print(std::ostream& os){
-
     for (int i = 0; i < MAX_SIZE; i++)
     {
-        os << "group number: "<< i << "\n";
-        if(m_parents[i] != -1){
-            int help = i;
-        
-            while(m_parents[help] != -1){
-                m_records[help]->print(os);
-                os << "\n";
-                help = m_parents[help];
-            }
-        }
-        m_records[i]->print(os);
-        os << "\n";
+        os<< " group number: " << i << "\n";
+        printHelper(os, i);
     }
     
+}
 
+void UFRecords::printHelper(std::ostream& os, int i){
+    if (m_parents[i] == -1){
+        os << m_records[i] << "\n";
+    }
+    printHelper(os, m_parents[i]);
 }
     
 
