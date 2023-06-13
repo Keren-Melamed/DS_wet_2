@@ -69,9 +69,10 @@ void UFRecords::print(std::ostream& os){
         else{
             int help = i;
             while(m_parents[help] != -1){
+                os << " help: " << help << "\n";
                 m_records[help]->print(os);
-                os << "\n";
                 help = m_parents[help];
+                os << "\n";
             }
         }
     }
