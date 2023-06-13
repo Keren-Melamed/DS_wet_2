@@ -4,21 +4,27 @@
 #include "utilesWet2.h"
 #include "Costumer.h"
 #include "RankedAVLTree.h"
+#include "HashTable.h"
 #include <memory>
 
 using namespace std;
 
 class RecordsCompany {
   private:
-    // todo
+
+    int m_numberOfRecords;
+    HashTable<Costumer> m_costumers;
 
     void addPrizeHelper(int c_id1, int c_id2, double amount, RankedNode<Costumer>* node);
     void addPrizeHelperLeft(int c_id1, int c_id2, double amount, RankedNode<Costumer>* node);
     void addPrizeHelperRight(int c_id1, int c_id2, double amount, RankedNode<Costumer>* node);
 
+    void resetAllExpenses(RankedNode<Costumer>* node);
+
     double getExpensesHelper(RankedNode<Costumer>* node, Costumer* tmpCostumer, double counter);
 
   public:
+
     RankedAVLTree<Costumer> m_members;
 
     RecordsCompany();

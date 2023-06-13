@@ -4,7 +4,7 @@
 
 using namespace std;
 
-RecordsCompany::RecordsCompany()
+RecordsCompany::RecordsCompany() : m_numberOfRecords(0)
 {
 
 }
@@ -16,17 +16,74 @@ RecordsCompany::~RecordsCompany()
 
 StatusType RecordsCompany::newMonth(int* records_stocks, int number_of_records)
 {
-    return FAILURE;
+    if(number_of_records < 0)
+    {
+        return StatusType::INVALID_INPUT;
+    }
+    m_members.resetAllRanks(m_members.getRoot());
+    resetAllExpenses(m_members.getRoot());
+
+    // something with the records.......................................
+
+    return StatusType::SUCCESS;
 }
 
 StatusType RecordsCompany::addCostumer(int c_id, int phone)
 {
-    return FAILURE;
+    if(c_id < 0 || phone < 0)
+    {
+        return StatusType::INVALID_INPUT;
+    }
+    Costumer newCostumer(c_id, phone);
+    Node<Costumer>* newNode = m_costumers.getCostumer(newCostumer);
+    if(newNode != nullptr)
+    {
+        return StatusType::ALREADY_EXISTS;
+    }
+    else
+    {
+        try
+        {
+            m_costumers.insert(newCostumer);
+            return StatusType::SUCCESS;
+        }
+        catch (BadAllocation &e)
+        {
+            return StatusType::ALLOCATION_ERROR;
+        }
+    }
+
+}
+
+void RecordsCompany::resetAllExpenses(RankedNode<Costumer> *node)
+{
+    if(node == nullptr)
+    {
+        return;
+    }
+    resetAllExpenses(node->getLeftNode());
+    node->getValue()->updateExpenses(-(node->getValue()->getExpenses()));
+    resetAllExpenses(node->getRightNode());
 }
 
 Output_t<int> RecordsCompany::getPhone(int c_id)
 {
-    return Output_t<int>();
+    if(c_id < 0)
+    {
+        return StatusType::INVALID_INPUT;
+    }
+    Costumer newCostumer(c_id, 0);
+    Node<Costumer>* newNode = m_costumers.getCostumer(newCostumer);
+    if(newNode == nullptr)
+    {
+        return StatusType::DOESNT_EXISTS;
+    }
+    else
+    {
+        int phone = newNode->getValue()->getPhoneNumber();
+        Output_t<int> result(phone);
+        return result;
+    }
 }
 
 StatusType RecordsCompany::makeMember(int c_id)
@@ -36,24 +93,51 @@ StatusType RecordsCompany::makeMember(int c_id)
         return StatusType ::INVALID_INPUT;
     }
 
-    //add the same method used to check if a member already exists as in add costumer
+    Costumer newCostumer(c_id, 0);
+    Node<Costumer>* newNode = m_costumers.getCostumer(newCostumer);
+    if(newNode == nullptr)
+    {
+        return StatusType::DOESNT_EXISTS;
+    }
 
-    Costumer* tmp = new Costumer(c_id, 0);
-    if(m_members.findObject(m_members.getRoot(), tmp) != nullptr)
+    Costumer* newMember = newNode->getValue();
+    if(m_members.findObject(m_members.getRoot(), newMember) != nullptr)
     {
         return StatusType::ALREADY_EXISTS;
     }
-    //find the costumer in the hash and add him to the tree
-    //also change his member flag to true
 
-    //if member is added after prizes were distributed than we need to adjust his expenses, can be done by subtracting the accumelated ranks from his expenses
-
-    return StatusType ::SUCCESS;
+    try
+    {
+        m_members.insertValue(newMember);
+        return StatusType::SUCCESS;
+    }
+    catch(BadAllocation& e)
+    {
+        return StatusType::ALLOCATION_ERROR;
+    }
+    //if member is added after prizes were distributed than we need to adjust his expenses, can be done by subtracting
+    // the accumulated ranks from his expenses ************* happens in tree.insertValue
 }
 
 Output_t<bool> RecordsCompany::isMember(int c_id)
 {
-    return Output_t<bool>();
+    if(c_id < 0)
+    {
+        return StatusType::INVALID_INPUT;
+    }
+
+    Costumer newCostumer(c_id, 0);
+    Node<Costumer>* newNode = m_costumers.getCostumer(newCostumer);
+    if(newNode == nullptr)
+    {
+        return StatusType::DOESNT_EXISTS;
+    }
+    else
+    {
+        bool isMember = newNode->getValue()->getIsMember();
+        Output_t<bool> result(isMember);
+        return result;
+    }
 }
 
 StatusType RecordsCompany::buyRecord(int c_id, int r_id)
@@ -62,24 +146,29 @@ StatusType RecordsCompany::buyRecord(int c_id, int r_id)
     {
         return StatusType ::INVALID_INPUT;
     }
-    if(r_id >= number_of_records)
+    if(r_id >= m_numberOfRecords)
     {
         return StatusType::DOESNT_EXISTS;
     }
 
-    //c_id part check if not member
-    try
-    {
-            Costumer* tmpCostumer = new Costumer(c_id, 0);
-            RankedNode<Costumer>* tmpNode = m_members.findObject(m_members.getRoot(), tmpCostumer);
-            tmpNode->getValue()->buyRecord(/* record.getPrice() */);
-    }
-    catch(NodeDoesntExist& e)
+    Costumer tmpCostumer(c_id, 0);
+    Node<Costumer>* newCostumerNode = m_costumers.getCostumer(tmpCostumer);
+    if(newCostumerNode == nullptr)
     {
         return StatusType::DOESNT_EXISTS;
     }
 
-    //r_id part
+    //find the record and update it accordingly
+
+    Costumer* tmpMember = new Costumer(c_id, 0);
+    RankedNode<Costumer>* tmpMemberNode = m_members.findObject(m_members.getRoot(), tmpMember);
+    delete tmpMember;
+    if(tmpMemberNode != nullptr) // else do nothing
+    {
+        //tmpMemberNode->getValue()->updateExpenses(record.getPrice);
+    }
+
+
 
     return StatusType::SUCCESS;
 }
@@ -240,7 +329,6 @@ StatusType RecordsCompany::getPlace(int r_id, int* column, int* height)
 {
     return FAILURE;
 }
-
 
 
 

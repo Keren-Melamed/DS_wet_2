@@ -469,7 +469,7 @@ Node<T>* AVLTree<T>::findObjectHelper(Node<T>* node, T* value)
 {
     if(node == nullptr )
     {
-        throw NodeDoesntExist();
+        return nullptr;
     }
     else if(*(node->getValue()) == *value)
     {

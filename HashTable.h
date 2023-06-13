@@ -28,7 +28,7 @@ public:
     ~HashTable();
 
     void insert(Costumer& item);
-    Node<Costumer> getCostumer(Costumer& item);
+    Node<Costumer>* getCostumer(Costumer& item);
     void addTo(AVLTree<Costumer>* tree, Node<Costumer>* node);
 
     ostream& print(ostream& os);
@@ -69,7 +69,7 @@ void HashTable<Costumer>::addTo(AVLTree<Costumer>* tree, Node<Costumer>* node){
 template<class Costumer>
 void HashTable<Costumer>::resize()
 {
-    int newSize = this->size * 2;
+    int newSize = this->size * 2 + 1;
     int oldSize = this->size;
     this->size = newSize;
     AVLTree<Costumer>** newData = new AVLTree<Costumer>*[newSize]();
@@ -106,41 +106,58 @@ void HashTable<Costumer>::insert(Costumer& costumer){
 
     Node<Costumer>* newCostumer = new Node<Costumer>(&costumer);
 
-    if(newCostumer == nullptr){
+    if(newCostumer == nullptr)
+    {
         throw BadAllocation();
     }
 
-    if(tree == NULL){
+    if(tree == NULL)
+    {
         data[index] = new AVLTree<Costumer>();
         data[index]->setRoot(newCostumer);
         currentSize++;
     }
 
-    else{
+    else
+    {
         Node<Costumer>* temp = tree->findObject(tree->getRoot(), newCostumer->getValue());
 
-        if(temp == nullptr){
+        if(temp == nullptr)
+        {
             tree->insertValue(newCostumer->getValue());
             currentSize++;
         }
 
-        else{
+        else
+        {
             throw NodeAlreadyExists();
         }
     }
 
-    if(currentSize == maxCurrentSize){
+    if(currentSize == maxCurrentSize)
+    {
         resize();
     }
 }
 
 template<class Costumer>
-Node<Costumer> HashTable<Costumer>::getCostumer(Costumer& costumer){
+Node<Costumer>* HashTable<Costumer>::getCostumer(Costumer& costumer){
     int index = hashFunc(costumer.getId());
     AVLTree<Costumer>* tree = data[index];
-    if(tree != nullptr){
-        tree->findObject(tree->getRoot(), &costumer);
+    if(tree != nullptr)
+    {
+        Node<Costumer>* tmpNode = tree->findObject(tree->getRoot(), &costumer);
+        if(tmpNode == nullptr)
+        {
+            return nullptr;
+        }
+        return tmpNode;
     }
+    else
+    {
+        return nullptr;
+    }
+
 }
 
 template<class Costumer>

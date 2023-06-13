@@ -63,8 +63,6 @@ class RankedAVLTree
         */
         void removeValue(T* value);
 
-        RankedNode<T>* removeValueHelper(RankedNode<T>* node, T* value);
-
         /*
         * inserts node into the tree with the corresponding value and rebalances it via recursion
         * @param node - the node that needs to be added
@@ -73,8 +71,6 @@ class RankedAVLTree
         *       a pointer to the node that is to be put in the appropriate spot
         */
         void insertValue(T *value);
-
-        RankedNode<T>* insertValueHelper(RankedNode<T>* node, T* value, double counter);
 
         /*
         * balances the tree from this root downwards
@@ -88,7 +84,9 @@ class RankedAVLTree
 
         void deleteNodes(RankedNode<T>* node);
 
-        void setAllToNullptr(RankedNode<T> *node);
+        void setAllToNullptr(RankedNode<T>* node);
+
+        void resetAllRanks(RankedNode<T>* node);
 
         ostream& inOrder(ostream& os, RankedNode<T>* node) const;
 
@@ -107,6 +105,10 @@ class RankedAVLTree
         RankedNode<T>* findFatherHelper(T* value, RankedNode<T>* node);
 
         RankedNode<T>* getNextMinValue(RankedNode<T>* node);
+
+        RankedNode<T>* removeValueHelper(RankedNode<T>* node, T* value);
+
+        RankedNode<T>* insertValueHelper(RankedNode<T>* node, T* value, double counter);
 
         RankedNode<T>* findObjectHelper(RankedNode<T>* node, T* value);
 
@@ -453,7 +455,7 @@ RankedNode<T>* RankedAVLTree<T>::findObjectHelper(RankedNode<T>* node, T* value)
 {
     if(node == nullptr )
     {
-        throw NodeDoesntExist();
+        return nullptr;
     }
     else if(*(node->getValue()) == *value)
     {
@@ -554,6 +556,18 @@ void RankedAVLTree<T>::setAllToNullptr(RankedNode<T>* node)
         setAllToNullptr(node->getRightNode());
     }
     node->setValue(nullptr);
+}
+
+template<class T>
+void RankedAVLTree<T>::resetAllRanks(RankedNode<T>* node)
+{
+    if(node == nullptr)
+    {
+        return;
+    }
+    resetAllRanks(node->getLeftNode());
+    node->updateRank(-(node->getRank()));
+    resetAllRanks(node->getRightNode());
 }
 
 template<class T>
