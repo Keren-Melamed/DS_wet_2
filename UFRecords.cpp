@@ -37,7 +37,7 @@ void UFRecords::Union(int below, int above){
     //update size of below to be size of both, 
     updateSize(below, getSize(above));
 
-    m_parents[above] = nullptr;
+    //m_parents[above] = nullptr;
     updateSize(above, 0);
 }
 
