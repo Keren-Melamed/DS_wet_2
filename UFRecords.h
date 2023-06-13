@@ -36,7 +36,7 @@ class UFRecords{
         bool isDisjoint(int r_id1, int r_id2);
 
         void print(std::ostream& os);
-        void UFRecords::printHelper(std::ostream& os, int i);
+        void printHelper(std::ostream& os, int i);
 
         
 };
