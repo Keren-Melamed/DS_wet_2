@@ -60,22 +60,16 @@ void UFRecords::print(std::ostream& os){
 
     for (int i = 0; i < MAX_SIZE; i++)
     {
-        os << "group number " << i << "\n";
-        if(m_parents[i] == -1){
-            m_records[i]->print(os);
+        int help = i;
+        do{
+            os<< " help: " << help << "\n";
+            m_records[help]->print(os);
             os << "\n";
+            help = m_parents[help];
         }
-
-        else{
-            int help = i;
-            while(m_parents[help] != -1){
-                os<< " help: " << help << "\n";
-                m_records[help]->print(os);
-                os << "\n";
-                help = m_parents[help];
-            }
-        }
+        while(m_parents[help] != -1);
     }
-    
 }
+    
+
     
