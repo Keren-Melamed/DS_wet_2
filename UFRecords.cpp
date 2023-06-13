@@ -63,6 +63,7 @@ void UFRecords::print(std::ostream& os){
         if(m_parents[i] == -1){
             os << "group number " << i << "\n";
             m_records[i]->print(os);
+            os << "\n";
         }
 
         else{

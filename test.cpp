@@ -22,14 +22,14 @@ int main()
 
 
     obj->print(cout);
-/*
+
     cout << obj->Find(3) << endl;
     cout << obj->Find(2) << endl;
 
     obj->Union(1 ,2);
     obj->Union(2, 3);
     obj->print(cout);
-*/
+
 
    return 0;
 }
