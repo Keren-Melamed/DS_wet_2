@@ -69,7 +69,7 @@ void UFRecords::print(std::ostream& os){
         else{
             int help = i;
             while(m_parents[help] != -1){
-                os << " group number " << i << "/n";
+                os << " group number " << i << "\n";
                 m_records[help]->print(os);
                 os << "\n";
                 help = m_parents[help];
