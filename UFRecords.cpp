@@ -1,11 +1,16 @@
 # include "UFRecords.h"
 
 UFRecords::UFRecords(int *records_stocks, int num_of_records){
-    ReversedNode** parents = new ReversedNode*[num_of_records];
-    this->m_parents = parents;
-
+    
     int* sizes = new int[num_of_records];
     this->m_sizes = sizes;
+
+    ReversedNode** parents = new ReversedNode*[num_of_records];
+    m_parents = parents;
+    for (int i = 0; i < num_of_records; i++)
+    {
+        m_parents[i]->setParent(new ReversedNode(new Record(0, 0, 0)));
+    }
 
     for (int r_id = 0; r_id < num_of_records; r_id++)
     {
@@ -14,6 +19,7 @@ UFRecords::UFRecords(int *records_stocks, int num_of_records){
         m_sizes[r_id] = records_stocks[r_id];
     }
     MAX_SIZE = num_of_records;
+   
 }
 
 int UFRecords::getSize(int index){
@@ -37,7 +43,7 @@ void UFRecords::Union(int below, int above){
     //update size of below to be size of both, 
     updateSize(below, getSize(above));
 
-    //m_parents[above] = nullptr;
+    m_parents[above]->setParent(nullptr);
     updateSize(above, 0);
 }
 
@@ -56,20 +62,5 @@ bool UFRecords::isDisjoint(int r_id1, int r_id2){
     return false;
 }
 
-void UFRecords::print(std::ostream& os){
-    int i = 0;
-    while(m_parents[i]!= nullptr){
-        os << " group number " << i << "\n";
-        ReversedNode* temp = m_parents[i];
-        os << " with records ";
-        
-        while(temp != NULL){
-            temp->getValue()->print(os);
-            os << "\n";
-            temp = temp->getParent();
-        }
-        os << "\n \n ";
-        i++;
-    }
-}
+
     
