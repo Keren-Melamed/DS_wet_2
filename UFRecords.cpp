@@ -62,5 +62,20 @@ bool UFRecords::isDisjoint(int r_id1, int r_id2){
     return false;
 }
 
-
+void UFRecords::print(std::ostream& os){
+    int i = 0;
+    while(m_parents[i]!= NULL){
+        os << " group number " << i << "\n";
+        ReversedNode* temp = m_parents[i];
+        os << " with records ";
+        
+        while(temp != NULL){
+            temp->getValue()->print(os);
+            os << "\n";
+            temp = temp->getParent();
+        }
+        os << "\n \n ";
+        i++;
+    }
+}
     
