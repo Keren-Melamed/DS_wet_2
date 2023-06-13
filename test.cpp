@@ -38,7 +38,7 @@ int main()
 
     obj->printParents(cout, 1);
 
-    height_aux(obj, 1);
+    height_aux(obj, 3);
 
     size_aux(obj, 1);
 
