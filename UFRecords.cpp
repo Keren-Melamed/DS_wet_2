@@ -60,12 +60,14 @@ bool UFRecords::isDisjoint(int r_id1, int r_id2){
 
 void UFRecords::printParents(std::ostream& os, int r_id){
     while(m_parents[r_id] != -1){
-        os << m_records[r_id] << "\n";
+        m_records[r_id]->print(os);
+        os << "\n";
         r_id = m_parents[r_id];
     }
     if(m_parents[r_id] == -1){
         os << "no parents, printing only the record: \n";
-        os << m_records[r_id] << "\n \n ";
+        m_records[r_id]->print(os);
+        os << "\n \n";
 
     }
 }
@@ -75,7 +77,6 @@ void UFRecords::printAllParents(std::ostream& os){
     {
         printParents(os, i);
     }
-    
 }
 
 int UFRecords::getRecordHeight(int r_id){
