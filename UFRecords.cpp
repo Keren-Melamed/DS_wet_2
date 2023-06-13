@@ -7,6 +7,10 @@ UFRecords::UFRecords(int *record_stocks, int num_of_records){
 
     Record** records = new Record*[num_of_records];
     m_records = records;
+
+    int* parents = new int[num_of_records];
+    m_parents = parents;
+
     for (int i = 0; i < num_of_records; i++)
     {
         m_records[i] = new Record(i, 0, record_stocks[i]);
