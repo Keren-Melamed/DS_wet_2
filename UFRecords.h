@@ -13,10 +13,11 @@ class UFRecords{
 
     public:
 
-        ReversedNode** m_parents;
+        Record** m_records;
+        int* m_parents;
         int* m_sizes;
 
-        UFRecords(int num_of_records);
+        UFRecords(int *record_stocks, int num_of_records);
         UFRecords(const UFRecords& other) = delete;
         UFRecords& operator=(const UFRecords& other) = delete;
         ~UFRecords();

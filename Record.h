@@ -12,6 +12,8 @@ class Record{
         int m_height;
 
     public:
+
+        Record();
         Record(int id, int number_of_buys, int copies);
 
         Record(const Record& other) = default;

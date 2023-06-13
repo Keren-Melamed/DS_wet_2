@@ -1,33 +1,24 @@
 # include "UFRecords.h"
 
-UFRecords::UFRecords(int num_of_records){
+UFRecords::UFRecords(int *record_stocks, int num_of_records){
     
     int* sizes = new int[num_of_records];
     this->m_sizes = sizes;
 
-    ReversedNode** parents = new ReversedNode*[num_of_records];
-    m_parents = parents;
+    Record** records = new Record*[num_of_records];
+    m_records = records;
     for (int i = 0; i < num_of_records; i++)
     {
-        m_parents[i] = new ReversedNode(new Record(i, 0, 0));
+        m_records[i] = new Record(i, 0, record_stocks[i]);
+        m_parents[i] = NULL;
+        m_sizes[i] = record_stocks[i];
     }
 
     MAX_SIZE = num_of_records;
    
 }
 
-void UFRecords::addRecords(int *record_stocks){
-    if(abs(sizeof(record_stocks)/sizeof(record_stocks[0])) > MAX_SIZE){
-        throw BadAllocation();
-    }
 
-    for (int i = 0; i < MAX_SIZE; i++)
-    {
-        ReversedNode* record = new ReversedNode(new Record(i, 0, record_stocks[i]));
-        record->setParent(m_parents[i]);
-    }
-    
-}
 
 int UFRecords::getSize(int index){
     return m_sizes[index];
@@ -38,28 +29,20 @@ void UFRecords::updateSize(int index, int size){
 }
 
 void UFRecords::Union(int below, int above){
-    ReversedNode* A = m_parents[above];
-    ReversedNode* B = m_parents[below];
+    if(below == above){
+        return;
+    }
 
-    //updating the parent of above to be the parent pf below
-    A->setParent(B);
-
-    //change height of above to be + height of below
-    A->getValue()->UpdateHeight(B->getValue()->getHeight());
-
-    //update size of below to be size of both, 
-    updateSize(below, getSize(above));
-
-    m_parents[above]->setParent(nullptr);
-    updateSize(above, 0);
+    m_parents[below] = above;
+    m_records[above]->UpdateHeight(m_records[below]->getNumOfCopies());
 }
 
 int UFRecords::Find(int r_id){
-    while(m_parents[r_id]->getValue()->getId() != r_id){
-        m_parents[r_id]->setParent(m_parents[r_id]->getParent());
-        r_id = m_parents[r_id]->getValue()->getId();
+    if (r_id == m_parents[r_id]){
+        return r_id;
     }
-    return r_id;
+    return m_parents[r_id] = Find(m_parents[r_id]);
+    
 }
 
 bool UFRecords::isDisjoint(int r_id1, int r_id2){
@@ -70,19 +53,11 @@ bool UFRecords::isDisjoint(int r_id1, int r_id2){
 }
 
 void UFRecords::print(std::ostream& os){
-    int i = 0;
-    while(m_parents[i]!= NULL){
-        os << " group number " << i << "\n";
-        ReversedNode* temp = m_parents[i];
-        os << " with records ";
-        
-        while(temp != NULL){
-            temp->getValue()->print(os);
-            os << "\n";
-            temp = temp->getParent();
-        }
-        os << "\n \n ";
-        i++;
+    int r_id = 0;
+    while(m_parents[r_id] != NULL){
+        os << " group number " << r_id << "/n";
+        os << m_records[r_id];
+        r_id = m_parents[r_id];
     }
 }
     
