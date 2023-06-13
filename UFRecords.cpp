@@ -21,7 +21,7 @@ void UFRecords::addRecords(int *record_stocks){
         throw BadAllocation();
     }
 
-    for (size_t i = 0; i < MAX_SIZE; i++)
+    for (int i = 0; i < MAX_SIZE; i++)
     {
         ReversedNode* record = new ReversedNode(new Record(i, 0, record_stocks[i]));
         record->setParent(m_parents[i]);
