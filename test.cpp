@@ -1,9 +1,10 @@
 #include "HashTable.h"
 #include "UFRecords.h"
 
-void union_aux(UFRecords* records, int below, int above){
-    cout << "stacking heap " << above << " above heap " << below << endl;
-    records->Union(below, above);
+void union_aux(UFRecords* records, int child, int parent){
+    cout << parent << " is becoming a parent of "<< child << endl;
+    cout << "(" << parent << " is above " << child << ")" <<endl;
+    records->Union(child, parent);
 }
 
 void find_aux(UFRecords* records, int r_id){
