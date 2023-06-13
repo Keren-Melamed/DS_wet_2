@@ -62,14 +62,14 @@ void UFRecords::print(std::ostream& os){
     {
         if(m_parents[i] == -1){
             os << "group number " << i << "/n";
-            os << m_records[i];
+            m_records[i]->print(os);
         }
 
         else{
             int help = i;
             while(m_parents[help] != -1){
                 os << " group number " << i << "/n";
-                os << m_records[help];
+                m_records[help]->print(os);
                 help = m_parents[help];
             }
         }
