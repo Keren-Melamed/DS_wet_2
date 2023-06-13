@@ -60,6 +60,7 @@ void UFRecords::print(std::ostream& os){
 
     for (int i = 0; i < MAX_SIZE; i++)
     {
+        os << " group number: " << i << "\n";
         int help = i;
         do{
             os<< " help: " << help << "\n";
