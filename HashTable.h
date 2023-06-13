@@ -5,34 +5,34 @@
 #include "Costumer.h"
 #include "exception.h"
 
-const int DEFAULT_TABLE_SIZE = 64;
+const int DEFAULT_TABLE_SIZE = 2;
 
 template<class Costumer>
 class HashTable
 {
-    private:
-        int size;
-        int maxCurrentSize;
-        int currentSize;
-        AVLTree<Costumer>** data;
+private:
+    int size;
+    int maxCurrentSize;
+    int currentSize;
+    AVLTree<Costumer>** data;
 
-        void resize();
+    void resize();
 
-        int hashFunc(int num) {return num % size;}
+    int hashFunc(int num) {return num % size;}
 
-    public:
-        HashTable(int size = DEFAULT_TABLE_SIZE);
-        
-        HashTable(const HashTable& other) = delete;
-        HashTable& operator=(const HashTable& other) = delete;
-        ~HashTable();
+public:
+    HashTable(int size = DEFAULT_TABLE_SIZE);
 
-        void insert(Costumer& item);
-        Node<Costumer> getCostumer(Costumer& item);
-        void addTo(AVLTree<Costumer>* tree, Node<Costumer>* node);
+    HashTable(const HashTable& other) = delete;
+    HashTable& operator=(const HashTable& other) = delete;
+    ~HashTable();
 
-        ostream& print(ostream& os);
-        
+    void insert(Costumer& item);
+    Node<Costumer> getCostumer(Costumer& item);
+    void addTo(AVLTree<Costumer>* tree, Node<Costumer>* node);
+
+    ostream& print(ostream& os);
+
 };
 
 template<class Costumer>
@@ -40,12 +40,7 @@ HashTable<Costumer>::HashTable(int size){
     this->size = size;
     currentSize = 0;
     maxCurrentSize = DEFAULT_TABLE_SIZE;
-    for (int i = 0; i < size; i++)
-    {
-        AVLTree<Costumer>** temp = new AVLTree<Costumer>*();
-        data[i] = temp;
-    }
-    
+    data = new AVLTree<Costumer>*[size];
 }
 
 template<class Costumer>
@@ -58,7 +53,7 @@ HashTable<Costumer>::~HashTable(){
         }
     }
     delete[] this->data;
-    
+
 }
 
 template<class Costumer>
@@ -81,9 +76,9 @@ void HashTable<Costumer>::resize()
 
     for (int i = 0; i < size; i++)
     {
-        newData[i]->setRoot(nullptr);
+        newData[i] = new AVLTree<Costumer>();
     }
-    
+
 
     for (int i = 0; i < oldSize; i++)
     {
@@ -116,7 +111,8 @@ void HashTable<Costumer>::insert(Costumer& costumer){
     }
 
     if(tree == NULL){
-        tree->setRoot(newCostumer);
+        data[index] = new AVLTree<Costumer>();
+        data[index]->setRoot(newCostumer);
         currentSize++;
     }
 
@@ -152,22 +148,15 @@ ostream& HashTable<Costumer>::print(ostream& os)
 {
     for (int i = 0; i < size; i++)
     {
-        os << "tree number " << i;
+        os << " tree number " << i << ": ";
         if(data[i] != nullptr){
             data[i]->inOrder(os, data[i]->getRoot());
         }
     }
     return os;
-    
+
 }
 
 
 
-
-
-
-
-
-
-
-#endif
+#endif // HASHTABLE_H_

@@ -158,6 +158,11 @@ bool operator==(const int &a, const Costumer &b)
     }
 }
 
+void Costumer::print(std::ostream &os) const
+{
+    os << m_id << " ";
+}
+
 
 
 

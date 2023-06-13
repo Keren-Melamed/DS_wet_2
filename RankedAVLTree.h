@@ -1,5 +1,5 @@
-#ifndef WET1_RANKEDAVLTREE_H
-#define WET1_RANKEDAVLTREE_H
+#ifndef WET2_RANKEDAVLTREE_H
+#define WET2_RANKEDAVLTREE_H
 
 #include "RankedNode.h"
 #include <iostream>
@@ -74,7 +74,7 @@ class RankedAVLTree
         */
         void insertValue(T *value);
 
-        RankedNode<T>* insertValueHelper(RankedNode<T>* node, T* value);
+        RankedNode<T>* insertValueHelper(RankedNode<T>* node, T* value, double counter);
 
         /*
         * balances the tree from this root downwards
@@ -89,6 +89,12 @@ class RankedAVLTree
         void deleteNodes(RankedNode<T>* node);
 
         void setAllToNullptr(RankedNode<T> *node);
+
+        ostream& inOrder(ostream& os, RankedNode<T>* node) const;
+
+        ostream& postOrder(ostream& os, RankedNode<T>* node) const;
+
+        ostream& preOrder(ostream& os, RankedNode<T>* node) const;
 
     private:
 
@@ -113,7 +119,6 @@ class RankedAVLTree
         RankedNode<T>* rotateRight(RankedNode<T>* parent);
         
         RankedNode<T>* m_root;
-        RankedNode<T>* m_maximumValue;
 
 };
 
@@ -143,7 +148,7 @@ void RankedAVLTree<T>::deleteNodes(RankedNode<T> *node)
 
     deleteNodes(node->getLeftNode());
     deleteNodes(node->getRightNode());
-    delete node->getValue();// might cause -> doesnt delete the tree in group and was somehow causing a seg fault....(double free to be exact)
+    delete node->getValue();// might cause -> doesn't delete the tree in group and was somehow causing a seg fault....(double free to be exact)
     delete node;
 }
 
@@ -362,7 +367,7 @@ void RankedAVLTree<T>::removeValue(T* value)
 }
 
 template<class T>
-RankedNode<T>* RankedAVLTree<T>::insertValueHelper(RankedNode<T>* node, T* value)
+RankedNode<T>* RankedAVLTree<T>::insertValueHelper(RankedNode<T>* node, T* value, double counter)
 {
     if(node == nullptr)
     {
@@ -371,18 +376,20 @@ RankedNode<T>* RankedAVLTree<T>::insertValueHelper(RankedNode<T>* node, T* value
         {
             throw BadAllocation();
         }
+        node->updateRank(-counter);
         return node;
     }
 
     else if (*(node->getValue()) > *value )
     {
-        node->setLeftNode(insertValueHelper(node->getLeftNode(), value));
+        counter += node->getRank();
+        node->setLeftNode(insertValueHelper(node->getLeftNode(), value, counter));
     }
 
     else if (*(node->getValue()) < *value)
     {
-        RankedNode<T>* tmp = insertValueHelper(node->getRightNode(), value);
-        node->setRightNode(tmp);
+        counter += node->getRank();
+        node->setRightNode(insertValueHelper(node->getRightNode(), value, counter));
     }
 
     node->setHeight(calculateHeight(node));
@@ -392,7 +399,7 @@ RankedNode<T>* RankedAVLTree<T>::insertValueHelper(RankedNode<T>* node, T* value
 template<class T>
 void RankedAVLTree<T>::insertValue(T* value)
 {
-    m_root = insertValueHelper(m_root, value);
+    m_root = insertValueHelper(m_root, value, 0);
 }
 
 template<class T>
@@ -446,7 +453,7 @@ RankedNode<T>* RankedAVLTree<T>::findObjectHelper(RankedNode<T>* node, T* value)
 {
     if(node == nullptr )
     {
-        return nullptr;
+        throw NodeDoesntExist();
     }
     else if(*(node->getValue()) == *value)
     {
@@ -485,11 +492,12 @@ RankedNode<T>* RankedAVLTree<T>::rotateLeft(RankedNode<T>* parent)
     parent->setHeight(calculateHeight(parent));
     parentRight->setHeight(calculateHeight(parentRight));
 
-    parent->updateRank(-(parentRight->getRank()));
-    parentRightLeft->updateRank(parent->getRank());
+    double parentRank = parent->getRank();
+    parent->updateRank(-parentRank);
+    parentRight->updateRank(parentRank);
+
 
     return parentRight;
-
 }
 
 template<class T>
@@ -508,11 +516,11 @@ RankedNode<T>* RankedAVLTree<T>::rotateRight(RankedNode<T>* parent)
     parent->setHeight(calculateHeight(parent));
     parentLeft->setHeight(calculateHeight(parentLeft));
 
-    parent->updateRank(-(parentLeft->getRank()));
-    parentLeftRight->updateRank(parent->getRank());
+    double parentRank = parent->getRank();
+    parent->updateRank(-parentRank);
+    parentLeft->updateRank(parentRank);
 
     return parentLeft;
-
 }
 
 template<class T>
@@ -548,5 +556,52 @@ void RankedAVLTree<T>::setAllToNullptr(RankedNode<T>* node)
     node->setValue(nullptr);
 }
 
+template<class T>
+ostream& RankedAVLTree<T>::inOrder(ostream& os, RankedNode<T>* node) const
+{
+    if (node == NULL)
+    {
+        return os;
+    }
+    else
+    {
+        inOrder(os, node->getLeftNode());
+        node->getValue()->print(os);
+        inOrder(os, node->getRightNode());
+        return os;
+    }
+}
 
-#endif // RANKEDAVLTREE_H
+template<class T>
+ostream& RankedAVLTree<T>::postOrder(ostream& os, RankedNode<T>* node) const
+{
+    if (node == NULL)
+    {
+        return os;
+    }
+    else
+    {
+        postOrder(os, node->getLeftNode());
+        postOrder(os, node->getRightNode());
+        node->getValue()->print(os);
+        return os;
+    }
+}
+
+template<class T>
+ostream& RankedAVLTree<T>::preOrder(ostream& os, RankedNode<T>* node) const
+{
+    if(node == NULL)
+    {
+        return os;
+    }
+    else
+    {
+        node->getValue()->print(os);
+        preOrder(os, node->getLeftNode());
+        preOrder(os, node->getRightNode());
+        return os;
+    }
+}
+
+#endif // WET2_RANKEDAVLTREE_H

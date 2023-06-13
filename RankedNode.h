@@ -118,7 +118,7 @@ class RankedNode {
         T* m_value;
 
         int m_height;
-        int m_rank;
+        double m_rank;
 
 };
 
@@ -128,7 +128,7 @@ class RankedNode {
 
 template<class T>
 RankedNode<T>::RankedNode(T* value) :
-    m_leftNode(nullptr), m_rightNode(nullptr), m_value(value), m_height(0), m_rank(1)
+    m_leftNode(nullptr), m_rightNode(nullptr), m_value(value), m_height(0), m_rank(0)
 {}
 
 template<class T>

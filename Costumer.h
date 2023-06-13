@@ -2,6 +2,7 @@
 #define DS_WET_2_COSTUMER_H
 
 #include "utilesWet2.h"
+#include <iostream>
 
 class Costumer
 {
@@ -39,6 +40,8 @@ class Costumer
         bool operator>=(const int& num) const;
         friend bool operator==(const Costumer& a, const int& b);
         friend bool operator==(const int& a, const Costumer& b);
+
+        void print(std::ostream& os) const;
 
 };
 
