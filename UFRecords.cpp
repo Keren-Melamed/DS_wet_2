@@ -67,7 +67,8 @@ void UFRecords::print(std::ostream& os){
 
 void UFRecords::printHelper(std::ostream& os, int i){
     if (m_parents[i] == -1){
-        os << m_records[i] << "\n";
+        m_records[i]->print(os);
+        os << "\n";
     }
     printHelper(os, m_parents[i]);
 }
