@@ -18,12 +18,8 @@ int main()
     
 */
     int records_stocks[4] = {1, 2, 3, 4};
-    UFRecords* obj = new UFRecords(4);
-    for (int i = 0; i < 4; i++)
-    {
-        ReversedNode* record = new ReversedNode(new Record(i, 0, records_stocks[i]));
-        record->setParent(obj->m_parents[i]);
-    }
+    UFRecords* obj = new UFRecords(records_stocks, 4);
+
 
     obj->print(cout);
 
