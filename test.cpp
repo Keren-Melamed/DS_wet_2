@@ -28,6 +28,7 @@ int main()
 
     obj->Union(1 ,2);
     obj->Union(2, 3);
+    obj->Find(3);
     obj->print(cout);
 
 
