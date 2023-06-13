@@ -24,7 +24,7 @@ int main()
 {
 
     int records_stocks[5] = {10, 20, 30, 40, 50};
-    int len = abs(sizeof(records_stocks)/sizeof(records_stocks[0]));
+    int len = sizeof(records_stocks)/sizeof(records_stocks[0]);
 
     UFRecords* obj = new UFRecords(records_stocks, len);
 
