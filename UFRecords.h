@@ -13,7 +13,7 @@ class UFRecords{
         Record** m_records;
         int* m_parents;
         int* m_sizes;
-        void UFRecords::printHelper(std::ostream& os, int i);
+        
     public:
 
 
@@ -36,6 +36,7 @@ class UFRecords{
         bool isDisjoint(int r_id1, int r_id2);
 
         void print(std::ostream& os);
+        void UFRecords::printHelper(std::ostream& os, int i);
 
         
 };
