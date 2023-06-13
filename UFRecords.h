@@ -8,11 +8,14 @@
 
 class UFRecords{
     private:
-        ReversedNode** m_parents;
-        int* m_sizes;
+
         int MAX_SIZE = 0;
 
     public:
+
+        ReversedNode** m_parents;
+        int* m_sizes;
+
         UFRecords(int num_of_records);
         UFRecords(const UFRecords& other) = delete;
         UFRecords& operator=(const UFRecords& other) = delete;
