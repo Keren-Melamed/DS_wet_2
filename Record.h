@@ -33,10 +33,9 @@ public:
     int getPrice() const;
 
     void setNumberOfCopies(int copies);
+    void setNumberOfCopies(int copies);
 
-    void updateNumberOfBuys();
-    
-    void setNumberOfBuys(int number_of_buys);
+        void setNumberOfBuys(int number_of_buys);
 
     void UpdateHeight(int height);
 };

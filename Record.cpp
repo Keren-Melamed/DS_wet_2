@@ -46,6 +46,14 @@ int Record::getPrice() const
 {
     return (100 + getNumberOfBuys());
 }
+void Record::updateNumberOfBuys(){
+    m_number_of_buys += 1;
+}
+
+int Record::getPrice() const
+{
+    return (100 + getNumberOfBuys());
+}
 
 
 

@@ -23,6 +23,7 @@ class UFRecords{
         void addRecords(int *record_stocks);
 
         int getSize(int index) const;
+        int getSize(int index) const;
 
         void updateSize(int index, int size);
 
@@ -35,6 +36,8 @@ class UFRecords{
         void printParents(std::ostream& os, int r_id);
         void printAllParents(std::ostream& os);
 
+        int getRecordHeight(int r_id) const;
+        Record* getRecord(int r_id) const;
         int getRecordHeight(int r_id) const;
         Record* getRecord(int r_id) const;
 

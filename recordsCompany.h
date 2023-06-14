@@ -7,7 +7,9 @@
 #include "HashTable.h"
 #include "UFRecords.h"
 #include <memory>
+#include <memory>
 
+using namespace std;
 using namespace std;
 using namespace std;
 
