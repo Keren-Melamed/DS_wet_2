@@ -4,7 +4,7 @@
 
 using namespace std;
 
-RecordsCompany::RecordsCompany() : m_numberOfRecords(0), m_records(nullptr,0)
+RecordsCompany::RecordsCompany() : m_numberOfRecords(0)
 {}
 
 RecordsCompany::~RecordsCompany()
@@ -153,17 +153,16 @@ StatusType RecordsCompany::buyRecord(int c_id, int r_id)
         return StatusType::DOESNT_EXISTS;
     }
 
-    //find the record and update it accordingly
+    Record* record = m_UFrecords.getRecord(r_id);
+    record->updateNumberOfBuys();
 
     Costumer* tmpMember = new Costumer(c_id, 0);
     RankedNode<Costumer>* tmpMemberNode = m_members.findObject(m_members.getRoot(), tmpMember);
     delete tmpMember;
     if(tmpMemberNode != nullptr) // else do nothing
     {
-        //tmpMemberNode->getValue()->updateExpenses(record.getPrice);
+        tmpMemberNode->getValue()->updateExpenses(record->getPrice());
     }
-
-
 
     return StatusType::SUCCESS;
 }

@@ -1,0 +1,43 @@
+#ifndef DS_WET_2_UFRECORDS_H
+#define DS_WET_2_UFRECORDS_H
+
+#include "Record.h"
+#include "ReversedNode.h"
+#include "exception.h"
+
+class UFRecords{
+private:
+
+    Record** m_records;
+    int* m_parents;
+    int* m_sizes;
+    int MAX_SIZE = 0;
+
+public:
+
+    UFRecords(int *record_stocks, int num_of_records);
+    UFRecords(const UFRecords& other);
+    UFRecords& operator=(const UFRecords& other);
+    ~UFRecords() = default;
+
+    void addRecords(int *record_stocks);
+
+    int getSize(int index);
+
+    Record* getRecord(int r_id);
+
+    void updateSize(int index, int size);
+
+    void Union(int below, int above);
+
+    int Find(int r_id);
+
+    bool isDisjoint(int r_id1, int r_id2);
+
+    void printParents(std::ostream& os, int r_id);
+    void printAllParents(std::ostream& os);
+
+    int getRecordHeight(int r_id);
+};
+
+#endif //DS_WET_2_UFRECORDS_H

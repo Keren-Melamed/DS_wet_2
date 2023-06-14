@@ -38,7 +38,7 @@ void Costumer::buyRecord(double price)
     updateExpenses(price);
 }
 
-StatusType_t Costumer::setMember(bool isMember)
+void Costumer::setMember(bool isMember)
 {
     m_isMember = isMember;
 }

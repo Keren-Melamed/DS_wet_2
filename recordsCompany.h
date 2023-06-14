@@ -27,7 +27,7 @@ class RecordsCompany {
 
     HashTable<Costumer> m_costumers;
     RankedAVLTree<Costumer> m_members;
-    UFRecords m_records;
+    UFRecords m_UFrecords;
 
     RecordsCompany();
     ~RecordsCompany();

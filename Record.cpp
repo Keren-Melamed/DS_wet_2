@@ -1,5 +1,6 @@
 #include "Record.h"
 
+
 Record::Record(int id, int number_of_buys, int copies):m_id(id), m_number_of_buys(number_of_buys), m_copies(copies), m_height(0){}
 
 
@@ -24,8 +25,8 @@ void Record::setNumberOfCopies(int copies){
     m_copies = copies;
 }
 
-void Record::setNumberOfBuys(int number_of_buys){
-    m_number_of_buys = number_of_buys;
+void Record::updateNumberOfBuys(){
+    m_number_of_buys += 1;
 }
 
 void Record::UpdateHeight(int height){
@@ -38,6 +39,10 @@ void Record::print(std::ostream& os){
     os << " buys: " << m_number_of_buys;
 }
 
+int Record::getPrice() const
+{
+    return (100 + getNumberOfBuys());
+}
 
 
 

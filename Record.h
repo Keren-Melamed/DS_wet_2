@@ -12,6 +12,8 @@ private:
     int m_height;
 
 public:
+
+    Record();
     Record(int id, int number_of_buys, int copies);
 
     Record(const Record& other) = default;
@@ -28,17 +30,13 @@ public:
 
     int getHeight() const;
 
+    int getPrice() const;
 
     void setNumberOfCopies(int copies);
 
-    void setNumberOfBuys(int number_of_buys);
+    void updateNumberOfBuys();
 
     void UpdateHeight(int height);
 };
 
-
-
-
-
-
-#endif
+#endif //RECORD_H_
