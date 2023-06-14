@@ -1,4 +1,5 @@
 # include "UFRecords.h"
+#include <iostream>
 
 UFRecords::UFRecords(int *record_stocks, int num_of_records){
     
@@ -25,7 +26,7 @@ UFRecords::UFRecords(int *record_stocks, int num_of_records){
 UFRecords::UFRecords(const UFRecords& other){
     
     this->MAX_SIZE = other.MAX_SIZE;
-
+    std::cout << "MAX_SIZE: " << this->MAX_SIZE << std::endl;
     int* sizes = new int[MAX_SIZE];
     this->m_sizes = sizes;
 
@@ -37,8 +38,11 @@ UFRecords::UFRecords(const UFRecords& other){
     
     for (int i = 0; i < MAX_SIZE; i++)
     {
+        std::cout << "record in place: " << i << " " << other.m_records[i] << std::endl;
         this->m_records[i] = other.m_records[i];
+        std::cout << "parent in place: " << i << " " << other.m_parents[i] << std::endl;
         this->m_parents[i] = other.m_parents[i];
+        std::cout << "size in place: " << i << " " << other.m_sizes[i] << std::endl;
         this->m_sizes[i] = other.m_sizes[i];
     }
     
