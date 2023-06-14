@@ -88,7 +88,7 @@ UFRecords::~UFRecords(){
     deleteHelper(m_records, m_parents, m_sizes);
 }
 
-int UFRecords::getSize(int index){
+int UFRecords::getSize(int index) const{
     return m_sizes[index];
 }
 
@@ -145,7 +145,7 @@ void UFRecords::printAllParents(std::ostream& os){
     }
 }
 
-int UFRecords::getRecordHeight(int r_id){
+int UFRecords::getRecordHeight(int r_id) const{
     return m_records[r_id]->getHeight();
 }
     
@@ -156,5 +156,9 @@ void UFRecords::deleteHelper(Record** records, int* parents, int* sizes){
     }
     delete[] parents;
     delete[] sizes;
-    
+}
+
+Record* UFRecords::getRecord(int r_id) const
+{
+    return m_records[r_id];
 }

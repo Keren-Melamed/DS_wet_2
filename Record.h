@@ -5,42 +5,39 @@
 #include "exception.h"
 
 class Record{
-    private:
-        int m_id;
-        int m_number_of_buys;
-        int m_copies;
-        int m_height;
+private:
+    int m_id;
+    int m_number_of_buys;
+    int m_copies;
+    int m_height;
 
-    public:
+public:
 
-        Record();
-        Record(int id, int number_of_buys, int copies);
+    Record();
+    Record(int id, int number_of_buys, int copies);
 
-        Record(const Record& other) = default;
-        Record& operator=(const Record& other) = default;
-        ~Record() = default;
+    Record(const Record& other) = default;
+    Record& operator=(const Record& other) = default;
+    ~Record() = default;
 
-        void print(std::ostream& os);
+    void print(std::ostream& os);
 
-        int getId() const;
+    int getId() const;
 
-        int getNumOfCopies() const;
+    int getNumOfCopies() const;
 
-        int getNumberOfBuys() const;
+    int getNumberOfBuys() const;
 
-        int getHeight() const;
+    int getHeight() const;
 
+    int getPrice() const;
 
-        void setNumberOfCopies(int copies);
+    void setNumberOfCopies(int copies);
 
-        void setNumberOfBuys(int number_of_buys);
+    void updateNumberOfBuys();
+    
+    void setNumberOfBuys(int number_of_buys);
 
-        void UpdateHeight(int height);
+    void UpdateHeight(int height);
 };
-
-
-
-
-
-
 #endif
