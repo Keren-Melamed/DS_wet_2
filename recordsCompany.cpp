@@ -98,6 +98,7 @@ StatusType RecordsCompany::makeMember(int c_id)
     }
 
     Node<Costumer>* newNode = m_costumers.getCostumer(c_id);
+
     if(newNode == nullptr)
     {
         return StatusType::DOESNT_EXISTS;
@@ -109,17 +110,20 @@ StatusType RecordsCompany::makeMember(int c_id)
         return StatusType::ALREADY_EXISTS;
     }
 
+    newMember->setMember(true);
+    
     try
     {
         m_members.insertValue(newMember);
         return StatusType::SUCCESS;
     }
+    
     catch(BadAllocation& e)
     {
         return StatusType::ALLOCATION_ERROR;
     }
     //if member is added after prizes were distributed than we need to adjust his expenses, can be done by subtracting
-    // the accumulated ranks from his expenses ************* happens in tree.insertValue
+// the accumulated ranks from his expenses ************* happens in tree.insertValue
 }
 
 Output_t<bool> RecordsCompany::isMember(int c_id)

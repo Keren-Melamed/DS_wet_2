@@ -28,7 +28,7 @@ public:
     ~HashTable();
 
     void insert(int c_id, int phone);
-    Node<Costumer>* getCostumer(int c_id) const;
+    Node<Costumer>* getCostumer(int c_id);
     void addTo(AVLTree<Costumer>* tree, Node<Costumer>* node);
 
     ostream& print(ostream& os);
@@ -142,7 +142,7 @@ void HashTable<Costumer>::insert(int c_id, int phone){
 }
 
 template<class Costumer>
-Node<Costumer>* HashTable<Costumer>::getCostumer(int c_id) const{
+Node<Costumer>* HashTable<Costumer>::getCostumer(int c_id){
     int index = hashFunc(c_id);
     AVLTree<Costumer>* tree = data[index];
     if(tree != nullptr)
