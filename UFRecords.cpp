@@ -79,12 +79,6 @@ UFRecords& UFRecords::operator=(const UFRecords& other){
     return *this;
 }
 
-UFRecords::~UFRecords(){
-    delete[] m_records;
-    delete[] m_parents;
-    delete[] m_sizes;
-}
-
 int UFRecords::getSize(int index){
     return m_sizes[index];
 }

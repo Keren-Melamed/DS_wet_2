@@ -19,7 +19,7 @@ class UFRecords{
         UFRecords(int *record_stocks, int num_of_records);
         UFRecords(const UFRecords& other);
         UFRecords& operator=(const UFRecords& other);
-        ~UFRecords();
+        ~UFRecords() = default;
 
         void addRecords(int *record_stocks);
 

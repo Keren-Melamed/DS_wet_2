@@ -30,8 +30,9 @@ int main()
     UFRecords* obj = new UFRecords(records_stocks, len);
 
     UFRecords* new_obj(obj);
+    new_obj->printAllParents(cout);
 
-    //delete new_obj;
+    delete new_obj;
 
     obj->printAllParents(cout);
 
