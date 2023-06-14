@@ -145,20 +145,23 @@ template<class Costumer>
 Node<Costumer>* HashTable<Costumer>::getCostumer(int c_id){
     int index = hashFunc(c_id);
     AVLTree<Costumer>* tree = data[index];
-    if(tree != nullptr)
+    if(tree == nullptr){
+        return nullptr;
+    }
+
+    else
     {
         Costumer* tmpCostumer = new Costumer(c_id, 0);
         Node<Costumer>* tmpNode = tree->findObject(tree->getRoot(), tmpCostumer);
-        delete tmpCostumer;
+        
+
         if(tmpNode == nullptr)
         {
             return nullptr;
         }
         return tmpNode;
-    }
-    else
-    {
-        return nullptr;
+
+        delete tmpCostumer;
     }
 
 }
