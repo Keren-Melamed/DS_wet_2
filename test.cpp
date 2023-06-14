@@ -29,6 +29,10 @@ int main()
 
     UFRecords* obj = new UFRecords(records_stocks, len);
 
+    UFRecords* new_obj(obj);
+
+    delete new_obj;
+
     obj->printAllParents(cout);
 
     union_aux(obj, 1, 2);

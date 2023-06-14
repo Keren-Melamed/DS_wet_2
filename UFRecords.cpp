@@ -3,7 +3,7 @@
 UFRecords::UFRecords(int *record_stocks, int num_of_records){
     
     int* sizes = new int[num_of_records];
-    this->m_sizes = sizes;
+    m_sizes = sizes;
 
     Record** records = new Record*[num_of_records];
     m_records = records;
@@ -20,6 +20,69 @@ UFRecords::UFRecords(int *record_stocks, int num_of_records){
 
     MAX_SIZE = num_of_records;
    
+}
+
+UFRecords::UFRecords(const UFRecords& other){
+    
+    this->MAX_SIZE = other.MAX_SIZE;
+
+    int* sizes = new int[MAX_SIZE];
+    this->m_sizes = sizes;
+
+    Record** records = new Record*[MAX_SIZE];
+    this->m_records = records;
+
+    int* parents = new int[MAX_SIZE];
+    this->m_parents = parents;
+    
+    for (int i = 0; i < MAX_SIZE; i++)
+    {
+        this->m_records[i] = other.m_records[i];
+        this->m_parents[i] = other.m_parents[i];
+        this->m_sizes[i] = other.m_sizes[i];
+    }
+    
+}
+
+UFRecords& UFRecords::operator=(const UFRecords& other){
+    if (this == &other) {
+        return *this;
+    }
+
+    Record** tempRecords = new Record*[other.MAX_SIZE];
+    int* tempSizes = new int[other.MAX_SIZE];
+    int* tempParents = new int[other.MAX_SIZE];
+
+    try {
+        for(int i=0; i < other.MAX_SIZE; i++) {
+            tempRecords[i] = other.m_records[i];
+            tempParents[i] = other.m_parents[i];
+            tempSizes[i] = other.m_sizes[i];
+        }
+    } 
+    
+    catch(...) {
+        delete[] tempRecords;
+        delete[] tempParents;
+        delete[] tempSizes;
+        throw;
+    }
+
+    delete[] m_records;
+    delete[] m_parents;
+    delete[] m_sizes;
+    MAX_SIZE = other.MAX_SIZE;
+    this->m_records = tempRecords;
+    this->m_parents = tempParents;
+    this->m_sizes = tempSizes;
+
+    return *this;
+}
+
+UFRecords::~UFRecords(){
+    delete[] m_records;
+    delete[] m_parents;
+    delete[] m_sizes;
 }
 
 int UFRecords::getSize(int index){

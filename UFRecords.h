@@ -17,8 +17,8 @@ class UFRecords{
     public:
 
         UFRecords(int *record_stocks, int num_of_records);
-        UFRecords(const UFRecords& other) = delete;
-        UFRecords& operator=(const UFRecords& other) = delete;
+        UFRecords(const UFRecords& other);
+        UFRecords& operator=(const UFRecords& other);
         ~UFRecords();
 
         void addRecords(int *record_stocks);
