@@ -95,7 +95,9 @@ void get_place_aux(RecordsCompany *obj, int r_id){
     int* column = nullptr;
     int* height = nullptr;
     status_aux(obj->getPlace(r_id, column, height));
-    std::cout << "column: " << *column << " height: " << *height << endl;
+    if((column != nullptr) && (height != nullptr)){
+        std::cout << "column: " << *column << " height: " << *height << endl;
+    }
 }
 
 void test() {
