@@ -334,11 +334,9 @@ StatusType RecordsCompany::getPlace(int r_id, int* column, int* height)
         return StatusType::INVALID_INPUT;
     }
     
-    int* tempColumn = new int(m_UFrecords.Find(r_id));
-    column = tempColumn;
+    *column = m_UFrecords.Find(r_id);
 
-    int* tempHeight = new int(m_UFrecords.getRecordHeight(r_id));
-    height = tempHeight;
+    *height = m_UFrecords.getRecordHeight(r_id);;
 
     return StatusType::SUCCESS;
     
