@@ -28,7 +28,7 @@ int main()
     int len = sizeof(records_stocks)/sizeof(records_stocks[0]);
 
     UFRecords* obj = new UFRecords(records_stocks, len);
-
+/*
     UFRecords* new_obj = new UFRecords(*obj);
     cout << "new_obj: \n" << endl;
     new_obj->printAllParents(cout);
@@ -48,7 +48,12 @@ int main()
     height_aux(obj, 3);
 
     size_aux(obj, 1);
+*/
 
+    UFRecords* empty = new UFRecords();
+    empty = obj;
+
+    empty->printAllParents(cout);
 
    return 0;
 }

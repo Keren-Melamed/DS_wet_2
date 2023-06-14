@@ -15,7 +15,7 @@ class UFRecords{
         int MAX_SIZE = 0;
         
     public:
-
+        UFRecords();
         UFRecords(int *record_stocks, int num_of_records);
         UFRecords(const UFRecords& other);
         UFRecords& operator=(const UFRecords& other);

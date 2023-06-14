@@ -1,6 +1,12 @@
 # include "UFRecords.h"
 #include <iostream>
 
+UFRecords::UFRecords(){
+    m_records = nullptr;
+    m_parents = nullptr;
+    m_sizes = nullptr;
+}
+
 UFRecords::UFRecords(int *record_stocks, int num_of_records){
     
     int* sizes = new int[num_of_records];

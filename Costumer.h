@@ -3,6 +3,7 @@
 
 #include "utilesWet2.h"
 #include <iostream>
+
 class Costumer
 {
     private:
@@ -25,14 +26,23 @@ class Costumer
 
         /*** Methods ***/
         void buyRecord(double price);
-        StatusType_t setMember();
+        void updateExpenses(double expense);
+        void setMember(bool isMember);
 
         /*** Operators ***/
         friend bool operator==(const Costumer& a, const Costumer& b);
         bool operator<(const Costumer& other) const;
         bool operator>(const Costumer& other) const;
 
+        bool operator<(const int& num) const;
+        bool operator>(const int& num) const;
+        bool operator<=(const int& num) const;
+        bool operator>=(const int& num) const;
+        friend bool operator==(const Costumer& a, const int& b);
+        friend bool operator==(const int& a, const Costumer& b);
+
         void print(std::ostream& os) const;
+
 };
 
 

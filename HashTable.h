@@ -10,29 +10,29 @@ const int DEFAULT_TABLE_SIZE = 2;
 template<class Costumer>
 class HashTable
 {
-    private:
-        int size;
-        int maxCurrentSize;
-        int currentSize;
-        AVLTree<Costumer>** data;
+private:
+    int size;
+    int maxCurrentSize;
+    int currentSize;
+    AVLTree<Costumer>** data;
 
-        void resize();
+    void resize();
 
-        int hashFunc(int num) {return num % size;}
+    int hashFunc(int num) {return num % size;}
 
-    public:
-        HashTable(int size = DEFAULT_TABLE_SIZE);
-        
-        HashTable(const HashTable& other) = delete;
-        HashTable& operator=(const HashTable& other) = delete;
-        ~HashTable();
+public:
+    HashTable(int size = DEFAULT_TABLE_SIZE);
 
-        void insert(Costumer& item);
-        Node<Costumer> getCostumer(Costumer& item);
-        void addTo(AVLTree<Costumer>* tree, Node<Costumer>* node);
+    HashTable(const HashTable& other) = delete;
+    HashTable& operator=(const HashTable& other) = delete;
+    ~HashTable();
 
-        ostream& print(ostream& os);
-        
+    void insert(int c_id, int phone);
+    Node<Costumer>* getCostumer(int c_id);
+    void addTo(AVLTree<Costumer>* tree, Node<Costumer>* node);
+
+    ostream& print(ostream& os);
+
 };
 
 template<class Costumer>
@@ -53,7 +53,7 @@ HashTable<Costumer>::~HashTable(){
         }
     }
     delete[] this->data;
-    
+
 }
 
 template<class Costumer>
@@ -69,7 +69,7 @@ void HashTable<Costumer>::addTo(AVLTree<Costumer>* tree, Node<Costumer>* node){
 template<class Costumer>
 void HashTable<Costumer>::resize()
 {
-    int newSize = this->size * 2;
+    int newSize = this->size * 2;//don't add the plus 1, breaks it for some reason.....
     int oldSize = this->size;
     this->size = newSize;
     AVLTree<Costumer>** newData = new AVLTree<Costumer>*[newSize]();
@@ -78,15 +78,17 @@ void HashTable<Costumer>::resize()
     {
         newData[i] = new AVLTree<Costumer>();
     }
-    
+
 
     for (int i = 0; i < oldSize; i++)
     {
         AVLTree<Costumer>* currTree = data[i];
-        if(currTree != nullptr){
+        if(currTree != nullptr)
+        {
             int currIndex = hashFunc(currTree->getRoot()->getValue()->getId());
 
-            if(data[i] != nullptr){
+            if(data[i] != nullptr)
+            {
                 addTo(newData[currIndex], currTree->getRoot());
             }
         }
@@ -98,49 +100,67 @@ void HashTable<Costumer>::resize()
 }
 
 template<class Costumer>
-void HashTable<Costumer>::insert(Costumer& costumer){
+void HashTable<Costumer>::insert(int c_id, int phone){
 
-    int index = hashFunc(costumer.getId());
+    int index = hashFunc(c_id);
 
     AVLTree<Costumer>* tree = data[index];//the tree we need to add to
 
-    Node<Costumer>* newCostumer = new Node<Costumer>(&costumer);
-
-    if(newCostumer == nullptr){
+    Costumer* newCostumer = new Costumer(c_id, phone);
+    if(newCostumer == nullptr)
+    {
         throw BadAllocation();
     }
 
-    if(tree == NULL){
+    if(tree == NULL)
+    {
         data[index] = new AVLTree<Costumer>();
-        data[index]->setRoot(newCostumer);
+        data[index]->insertValue(newCostumer);
         currentSize++;
     }
 
-    else{
-        Node<Costumer>* temp = tree->findObject(tree->getRoot(), newCostumer->getValue());
+    else
+    {
+        Node<Costumer>* newCostumerNode = tree->findObject(tree->getRoot(), newCostumer);
 
-        if(temp == nullptr){
-            tree->insertValue(newCostumer->getValue());
+        if(newCostumerNode == nullptr)
+        {
+            tree->insertValue(newCostumer);
             currentSize++;
         }
 
-        else{
+        else
+        {
             throw NodeAlreadyExists();
         }
     }
 
-    if(currentSize == maxCurrentSize){
+    if(currentSize == maxCurrentSize)
+    {
         resize();
     }
 }
 
 template<class Costumer>
-Node<Costumer> HashTable<Costumer>::getCostumer(Costumer& costumer){
-    int index = hashFunc(costumer.getId());
+Node<Costumer>* HashTable<Costumer>::getCostumer(int c_id){
+    int index = hashFunc(c_id);
     AVLTree<Costumer>* tree = data[index];
-    if(tree != nullptr){
-        tree->findObject(tree->getRoot(), &costumer);
+    if(tree != nullptr)
+    {
+        Costumer* tmpCostumer = new Costumer(c_id, 0);
+        Node<Costumer>* tmpNode = tree->findObject(tree->getRoot(), tmpCostumer);
+        delete tmpCostumer;
+        if(tmpNode == nullptr)
+        {
+            return nullptr;
+        }
+        return tmpNode;
     }
+    else
+    {
+        return nullptr;
+    }
+
 }
 
 template<class Costumer>
@@ -152,11 +172,11 @@ ostream& HashTable<Costumer>::print(ostream& os)
         if(data[i] != nullptr){
             data[i]->inOrder(os, data[i]->getRoot());
         }
+        cout << endl;
     }
     return os;
-    
 }
 
 
 
-#endif
+#endif // HASHTABLE_H_
