@@ -92,8 +92,8 @@ void put_on_top_aux(RecordsCompany *obj, int r_id1, int r_id2)
 
 void get_place_aux(RecordsCompany *obj, int r_id){
     std::cout << " getting place of record  "<< r_id << endl;
-    int* column;
-    int* height;
+    int* column = nullptr;
+    int* height = nullptr;
     status_aux(obj->getPlace(r_id, column, height));
     std::cout << "column: " << *column << " height: " << *height << endl;
 }
