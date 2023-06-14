@@ -29,7 +29,7 @@ int main()
 
     UFRecords* obj = new UFRecords(records_stocks, len);
 
-    UFRecords* new_obj(obj);
+    UFRecords* new_obj = new UFRecords(*obj);
     cout << "new_obj: \n" << endl;
     new_obj->printAllParents(cout);
 
