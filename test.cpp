@@ -30,10 +30,12 @@ int main()
     UFRecords* obj = new UFRecords(records_stocks, len);
 
     UFRecords* new_obj(obj);
+    cout << "new_obj: \n" << endl;
     new_obj->printAllParents(cout);
 
     delete new_obj;
 
+    cout << "obj: \n" <<endl;
     obj->printAllParents(cout);
 
     union_aux(obj, 1, 2);
