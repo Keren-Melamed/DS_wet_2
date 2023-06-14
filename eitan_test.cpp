@@ -101,7 +101,9 @@ void get_place_aux(RecordsCompany *obj, int r_id){
 void test() {
     RecordsCompany *obj = new RecordsCompany();
 
-    new_month_aux(obj, 18, new int [18, 18, 13, 17, 18, 4, 18, 9, 11, 16, 8, 13, 8, 10, 20, 13, 4, 5]);
+    int* record_stocks = new int[18]{18, 18, 13, 17, 18, 4, 18, 9, 11, 16, 8, 13, 8, 10, 20, 13, 4, 5};
+    
+    new_month_aux(obj, 18,  record_stocks );
     add_costumer_aux(obj, 206, 246);
     add_costumer_aux(obj, 184, -4);
     add_costumer_aux(obj, 245, 175);

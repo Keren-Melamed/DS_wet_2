@@ -36,7 +36,7 @@ class UFRecords{
         void printAllParents(std::ostream& os);
 
         int getRecordHeight(int r_id) const;
-        Record* getRecord(int r_id) const;
+        Record* getRecord(int r_id);
 
         void deleteHelper(Record** records, int* parents, int* sizes);
 };
