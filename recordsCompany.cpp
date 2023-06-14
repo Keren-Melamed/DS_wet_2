@@ -173,11 +173,11 @@ StatusType RecordsCompany::buyRecord(int c_id, int r_id)
     if(tmpMemberNode != nullptr) // else do nothing
     {
         tmpMemberNode->getValue()->updateExpenses(record->getPrice());
-        delete tmpMember;
-        return StatusType::SUCCESS;
-    }
-    return StatusType::FAILURE;
 
+    }
+    cout << "not a member "<<endl;
+    delete tmpMember;
+    return StatusType::SUCCESS;
 }
 
 StatusType RecordsCompany::addPrize(int c_id1, int c_id2, double amount)
