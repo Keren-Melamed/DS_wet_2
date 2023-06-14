@@ -162,7 +162,13 @@ StatusType RecordsCompany::buyRecord(int c_id, int r_id)
     }
 
     Record* record = m_UFrecords.getRecord(r_id);
-    record->updateNumberOfBuys();
+    if(record != nullptr){
+        record->updateNumberOfBuys();
+    }
+
+    else{
+        return StatusType::FAILURE;
+    }
 
     Costumer* tmpMember = new Costumer(c_id, 0);
     RankedNode<Costumer>* tmpMemberNode = m_members.findObject(m_members.getRoot(), tmpMember);
