@@ -19,7 +19,7 @@ class UFRecords{
         UFRecords(int *record_stocks, int num_of_records);
         UFRecords(const UFRecords& other);
         UFRecords& operator=(const UFRecords& other);
-        ~UFRecords() = default;
+        ~UFRecords();
 
         void addRecords(int *record_stocks);
 
@@ -37,6 +37,8 @@ class UFRecords{
         void printAllParents(std::ostream& os);
 
         int getRecordHeight(int r_id);
+
+        void deleteHelper(Record** records, int* parents, int* sizes);
 };
 
 #endif

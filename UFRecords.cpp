@@ -72,21 +72,20 @@ UFRecords& UFRecords::operator=(const UFRecords& other){
     } 
     
     catch(...) {
-        delete[] tempRecords;
-        delete[] tempParents;
-        delete[] tempSizes;
+        deleteHelper(tempRecords, tempParents, tempSizes);
         throw;
     }
-
-    delete[] m_records;
-    delete[] m_parents;
-    delete[] m_sizes;
+    deleteHelper(m_records, m_parents, m_sizes);
     MAX_SIZE = other.MAX_SIZE;
     this->m_records = tempRecords;
     this->m_parents = tempParents;
     this->m_sizes = tempSizes;
 
     return *this;
+}
+
+UFRecords::~UFRecords(){
+    deleteHelper(m_records, m_parents, m_sizes);
 }
 
 int UFRecords::getSize(int index){
@@ -150,3 +149,12 @@ int UFRecords::getRecordHeight(int r_id){
     return m_records[r_id]->getHeight();
 }
     
+void UFRecords::deleteHelper(Record** records, int* parents, int* sizes){
+    for (int i = 0; i < MAX_SIZE; i++)
+    {
+        delete records[i];
+    }
+    delete[] parents;
+    delete[] sizes;
+    
+}

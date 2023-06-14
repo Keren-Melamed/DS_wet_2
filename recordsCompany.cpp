@@ -24,7 +24,6 @@ StatusType RecordsCompany::newMonth(int* records_stocks, int number_of_records)
 
     UFRecords records(records_stocks, number_of_records);
     m_UFrecords = records;
-    
 
     return StatusType::SUCCESS;
 }
@@ -321,15 +320,27 @@ double RecordsCompany::getExpensesHelper(RankedNode<Costumer>* node, Costumer* t
 
 StatusType RecordsCompany::putOnTop(int r_id1, int r_id2)
 {
-    return FAILURE;
+    if((r_id1 > m_numberOfRecords) || (r_id2 > m_numberOfRecords)){
+        return StatusType::INVALID_INPUT;
+    }
+    m_UFrecords.Union(r_id2, r_id1);
+    return StatusType::SUCCESS;
 }
 
 StatusType RecordsCompany::getPlace(int r_id, int* column, int* height)
 {
-    return FAILURE;
+    if(r_id > m_numberOfRecords){
+        return StatusType::INVALID_INPUT;
+    }
+    
+    int tempColumn = m_UFrecords.Find(r_id);
+    column = &tempColumn;
+
+    int tempHeight = (m_UFrecords.getRecordHeight(r_id));
+    height = &tempHeight;
+
+    return StatusType::SUCCESS;
+    
 }
-
-
-
 
 #pragma clang diagnostic pop
