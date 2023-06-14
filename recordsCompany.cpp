@@ -1,8 +1,6 @@
 
 #include "recordsCompany.h"
 
-RecordsCompany::RecordsCompany(){}
-
 RecordsCompany::RecordsCompany() : m_numberOfRecords(0)
 {}
 
