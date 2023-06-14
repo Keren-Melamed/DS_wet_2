@@ -1,19 +1,25 @@
 # include "UFRecords.h"
 
-UFRecords::UFRecords(int *records_stocks, int num_of_records){
-    ReversedNode** parents = new ReversedNode*[num_of_records];
-    this->m_parents = parents;
-
+UFRecords::UFRecords(int *record_stocks, int num_of_records){
+    
     int* sizes = new int[num_of_records];
     this->m_sizes = sizes;
 
-    for (int r_id = 0; r_id < num_of_records; r_id++)
+    Record** records = new Record*[num_of_records];
+    m_records = records;
+
+    int* parents = new int[num_of_records];
+    m_parents = parents;
+
+    for (int i = 0; i < num_of_records; i++)
     {
-        Record* tempRecord = new Record(r_id, 0, records_stocks[r_id]);
-        m_parents[r_id] = new ReversedNode(tempRecord);
-        m_sizes[r_id] = records_stocks[r_id];
+        m_records[i] = new Record(i, 0, record_stocks[i]);
+        m_parents[i] = -1;
+        m_sizes[i] = record_stocks[i];
     }
+
     MAX_SIZE = num_of_records;
+   
 }
 
 int UFRecords::getSize(int index){
@@ -24,30 +30,25 @@ void UFRecords::updateSize(int index, int size){
     m_sizes[index] += size;
 }
 
-void UFRecords::Union(int below, int above){
-    ReversedNode* A = m_parents[above];
-    ReversedNode* B = m_parents[below];
+void UFRecords::Union(int child, int parent){
+    if(child == parent){
+        return;
+    }
 
-    //updating the parent of above to be the parent pf below
-    A->setParent(B);
+    m_parents[child] = parent;
 
-    //change height of above to be + height of below
-    A->getValue()->UpdateHeight(B->getValue()->getHeight());
+    m_records[parent]->UpdateHeight(m_sizes[child]);
 
-    //update size of below to be size of both, 
-    updateSize(below, getSize(above));
-
-    //killing original A
-    //DeleteHeap(above);
-    updateSize(above, 0);
+    m_sizes[child] += m_sizes[parent];
+    m_sizes[parent] = 0;
 }
 
 int UFRecords::Find(int r_id){
-    while(m_parents[r_id]->getValue()->getId() != r_id){
-        m_parents[r_id]->setParent(m_parents[r_id]->getParent());
-        r_id = m_parents[r_id]->getValue()->getId();
+    if (m_parents[r_id] == -1){
+        return r_id;
     }
-    return r_id;
+    return m_parents[r_id] = Find(m_parents[r_id]);
+    
 }
 
 bool UFRecords::isDisjoint(int r_id1, int r_id2){
@@ -57,34 +58,28 @@ bool UFRecords::isDisjoint(int r_id1, int r_id2){
     return false;
 }
 
-void UFRecords::print(std::ostream& os){
-    int i = 0;
-    while(m_parents[i]!= NULL){
-        os << " group number " << i << "\n";
-        ReversedNode* temp = m_parents[i];
-        os << " with records ";
-        
-        while(temp != NULL){
-            temp->getValue()->print(os);
-            os << "\n";
-            temp = temp->getParent();
-        }
-        os << "\n \n ";
-        i++;
+void UFRecords::printParents(std::ostream& os, int r_id){
+    while(m_parents[r_id] != -1){
+        m_records[r_id]->print(os);
+        os << "\n";
+        r_id = m_parents[r_id];
     }
+    if(m_parents[r_id] == -1){
+        os << "no parents, printing only the record: \n";
+        m_records[r_id]->print(os);
+        os << "\n \n";
+
+    }
+}
+
+void UFRecords::printAllParents(std::ostream& os){
+    for (int i = 0; i < MAX_SIZE; i++)
+    {
+        printParents(os, i);
+    }
+}
+
+int UFRecords::getRecordHeight(int r_id){
+    return m_records[r_id]->getHeight();
 }
     
-
-
-void UFRecords::DeleteHeap(int r_id){
-
-    ReversedNode* current = m_parents[r_id];
-    ReversedNode* next = new ReversedNode();
-
-    while(current != NULL){
-        next = current->getParent();
-        free(current);
-        current = next;
-    }
-
-}

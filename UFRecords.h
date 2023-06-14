@@ -8,16 +8,20 @@
 
 class UFRecords{
     private:
-        ReversedNode** m_parents;
+
+        Record** m_records;
+        int* m_parents;
         int* m_sizes;
         int MAX_SIZE = 0;
-        void DeleteHeap(int index);
-
+        
     public:
-        UFRecords(int *records_stocks, int num_of_records);
+
+        UFRecords(int *record_stocks, int num_of_records);
         UFRecords(const UFRecords& other) = delete;
         UFRecords& operator=(const UFRecords& other) = delete;
         ~UFRecords();
+
+        void addRecords(int *record_stocks);
 
         int getSize(int index);
 
@@ -29,9 +33,10 @@ class UFRecords{
 
         bool isDisjoint(int r_id1, int r_id2);
 
-        void print(std::ostream& os);
+        void printParents(std::ostream& os, int r_id);
+        void printAllParents(std::ostream& os);
 
-        
+        int getRecordHeight(int r_id);
 };
 
 #endif

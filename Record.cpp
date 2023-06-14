@@ -1,5 +1,6 @@
 #include "Record.h"
 
+
 Record::Record(int id, int number_of_buys, int copies):m_id(id), m_number_of_buys(number_of_buys), m_copies(copies), m_height(0){}
 
 
