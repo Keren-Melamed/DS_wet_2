@@ -27,7 +27,7 @@ class Costumer
         /*** Methods ***/
         void buyRecord(double price);
         void updateExpenses(double expense);
-        StatusType_t setMember();
+        StatusType_t setMember(bool isMember);
 
         /*** Operators ***/
         friend bool operator==(const Costumer& a, const Costumer& b);

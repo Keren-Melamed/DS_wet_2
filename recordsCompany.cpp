@@ -4,10 +4,8 @@
 
 using namespace std;
 
-RecordsCompany::RecordsCompany() : m_numberOfRecords(0)
-{
-
-}
+RecordsCompany::RecordsCompany() : m_numberOfRecords(0), m_records(nullptr,0)
+{}
 
 RecordsCompany::~RecordsCompany()
 {
@@ -28,13 +26,23 @@ StatusType RecordsCompany::newMonth(int* records_stocks, int number_of_records)
     return StatusType::SUCCESS;
 }
 
+void RecordsCompany::resetAllExpenses(RankedNode<Costumer> *node)
+{
+    if(node == nullptr)
+    {
+        return;
+    }
+    resetAllExpenses(node->getLeftNode());
+    node->getValue()->updateExpenses(-(node->getValue()->getExpenses()));
+    resetAllExpenses(node->getRightNode());
+}
+
 StatusType RecordsCompany::addCostumer(int c_id, int phone)
 {
     if(c_id < 0 || phone < 0)
     {
         return StatusType::INVALID_INPUT;
     }
-    Costumer newCostumer(c_id, phone);
     Node<Costumer>* newNode = m_costumers.getCostumer(c_id);
     if(newNode != nullptr)
     {
@@ -56,24 +64,12 @@ StatusType RecordsCompany::addCostumer(int c_id, int phone)
 
 }
 
-void RecordsCompany::resetAllExpenses(RankedNode<Costumer> *node)
-{
-    if(node == nullptr)
-    {
-        return;
-    }
-    resetAllExpenses(node->getLeftNode());
-    node->getValue()->updateExpenses(-(node->getValue()->getExpenses()));
-    resetAllExpenses(node->getRightNode());
-}
-
 Output_t<int> RecordsCompany::getPhone(int c_id)
 {
     if(c_id < 0)
     {
         return StatusType::INVALID_INPUT;
     }
-    Costumer newCostumer(c_id, 0);
     Node<Costumer>* newNode = m_costumers.getCostumer(c_id);
     if(newNode == nullptr)
     {
@@ -105,6 +101,7 @@ StatusType RecordsCompany::makeMember(int c_id)
     {
         return StatusType::ALREADY_EXISTS;
     }
+    newMember->setMember(true);
 
     try
     {

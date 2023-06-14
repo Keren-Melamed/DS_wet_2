@@ -38,16 +38,9 @@ void Costumer::buyRecord(double price)
     updateExpenses(price);
 }
 
-StatusType_t Costumer::setMember()
+StatusType_t Costumer::setMember(bool isMember)
 {
-    if(m_isMember == true)
-    {
-        return StatusType::SUCCESS;
-    }
-    else
-    {
-        return StatusType::FAILURE;
-    }
+    m_isMember = isMember;
 }
 
 bool operator==(const Costumer &a, const Costumer &b)
