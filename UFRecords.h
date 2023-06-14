@@ -23,7 +23,6 @@ class UFRecords{
         void addRecords(int *record_stocks);
 
         int getSize(int index) const;
-        int getSize(int index) const;
 
         void updateSize(int index, int size);
 
@@ -38,8 +37,6 @@ class UFRecords{
 
         int getRecordHeight(int r_id) const;
         Record* getRecord(int r_id) const;
-        int getRecordHeight(int r_id) const;
-        Record* getRecord(int r_id);
 
         void deleteHelper(Record** records, int* parents, int* sizes);
 };
