@@ -8,7 +8,6 @@ int Record::getId() const{
     return m_id;
 }
 
-
 int Record::getNumOfCopies() const{
     return m_copies;
 }
@@ -39,6 +38,14 @@ void Record::print(std::ostream& os){
     os << " buys: " << m_number_of_buys;
 }
 
+void Record::updateNumberOfBuys(){
+    m_number_of_buys += 1;
+}
+
+int Record::getPrice() const
+{
+    return (100 + getNumberOfBuys());
+}
 
 
 

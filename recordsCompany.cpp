@@ -1,15 +1,12 @@
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "misc-no-recursion"
+
 #include "recordsCompany.h"
 
-using namespace std;
-
-RecordsCompany::RecordsCompany() : m_numberOfRecords(0){
-
-}
+RecordsCompany::RecordsCompany() : m_numberOfRecords(0)
+{}
 
 RecordsCompany::~RecordsCompany()
 {
+    m_members.setAllToNullptr(m_members.getRoot());
     m_members.setAllToNullptr(m_members.getRoot());
 }
 
@@ -25,7 +22,19 @@ StatusType RecordsCompany::newMonth(int* records_stocks, int number_of_records)
     UFRecords records(records_stocks, number_of_records);
     m_UFrecords = records;
 
+
     return StatusType::SUCCESS;
+}
+
+void RecordsCompany::resetAllExpenses(RankedNode<Costumer> *node)
+{
+    if(node == nullptr)
+    {
+        return;
+    }
+    resetAllExpenses(node->getLeftNode());
+    node->getValue()->updateExpenses(-(node->getValue()->getExpenses()));
+    resetAllExpenses(node->getRightNode());
 }
 
 StatusType RecordsCompany::addCostumer(int c_id, int phone)
@@ -34,7 +43,7 @@ StatusType RecordsCompany::addCostumer(int c_id, int phone)
     {
         return StatusType::INVALID_INPUT;
     }
-    Costumer newCostumer(c_id, phone);
+    
     Node<Costumer>* newNode = m_costumers.getCostumer(c_id);
     if(newNode != nullptr)
     {
@@ -54,17 +63,6 @@ StatusType RecordsCompany::addCostumer(int c_id, int phone)
         }
     }
 
-}
-
-void RecordsCompany::resetAllExpenses(RankedNode<Costumer> *node)
-{
-    if(node == nullptr)
-    {
-        return;
-    }
-    resetAllExpenses(node->getLeftNode());
-    node->getValue()->updateExpenses(-(node->getValue()->getExpenses()));
-    resetAllExpenses(node->getRightNode());
 }
 
 Output_t<int> RecordsCompany::getPhone(int c_id)
@@ -95,6 +93,7 @@ StatusType RecordsCompany::makeMember(int c_id)
     }
 
     Node<Costumer>* newNode = m_costumers.getCostumer(c_id);
+
     if(newNode == nullptr)
     {
         return StatusType::DOESNT_EXISTS;
@@ -106,17 +105,20 @@ StatusType RecordsCompany::makeMember(int c_id)
         return StatusType::ALREADY_EXISTS;
     }
 
+    newMember->setMember(true);
+    
     try
     {
         m_members.insertValue(newMember);
         return StatusType::SUCCESS;
     }
+
     catch(BadAllocation& e)
     {
         return StatusType::ALLOCATION_ERROR;
     }
     //if member is added after prizes were distributed than we need to adjust his expenses, can be done by subtracting
-    // the accumulated ranks from his expenses ************* happens in tree.insertValue
+// the accumulated ranks from his expenses ************* happens in tree.insertValue
 }
 
 Output_t<bool> RecordsCompany::isMember(int c_id)
@@ -156,17 +158,16 @@ StatusType RecordsCompany::buyRecord(int c_id, int r_id)
         return StatusType::DOESNT_EXISTS;
     }
 
-    //find the record and update it accordingly
+    Record* record = m_UFrecords.getRecord(r_id);
+    record->updateNumberOfBuys();
 
     Costumer* tmpMember = new Costumer(c_id, 0);
     RankedNode<Costumer>* tmpMemberNode = m_members.findObject(m_members.getRoot(), tmpMember);
     delete tmpMember;
     if(tmpMemberNode != nullptr) // else do nothing
     {
-        //tmpMemberNode->getValue()->updateExpenses(record.getPrice);
+        tmpMemberNode->getValue()->updateExpenses(record->getPrice());
     }
-
-
 
     return StatusType::SUCCESS;
 }
@@ -320,7 +321,7 @@ double RecordsCompany::getExpensesHelper(RankedNode<Costumer>* node, Costumer* t
 
 StatusType RecordsCompany::putOnTop(int r_id1, int r_id2)
 {
-    if((r_id1 > m_numberOfRecords) || (r_id2 > m_numberOfRecords)){
+    if((r_id1 < 0) || (r_id2 < 0) || (r_id1 > m_numberOfRecords) || (r_id2 > m_numberOfRecords)){
         return StatusType::INVALID_INPUT;
     }
     m_UFrecords.Union(r_id2, r_id1);
@@ -329,18 +330,16 @@ StatusType RecordsCompany::putOnTop(int r_id1, int r_id2)
 
 StatusType RecordsCompany::getPlace(int r_id, int* column, int* height)
 {
-    if(r_id > m_numberOfRecords){
+    if((r_id < 0) ||(r_id > m_numberOfRecords)){
         return StatusType::INVALID_INPUT;
     }
     
-    int tempColumn = m_UFrecords.Find(r_id);
-    column = &tempColumn;
+    int* tempColumn = new int(m_UFrecords.Find(r_id));
+    column = tempColumn;
 
-    int tempHeight = (m_UFrecords.getRecordHeight(r_id));
-    height = &tempHeight;
+    int* tempHeight = new int(m_UFrecords.getRecordHeight(r_id));
+    height = tempHeight;
 
     return StatusType::SUCCESS;
     
 }
-
-#pragma clang diagnostic pop

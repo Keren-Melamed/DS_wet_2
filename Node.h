@@ -1,119 +1,119 @@
-#ifndef WET1_NODE_H
-#define WET1_NODE_H
+#ifndef WET2_NODE_H
+#define WET2_NODE_H
 
 template <class T>
 class Node {
-    public:
-        
-        /**** c'tors and d'tors ****/
+public:
 
-        /*
-        * c'tor of the Node class with a set value
-        *
-        * @param value - the value to be saved in the node
-        * @result
-        *       an instance of Node with a saved value
-        */
-        Node(T* value);
-        //do we need this?
+    /**** c'tors and d'tors ****/
 
-        /*
-        * c'tor of the Node class with a set const value
-        *
-        * @param value - the value to be saved in the node
-        * @result
-        *       an instance of Node with a saved value
-        */
-        //Node(const T& value);
-        
+    /*
+    * c'tor of the Node class with a set value
+    *
+    * @param value - the value to be saved in the node
+    * @result
+    *       an instance of Node with a saved value
+    */
+    Node(T* value);
+    //do we need this?
 
-        /*
-        * copy c'tor
-        */
-        Node(const Node& originalNode);
+    /*
+    * c'tor of the Node class with a set const value
+    *
+    * @param value - the value to be saved in the node
+    * @result
+    *       an instance of Node with a saved value
+    */
+    //Node(const T& value);
 
-        /*
-        * d'tor
-        */
-        ~Node() = default;
 
-        /**** Getters and Setters ****/
+    /*
+    * copy c'tor
+    */
+    Node(const Node& originalNode);
 
-        /*
-        * returns the pointer to the left node
-        *
-        * @return
-        *       m_leftNode
-        */
-        Node* getLeftNode() const;
+    /*
+    * d'tor
+    */
+    ~Node() = default;
 
-        /*
-        * returns the pointer to the right node
-        *
-        * @return
-        *       m_rightNode
-        */
-        Node* getRightNode() const;
+    /**** Getters and Setters ****/
 
-        /*
-        * returns the value saved in the node
-        *
-        * @return
-        *       m_value
-        */
-        T* getValue();
+    /*
+    * returns the pointer to the left node
+    *
+    * @return
+    *       m_leftNode
+    */
+    Node* getLeftNode() const;
 
-        /*
-        * returns the height of the node
-        * @return
-        *       m_height
-        */
-        int getHeight() const;
+    /*
+    * returns the pointer to the right node
+    *
+    * @return
+    *       m_rightNode
+    */
+    Node* getRightNode() const;
 
-        /*
-        * setter for left node's pointer
-        *
-        * @param leftNode - pointer for the new left node
-        * @result
-        *       void
-        */
-        void setLeftNode(Node* leftNode);
+    /*
+    * returns the value saved in the node
+    *
+    * @return
+    *       m_value
+    */
+    T* getValue();
 
-        /*
-        * setter for right node's pointer
-        *
-        * @param rightNode - pointer for the new right node
-        * @result
-        *       void
-        */
-        void setRightNode(Node* rightNode);
+    /*
+    * returns the height of the node
+    * @return
+    *       m_height
+    */
+    int getHeight() const;
 
-        /*
-        * setter for the current value saved in the node
-        *
-        * @param value - the Node's new value
-        * @result
-        *       void
-        */
-        void setValue(T* value);
+    /*
+    * setter for left node's pointer
+    *
+    * @param leftNode - pointer for the new left node
+    * @result
+    *       void
+    */
+    void setLeftNode(Node* leftNode);
 
-        /*
-        * setter for the current height of the node
-        *
-        * @param height - the Node's new height
-        * @result
-        *       void
-        */
-        void setHeight(int height);
+    /*
+    * setter for right node's pointer
+    *
+    * @param rightNode - pointer for the new right node
+    * @result
+    *       void
+    */
+    void setRightNode(Node* rightNode);
 
-    private:
+    /*
+    * setter for the current value saved in the node
+    *
+    * @param value - the Node's new value
+    * @result
+    *       void
+    */
+    void setValue(T* value);
 
-        Node* m_leftNode;
-        Node* m_rightNode;
+    /*
+    * setter for the current height of the node
+    *
+    * @param height - the Node's new height
+    * @result
+    *       void
+    */
+    void setHeight(int height);
 
-        T* m_value;
+private:
 
-        int m_height;
+    Node* m_leftNode;
+    Node* m_rightNode;
+
+    T* m_value;
+
+    int m_height;
 
 };
 
@@ -123,13 +123,13 @@ class Node {
 
 template<class T>
 Node<T>::Node(T* value) :
-    m_leftNode(nullptr), m_rightNode(nullptr), m_value(value), m_height(0)
+        m_leftNode(nullptr), m_rightNode(nullptr), m_value(value), m_height(0)
 {}
 
 template<class T>
 Node<T>::Node(const Node& originalNode) :
-    m_leftNode(originalNode.getLeftNode()), m_rightNode(originalNode.getRightNode()), m_value(originalNode.getValue()),
-    m_height(originalNode.getHeight())
+        m_leftNode(originalNode.getLeftNode()), m_rightNode(originalNode.getRightNode()), m_value(originalNode.getValue()),
+        m_height(originalNode.getHeight())
 {}
 
 
@@ -187,4 +187,4 @@ void Node<T>::setHeight(int height)
 
 
 
-#endif
+#endif//WET2_NODE_H

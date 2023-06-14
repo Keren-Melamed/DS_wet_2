@@ -5,9 +5,10 @@
 #include "Costumer.h"
 #include "RankedAVLTree.h"
 #include "HashTable.h"
-#include <memory>
 #include "UFRecords.h"
+#include <memory>
 
+using namespace std;
 using namespace std;
 
 class RecordsCompany {
