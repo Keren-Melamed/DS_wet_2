@@ -150,7 +150,7 @@ StatusType RecordsCompany::buyRecord(int c_id, int r_id)
     {
         return StatusType ::INVALID_INPUT;
     }
-    if(r_id >= m_numberOfRecords)
+    if(r_id > m_numberOfRecords)
     {
         return StatusType::DOESNT_EXISTS;
     }
@@ -166,12 +166,12 @@ StatusType RecordsCompany::buyRecord(int c_id, int r_id)
 
     Costumer* tmpMember = new Costumer(c_id, 0);
     RankedNode<Costumer>* tmpMemberNode = m_members.findObject(m_members.getRoot(), tmpMember);
-    delete tmpMember;
+    
     if(tmpMemberNode != nullptr) // else do nothing
     {
         tmpMemberNode->getValue()->updateExpenses(record->getPrice());
     }
-
+    delete tmpMember;
     return StatusType::SUCCESS;
 }
 
