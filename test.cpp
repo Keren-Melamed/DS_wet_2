@@ -1,4 +1,4 @@
-/*
+
 #include "HashTable.h"
 #include "UFRecords.h"
 
@@ -20,7 +20,6 @@ void size_aux(UFRecords* records, int group){
 void height_aux(UFRecords* records, int r_id){
     cout << "the height of record " << r_id << " is " << records->getRecordHeight(r_id) << endl;
 }
-
 
 int main()
 {
@@ -53,4 +52,3 @@ int main()
 
    return 0;
 }
-*/
