@@ -53,8 +53,11 @@ void make_member_aux(RecordsCompany *obj, int c_id) {
 void is_member_aux(RecordsCompany *obj, int c_id) {
     std::cout<<"is  "<< c_id <<" a member " << endl;
     Output_t<bool> res = obj->isMember(c_id);
-    if((res.ans() == true)||(res.ans() == false)){
-        std::cout << res.ans() << std::endl;  
+    if(res.ans() == true){
+        std::cout << "true" << std::endl;  
+    }
+     if(res.ans() == false){
+        std::cout << "false" << std::endl;  
     }
     else{
         status_aux(res.status());
