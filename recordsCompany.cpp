@@ -160,13 +160,9 @@ StatusType RecordsCompany::buyRecord(int c_id, int r_id)
     {
         return StatusType::DOESNT_EXISTS;
     }
-
+    cout << "got costumer " << newCostumerNode->getValue()->getId();
     Record* record = m_UFrecords.getRecord(r_id);
-    if(record != nullptr){
-        record->updateNumberOfBuys();
-    }
-
-    else{
+    if(record = nullptr){
         return StatusType::FAILURE;
     }
 
@@ -176,9 +172,10 @@ StatusType RecordsCompany::buyRecord(int c_id, int r_id)
     if(tmpMemberNode != nullptr) // else do nothing
     {
         tmpMemberNode->getValue()->updateExpenses(record->getPrice());
+        delete tmpMember;
+        return StatusType::SUCCESS;
     }
-    delete tmpMember;
-    return StatusType::SUCCESS;
+
 }
 
 StatusType RecordsCompany::addPrize(int c_id1, int c_id2, double amount)
