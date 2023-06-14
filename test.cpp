@@ -31,7 +31,7 @@ int main()
 
     UFRecords* new_obj(obj);
 
-    delete new_obj;
+    //delete new_obj;
 
     obj->printAllParents(cout);
 
