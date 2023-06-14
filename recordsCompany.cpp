@@ -1,7 +1,4 @@
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "misc-no-recursion"
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "misc-no-recursion"
+
 #include "recordsCompany.h"
 
 RecordsCompany::RecordsCompany(){}
@@ -48,7 +45,7 @@ StatusType RecordsCompany::addCostumer(int c_id, int phone)
     {
         return StatusType::INVALID_INPUT;
     }
-    Costumer newCostumer(c_id, phone);
+    
     Node<Costumer>* newNode = m_costumers.getCostumer(c_id);
     if(newNode != nullptr)
     {
@@ -117,7 +114,7 @@ StatusType RecordsCompany::makeMember(int c_id)
         m_members.insertValue(newMember);
         return StatusType::SUCCESS;
     }
-    
+
     catch(BadAllocation& e)
     {
         return StatusType::ALLOCATION_ERROR;
@@ -339,14 +336,12 @@ StatusType RecordsCompany::getPlace(int r_id, int* column, int* height)
         return StatusType::INVALID_INPUT;
     }
     
-    int tempColumn = m_UFrecords.Find(r_id);
-    column = &tempColumn;
+    int* tempColumn = new int(m_UFrecords.Find(r_id));
+    column = tempColumn;
 
-    int tempHeight = (m_UFrecords.getRecordHeight(r_id));
-    height = &tempHeight;
+    int* tempHeight = new int(m_UFrecords.getRecordHeight(r_id));
+    height = tempHeight;
 
     return StatusType::SUCCESS;
     
 }
-
-#pragma clang diagnostic pop
