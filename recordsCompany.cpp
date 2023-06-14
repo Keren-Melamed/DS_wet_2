@@ -1,15 +1,18 @@
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "misc-no-recursion"
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "misc-no-recursion"
 #include "recordsCompany.h"
 
-using namespace std;
+RecordsCompany::RecordsCompany()
+{
 
-RecordsCompany::RecordsCompany() : m_numberOfRecords(0){
-
-}
+RecordsCompany::RecordsCompany() : m_numberOfRecords(0)
+{}
 
 RecordsCompany::~RecordsCompany()
 {
+    m_members.setAllToNullptr(m_members.getRoot());
     m_members.setAllToNullptr(m_members.getRoot());
 }
 
@@ -22,10 +25,20 @@ StatusType RecordsCompany::newMonth(int* records_stocks, int number_of_records)
     m_members.resetAllRanks(m_members.getRoot());
     resetAllExpenses(m_members.getRoot());
 
-    UFRecords records(records_stocks, number_of_records);
-    m_UFrecords = records;
+    // something with the records.......................................
 
     return StatusType::SUCCESS;
+}
+
+void RecordsCompany::resetAllExpenses(RankedNode<Costumer> *node)
+{
+    if(node == nullptr)
+    {
+        return;
+    }
+    resetAllExpenses(node->getLeftNode());
+    node->getValue()->updateExpenses(-(node->getValue()->getExpenses()));
+    resetAllExpenses(node->getRightNode());
 }
 
 StatusType RecordsCompany::addCostumer(int c_id, int phone)
@@ -65,15 +78,48 @@ void RecordsCompany::resetAllExpenses(RankedNode<Costumer> *node)
     resetAllExpenses(node->getLeftNode());
     node->getValue()->updateExpenses(-(node->getValue()->getExpenses()));
     resetAllExpenses(node->getRightNode());
+    if(c_id < 0 || phone < 0)
+    {
+        return StatusType::INVALID_INPUT;
+    }
+    Node<Costumer>* newNode = m_costumers.getCostumer(c_id);
+    if(newNode != nullptr)
+    {
+        cout << "costumer already exists" << endl;
+        return StatusType::ALREADY_EXISTS;
+    }
+    else
+    {
+        try
+        {
+            m_costumers.insert(c_id, phone);
+            return StatusType::SUCCESS;
+        }
+        catch (BadAllocation &e)
+        {
+            return StatusType::ALLOCATION_ERROR;
+        }
+    }
+
 }
 
 Output_t<int> RecordsCompany::getPhone(int c_id)
+{
+    return Output_t<int>();
+}
+
+StatusType RecordsCompany::makeMember(int c_id)
+{
+    return FAILURE;
+}
+
+Output_t<bool> RecordsCompany::isMember(int c_id)
 {
     if(c_id < 0)
     {
         return StatusType::INVALID_INPUT;
     }
-    Costumer newCostumer(c_id, 0);
+
     Node<Costumer>* newNode = m_costumers.getCostumer(c_id);
     if(newNode == nullptr)
     {
@@ -81,46 +127,10 @@ Output_t<int> RecordsCompany::getPhone(int c_id)
     }
     else
     {
-        int phone = newNode->getValue()->getPhoneNumber();
-        Output_t<int> result(phone);
+        bool isMember = newNode->getValue()->getIsMember();
+        Output_t<bool> result(isMember);
         return result;
     }
-}
-
-StatusType RecordsCompany::makeMember(int c_id)
-{
-    if(c_id < 0)
-    {
-        return StatusType ::INVALID_INPUT;
-    }
-
-    Node<Costumer>* newNode = m_costumers.getCostumer(c_id);
-    if(newNode == nullptr)
-    {
-        return StatusType::DOESNT_EXISTS;
-    }
-
-    Costumer* newMember = newNode->getValue();
-    if(m_members.findObject(m_members.getRoot(), newMember) != nullptr)
-    {
-        return StatusType::ALREADY_EXISTS;
-    }
-
-    try
-    {
-        m_members.insertValue(newMember);
-        return StatusType::SUCCESS;
-    }
-    catch(BadAllocation& e)
-    {
-        return StatusType::ALLOCATION_ERROR;
-    }
-    //if member is added after prizes were distributed than we need to adjust his expenses, can be done by subtracting
-    // the accumulated ranks from his expenses ************* happens in tree.insertValue
-}
-
-Output_t<bool> RecordsCompany::isMember(int c_id)
-{
     if(c_id < 0)
     {
         return StatusType::INVALID_INPUT;
@@ -156,17 +166,16 @@ StatusType RecordsCompany::buyRecord(int c_id, int r_id)
         return StatusType::DOESNT_EXISTS;
     }
 
-    //find the record and update it accordingly
+    Record* record = m_UFrecords.getRecord(r_id);
+    record->updateNumberOfBuys();
 
     Costumer* tmpMember = new Costumer(c_id, 0);
     RankedNode<Costumer>* tmpMemberNode = m_members.findObject(m_members.getRoot(), tmpMember);
     delete tmpMember;
     if(tmpMemberNode != nullptr) // else do nothing
     {
-        //tmpMemberNode->getValue()->updateExpenses(record.getPrice);
+        tmpMemberNode->getValue()->updateExpenses(record->getPrice());
     }
-
-
 
     return StatusType::SUCCESS;
 }
