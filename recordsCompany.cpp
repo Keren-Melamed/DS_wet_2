@@ -5,7 +5,7 @@
 using namespace std;
 
 RecordsCompany::RecordsCompany() : m_numberOfRecords(0){
-    
+
 }
 
 RecordsCompany::~RecordsCompany()
@@ -23,6 +23,7 @@ StatusType RecordsCompany::newMonth(int* records_stocks, int number_of_records)
     resetAllExpenses(m_members.getRoot());
 
     UFRecords records(records_stocks, number_of_records);
+    m_UFrecords = records;
     
 
     return StatusType::SUCCESS;

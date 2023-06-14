@@ -50,10 +50,9 @@ int main()
     size_aux(obj, 1);
 */
 
-    UFRecords* empty = new UFRecords();
-    empty = obj;
+    UFRecords records(records_stocks, len);
 
-    empty->printAllParents(cout);
+    records.printAllParents(cout);
 
    return 0;
 }
