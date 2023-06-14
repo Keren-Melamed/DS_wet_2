@@ -494,9 +494,13 @@ RankedNode<T>* RankedAVLTree<T>::rotateLeft(RankedNode<T>* parent)
     parent->setHeight(calculateHeight(parent));
     parentRight->setHeight(calculateHeight(parentRight));
 
-    double parentRank = parent->getRank();
-    parent->updateRank(-parentRank);
+    double parentRank = parent->getRank(), parentRightRank = parentRight->getRank();
+    parent->updateRank(-parentRank -parentRightRank/*maybe*/);
     parentRight->updateRank(parentRank);
+    if(parentRightLeft != nullptr)//also maybe
+    {
+        parentRightLeft->updateRank(parentRightRank);
+    }
 
 
     return parentRight;
@@ -518,9 +522,13 @@ RankedNode<T>* RankedAVLTree<T>::rotateRight(RankedNode<T>* parent)
     parent->setHeight(calculateHeight(parent));
     parentLeft->setHeight(calculateHeight(parentLeft));
 
-    double parentRank = parent->getRank();
-    parent->updateRank(-parentRank);
+    double parentRank = parent->getRank(), parentLeftRank = parentLeft->getRank();
+    parent->updateRank(-parentRank -parentLeftRank/*maybe*/);
     parentLeft->updateRank(parentRank);
+    if(parentLeftRight != nullptr)//also maybe
+    {
+        parentLeftRight->updateRank(parentLeftRank);
+    }
 
     return parentLeft;
 }
