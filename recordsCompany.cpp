@@ -331,6 +331,7 @@ StatusType RecordsCompany::putOnTop(int r_id1, int r_id2)
 StatusType RecordsCompany::getPlace(int r_id, int* column, int* height)
 {
     if((r_id < 0) ||(r_id > m_numberOfRecords)){
+        std::cout << "record: "<<r_id << endl;
         return StatusType::INVALID_INPUT;
     }
     

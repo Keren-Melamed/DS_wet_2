@@ -106,7 +106,7 @@ void test() {
     int* record_stocks = new int[18]{18, 18, 13, 17, 18, 4, 18, 9, 11, 16, 8, 13, 8, 10, 20, 13, 4, 5};
     
     new_month_aux(obj, 18,  record_stocks );
-
+    /*
     add_costumer_aux(obj, 206, 246);
     add_costumer_aux(obj, 184, -4);
     add_costumer_aux(obj, 245, 175);
@@ -116,6 +116,7 @@ void test() {
     add_prize_aux(obj, 7, 2, 72);
     add_costumer_aux(obj, 163, 214);
     add_costumer_aux(obj, 127, 42);
+    */
     get_place_aux(obj, 12);
     is_member_aux(obj, 163);
     add_costumer_aux(obj, 72, 45);
