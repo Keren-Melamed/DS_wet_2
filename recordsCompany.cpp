@@ -130,6 +130,7 @@ Output_t<bool> RecordsCompany::isMember(int c_id)
     }
 
     Node<Costumer>* newNode = m_costumers.getCostumer(c_id);
+    cout << "the costumer: " << newNode << endl;
     if(newNode == nullptr)
     {
         return StatusType::DOESNT_EXISTS;
