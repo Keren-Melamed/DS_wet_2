@@ -163,6 +163,7 @@ StatusType RecordsCompany::buyRecord(int c_id, int r_id)
     cout << "got costumer " << newCostumerNode->getValue()->getId();
     Record* record = m_UFrecords.getRecord(r_id);
     if(record == nullptr){
+        cout << "record not found "<< endl;
         return StatusType::FAILURE;
     }
 
