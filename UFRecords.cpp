@@ -158,7 +158,7 @@ void UFRecords::deleteHelper(Record** records, int* parents, int* sizes){
     delete[] sizes;
 }
 
-Record* UFRecords::getRecord(int r_id)
+Record* UFRecords::getRecord(int r_id) const
 {
     return m_records[r_id];
 }

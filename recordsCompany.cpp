@@ -7,7 +7,6 @@ RecordsCompany::RecordsCompany() : m_numberOfRecords(0)
 RecordsCompany::~RecordsCompany()
 {
     m_members.setAllToNullptr(m_members.getRoot());
-    m_members.setAllToNullptr(m_members.getRoot());
 }
 
 StatusType RecordsCompany::newMonth(int* records_stocks, int number_of_records)

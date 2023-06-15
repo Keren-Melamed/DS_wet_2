@@ -34,10 +34,17 @@ public:
 
     void setNumberOfCopies(int copies);
 
+
     void setNumberOfBuys(int number_of_buys);
 
     void UpdateHeight(int height);
     void updateNumberOfBuys();
     
+
+    void updateNumberOfBuys();
+    
+    void setNumberOfBuys(int number_of_buys);
+
+    void UpdateHeight(int height);
 };
 #endif
