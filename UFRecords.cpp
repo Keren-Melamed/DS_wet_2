@@ -158,3 +158,6 @@ Record* UFRecords::getRecord(int r_id) const
     return &m_records[r_id];
 }
     
+Record* UFRecords::getAllRecords(){
+    return m_records;
+}
