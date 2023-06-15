@@ -136,6 +136,7 @@ void HashTable<Costumer>::insert(int c_id, int phone, double expenses, bool isMe
         tree = new AVLTree<Costumer>();
         tree->insertValue(newCostumer);
         currentSize++;
+        cout << "tree in insert " << tree->getRoot()->getValue();
     }
 
     else
