@@ -110,7 +110,7 @@ void test() {
     
 
     new_month_aux(obj, 18, stock);
-
+    obj->getAllRecords(cout);
 
     add_costumer_aux(obj, 206, 246);
 
