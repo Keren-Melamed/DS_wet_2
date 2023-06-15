@@ -43,6 +43,11 @@ HashTable<Costumer>::HashTable(int size){
     currentSize = 0;
     maxCurrentSize = DEFAULT_TABLE_SIZE;
     data = new AVLTree<Costumer>*[size];
+    for (int i = 0; i < size; i++)
+    {
+        data[i] = nullptr;
+    }
+    
 }
 
 template<class Costumer>
@@ -69,8 +74,7 @@ void HashTable<Costumer>::addTo(AVLTree<Costumer>* tree, Node<Costumer>* node){
 }
 
 template<class Costumer>
-void HashTable<Costumer>::resize()
-{
+void HashTable<Costumer>::resize(){
     int newSize = this->size * 2;//don't add the plus 1, breaks it for some reason.....
     int oldSize = this->size;
     this->size = newSize;
@@ -84,26 +88,10 @@ void HashTable<Costumer>::resize()
 
     for(int i = 0; i < oldSize; i++)
     {
-        addTreeToTable(oldData[i]);
-    }
-
-    /*for (int i = 0; i < oldSize; i++)
-    {
-        AVLTree<Costumer>* currTree = data[i];
-        if(currTree != nullptr)
-        {
-            int currIndex = hashFunc(currTree->getRoot()->getValue()->getId());
-
-            if(data[i] != nullptr)
-            {
-                addTo(newData[currIndex], currTree->getRoot());
-            }
-            else
-            {
-                newData[i] = nullptr;
-            }
+        if(oldData[i] != nullptr){
+            addTreeToTable(oldData[i]->getRoot());
         }
-    }*/
+    }
 
     maxCurrentSize = newSize;
 
@@ -113,8 +101,6 @@ void HashTable<Costumer>::resize()
         delete oldData[i];
     }
     delete[] oldData;
-
-    //cout << "resize has ended" << endl;
 }
 template<class Costumer>
 void HashTable<Costumer>::addTreeToTable(Node<Costumer>* node)
@@ -125,7 +111,7 @@ void HashTable<Costumer>::addTreeToTable(Node<Costumer>* node)
     }
     addTreeToTable(node->getLeftNode());
     Costumer* costumer = node->getValue();
-    insert(costumer->getId(), costumer->getPhoneNumber(), costumer->getExpenses(), costumer->getMember());
+    insert(costumer->getId(), costumer->getPhoneNumber(), costumer->getExpenses(), costumer->getIsMember());
     addTreeToTable(node->getRightNode());
 }
 

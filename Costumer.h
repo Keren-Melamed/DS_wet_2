@@ -13,7 +13,7 @@ class Costumer
         bool m_isMember;
 
     public:
-        Costumer(int id, int phoneNumber, double expenses = 0, bool isMember = false);
+        Costumer(int id, int phoneNumber);
         Costumer(const Costumer& other) = delete;//no need for a copy c'tor;
         ~Costumer() = default;
 

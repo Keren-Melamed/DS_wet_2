@@ -1,8 +1,8 @@
 #include "Costumer.h"
 
 
-Costumer::Costumer(int id, int phoneNumber, double expenses, bool isMember):
-m_id(id), m_phoneNumber(phoneNumber), m_expenses(expenses), m_isMember(isMember)
+Costumer::Costumer(int id, int phoneNumber):
+m_id(id), m_phoneNumber(phoneNumber), m_expenses(0), m_isMember(false)
 {}
 
 int Costumer::getId() const
