@@ -79,11 +79,11 @@ void add_prize_aux(RecordsCompany *obj, int c_id1, int c_id2, double amount)
 void get_expenses_aux(RecordsCompany *obj, int c_id) {
     std::cout << "is  "<< c_id <<" a member " << endl;
     Output_t<double> res = obj->getExpenses(c_id);
-    if(res.status() != INVALID_INPUT){
-        std::cout << res.ans() << std::endl;
+    if(res.ans() == 0){
+        status_aux(res.status());
     }
     else{
-        status_aux(res.status());
+        std::cout << res.ans() << std::endl;
     }
 }
 
