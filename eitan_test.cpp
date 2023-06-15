@@ -114,6 +114,9 @@ void test() {
     get_place_aux(obj, 12);
 
     put_on_top_aux(obj, 3, 11);
+    obj->getAllRecords(cout);
+
+    obj->m_UFrecords.printParents(cout, 3);
     get_place_aux(obj, 3);
     /*
     get_expenses_aux(obj, 206);
