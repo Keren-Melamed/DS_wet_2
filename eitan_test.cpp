@@ -107,16 +107,31 @@ void get_place_aux(RecordsCompany *obj, int r_id){
 void test() {
     RecordsCompany *obj = new RecordsCompany();
     int* stock = new int[18]{18, 18, 13, 17, 18, 4, 18, 9, 11, 16, 8, 13, 8, 10, 20, 13, 4, 5};
+    
+
     new_month_aux(obj, 18, stock);
+    obj->getAllRecords(cout);
+
     add_costumer_aux(obj, 206, 246);
+    obj->getAllRecords(cout);
+
     add_costumer_aux(obj, 184, -4);
+    obj->getAllRecords(cout);
+
     add_costumer_aux(obj, 245, 175);
+    obj->getAllRecords(cout);
+
     buy_record_aux(obj, 206, 10);
+    obj->getAllRecords(cout);
+
     get_expenses_aux(obj, 245);
+    obj->getAllRecords(cout);
+    
     put_on_top_aux(obj, -1, 15);
     add_prize_aux(obj, 7, 2, 72);
-    add_costumer_aux(obj, 100000000, 214);
+    add_costumer_aux(obj, 1000000, 214);
     add_costumer_aux(obj, 127, 42);
+
     obj->m_UFrecords.printParents(cout, 12);
     get_place_aux(obj, 12);
 

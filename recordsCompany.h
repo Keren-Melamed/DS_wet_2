@@ -29,12 +29,15 @@ class RecordsCompany {
 
     double getExpensesHelper(RankedNode<Costumer>* node, Costumer* tmpCostumer, double counter);
 
+    
+
   public:
 
     HashTable<Costumer> m_costumers;
     RankedAVLTree<Costumer> m_members;
     UFRecords m_UFrecords;
-
+    void getAllRecords(ostream& os);
+    
     RecordsCompany();
     ~RecordsCompany();
     StatusType newMonth(int* records_stocks, int number_of_records);
