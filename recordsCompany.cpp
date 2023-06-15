@@ -146,7 +146,7 @@ Output_t<bool> RecordsCompany::isMember(int c_id)
 
 StatusType RecordsCompany::buyRecord(int c_id, int r_id)
 {
-    if(c_id < 0 || r_id < 0)
+    if(((c_id < 0) || (r_id < 0)) || (r_id >= m_numberOfRecords)) //maybe only >
     {
         return StatusType ::INVALID_INPUT;
     }
@@ -160,10 +160,12 @@ StatusType RecordsCompany::buyRecord(int c_id, int r_id)
     {
         return StatusType::DOESNT_EXISTS;
     }
-    cout << "got costumer " << newCostumerNode->getValue()->getId();
+
     Record* record = m_UFrecords.getRecord(r_id);
+
     if(record == nullptr){
-        return StatusType::FAILURE;
+
+        return StatusType::DOESNT_EXISTS;
     }
 
     Costumer* tmpMember = new Costumer(c_id, 0);
@@ -336,7 +338,7 @@ StatusType RecordsCompany::putOnTop(int r_id1, int r_id2)
 
 StatusType RecordsCompany::getPlace(int r_id, int* column, int* height)
 {
-    if((r_id < 0) ||(r_id > m_numberOfRecords)){
+    if((r_id < 0) ||(r_id >= m_numberOfRecords)){
         return StatusType::INVALID_INPUT;
     }
     
