@@ -113,19 +113,19 @@ void test() {
     obj->getAllRecords(cout);
 
     add_costumer_aux(obj, 206, 246);
-
+    obj->getAllRecords(cout);
 
     add_costumer_aux(obj, 184, -4);
-
+    obj->getAllRecords(cout);
 
     add_costumer_aux(obj, 245, 175);
-
+    obj->getAllRecords(cout);
 
     buy_record_aux(obj, 206, 10);
-
+    obj->getAllRecords(cout);
 
     get_expenses_aux(obj, 245);
-
+    obj->getAllRecords(cout);
 
     put_on_top_aux(obj, -1, 15);
     add_prize_aux(obj, 7, 2, 72);
