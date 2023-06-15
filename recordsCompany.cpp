@@ -187,7 +187,7 @@ StatusType RecordsCompany::addPrize(int c_id1, int c_id2, double amount)
     {
         return StatusType::INVALID_INPUT;
     }
-    addPrizeHelper(c_id1, c_id2, amount, m_members.getRoot());
+    addPrizeHelper(c_id1, c_id2 - 1, amount, m_members.getRoot());
     return StatusType::SUCCESS;
 }
 
@@ -352,7 +352,7 @@ StatusType RecordsCompany::getPlace(int r_id, int* column, int* height)
     if((r_id < 0) ||(r_id >= m_numberOfRecords)){
         return StatusType::INVALID_INPUT;
     }
-    
+    cout << "column in getplace " << m_UFrecords.Find(r_id);
     *column = m_UFrecords.Find(r_id);
 
     *height = m_UFrecords.getRecordHeight(r_id);;
