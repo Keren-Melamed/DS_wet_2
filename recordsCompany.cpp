@@ -363,10 +363,5 @@ StatusType RecordsCompany::getPlace(int r_id, int* column, int* height)
 
 
 void RecordsCompany::getAllRecords(ostream& os){
-    os << "printing all records:\n" ;
-    for (int i = 0; i < m_numberOfRecords; i++)
-    {
-        m_UFrecords.getAllRecords()->print(os);
-        os << "\n";
-    }
+    m_UFrecords.printAllRecords(os);
 }

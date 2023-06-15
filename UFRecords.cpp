@@ -157,6 +157,11 @@ Record* UFRecords::getRecord(int r_id) const
     return &m_records[r_id];
 }
     
-Record* UFRecords::getAllRecords(){
-    return m_records;
+void UFRecords::printAllRecords(std::ostream& os){
+    os << "printing all records:\n" ;
+    for (int i = 0; i < MAX_SIZE; i++)
+    {
+        m_records[i].print(os);
+        os << "\n";
+    }
 }
