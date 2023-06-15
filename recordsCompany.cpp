@@ -1,5 +1,7 @@
 
 #include "recordsCompany.h"
+using namespace std;
+
 
 RecordsCompany::RecordsCompany() : m_numberOfRecords(0)
 {}
@@ -22,6 +24,12 @@ StatusType RecordsCompany::newMonth(int* records_stocks, int number_of_records)
     m_UFrecords = records;
 
     m_numberOfRecords = number_of_records;
+
+    cout << "printing all records:\n" <<endl;
+    for (int i = 0; i < m_numberOfRecords; i++)
+    {
+        m_UFrecords.m_records[i]->print(cout);
+    }
 
     return StatusType::SUCCESS;
 }
@@ -359,11 +367,11 @@ StatusType RecordsCompany::getPlace(int r_id, int* column, int* height)
     
 }
 
+/*
 void RecordsCompany::getAllRecords(ostream& os){
     os<< "printing all records:\n";
     for (int i = 0; i < m_numberOfRecords; i++)
     {
-        m_UFrecords.printRecords(os);
+        m_UFrecords.m_records[i]
     }
-    
-}
+    */

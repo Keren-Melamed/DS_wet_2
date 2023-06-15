@@ -14,6 +14,8 @@ class UFRecords{
         int MAX_SIZE = 0;
         
     public:
+        Record** m_records;
+
         UFRecords();
         UFRecords(int *record_stocks, int num_of_records);
         UFRecords(const UFRecords& other);
@@ -37,8 +39,6 @@ class UFRecords{
 
         int getRecordHeight(int r_id) const;
         Record* getRecord(int r_id) const;
-
-        void printRecords(std::ostream& os);
 
         void deleteHelper(Record** records, int* parents, int* sizes);
 };
