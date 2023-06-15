@@ -344,8 +344,8 @@ StatusType RecordsCompany::getPlace(int r_id, int* column, int* height)
     
     *column = m_UFrecords.Find(r_id);
 
-    //*height = m_UFrecords.getRecordHeight(r_id);;
-    *height = 3;
+    *height = m_UFrecords.getRecordHeight(r_id);;
+
     return StatusType::SUCCESS;
     
 }
