@@ -117,6 +117,7 @@ void test() {
     add_prize_aux(obj, 7, 2, 72);
     add_costumer_aux(obj, 163, 214);
     add_costumer_aux(obj, 127, 42);
+    obj->m_UFrecords.printParents(cout, 12);
     get_place_aux(obj, 12);
     is_member_aux(obj, 163);
     add_costumer_aux(obj, 72, 45);
