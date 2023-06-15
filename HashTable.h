@@ -134,7 +134,6 @@ void HashTable<Costumer>::insert(int c_id, int phone, double expenses, bool isMe
         data[index] = new AVLTree<Costumer>();
         data[index]->insertValue(newCostumer);
         currentSize++;
-        cout << "data[index] in insert " << data[index]->getRoot()->getValue()->getId();
     }
 
     else
@@ -164,26 +163,21 @@ template<class Costumer>
 Node<Costumer>* HashTable<Costumer>::getCostumer(int c_id){
     
     int index = hashFunc(c_id);
-    cout << "get costumer index: " << index << endl;
     AVLTree<Costumer>* tree = data[index];
 
     if(tree != nullptr)
     {
-        cout << "the tree isn't nullptr" << endl;
         Costumer* tmpCostumer = new Costumer(c_id, 0);
         Node<Costumer>* tmpNode = tree->findObject(tree->getRoot(), tmpCostumer);
-        //cout << "in getCostumer find object has finished" << endl;
         delete tmpCostumer;
         if(tmpNode == nullptr)
         {
-            cout << "the tmpNode in getCostumer was null" << endl;
             return nullptr;
         }
         return tmpNode;
     }
     else
     {
-        cout << "the tree was nullptr" << endl;
         return nullptr;
     }
 
