@@ -168,6 +168,7 @@ void UFRecords::printRecords(std::ostream& os){
     for (int i = 0; i < MAX_SIZE; i++)
     {
         m_records[i]->print(os);
+        os << "\n";
     }
     
 }
