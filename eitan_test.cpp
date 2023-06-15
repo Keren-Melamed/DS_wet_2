@@ -108,10 +108,11 @@ void test() {
     RecordsCompany *obj = new RecordsCompany();
     int* record_stocks = new int[18]{18, 18, 13, 17, 18, 4, 18, 9, 11, 16, 8, 13, 8, 10, 20, 13, 4, 5};
     new_month_aux(obj, 18, record_stocks);
-    
-    add_costumer_aux(obj, 206, 246);
 
-    make_member_aux(obj, 206);
+    add_costumer_aux(obj, 5, 246);
+    add_costumer_aux(obj, 10, 246);
+
+    make_member_aux(obj, 5);
     
 
     delete obj;

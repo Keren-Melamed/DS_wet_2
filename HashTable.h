@@ -5,7 +5,7 @@
 #include "Costumer.h"
 #include "exception.h"
 
-const int DEFAULT_TABLE_SIZE = 100;
+const int DEFAULT_TABLE_SIZE = 5;
 
 template<class Costumer>
 class HashTable
