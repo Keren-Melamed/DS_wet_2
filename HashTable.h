@@ -121,7 +121,6 @@ template<class Costumer>
 void HashTable<Costumer>::insert(int c_id, int phone, double expenses, bool isMember){
 
     int index = hashFunc(c_id);
-    cout << "insert index: " << index << endl;
 
     Costumer* newCostumer = new Costumer(c_id, phone);
     if(newCostumer == nullptr)
