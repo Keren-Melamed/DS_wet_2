@@ -121,6 +121,7 @@ template<class Costumer>
 void HashTable<Costumer>::insert(int c_id, int phone, double expenses, bool isMember){
 
     int index = hashFunc(c_id);
+    cout << "insert index: " << index << endl;
 
     AVLTree<Costumer>* tree = data[index];//the tree we need to add to
 
@@ -162,10 +163,11 @@ void HashTable<Costumer>::insert(int c_id, int phone, double expenses, bool isMe
 
 template<class Costumer>
 Node<Costumer>* HashTable<Costumer>::getCostumer(int c_id){
-    cout << "getCostumer was entered" << endl;
+    
     int index = hashFunc(c_id);
+    cout << "get costumer index: " << index << endl;
     AVLTree<Costumer>* tree = data[index];
-    cout << "the if statement is about to be entered" << endl;
+
     if(tree != nullptr)
     {
         cout << "the tree isn't nullptr" << endl;
