@@ -95,13 +95,11 @@ void put_on_top_aux(RecordsCompany *obj, int r_id1, int r_id2)
 
 void get_place_aux(RecordsCompany *obj, int r_id){
     std::cout << " getting place of record  "<< r_id << endl;
-    int temp = 0;
-    int* column = &temp;
-    int* height = &temp;
-    status_aux(obj->getPlace(r_id, column, height));
-    if((column != nullptr) && (height != nullptr)){
-        std::cout << "column: " << *column << " height: " << *height << endl;
-    }
+    int column = 0;
+    int height = 0;
+    status_aux(obj->getPlace(r_id, &column, &height));
+    std::cout << "column: " << column << " height: " << height << endl;
+    
 }
 
 void test() {
@@ -110,22 +108,16 @@ void test() {
     
 
     new_month_aux(obj, 18, stock);
-    obj->getAllRecords(cout);
 
     add_costumer_aux(obj, 206, 246);
-    obj->getAllRecords(cout);
 
     add_costumer_aux(obj, 184, -4);
-    obj->getAllRecords(cout);
 
     add_costumer_aux(obj, 245, 175);
-    obj->getAllRecords(cout);
 
     buy_record_aux(obj, 206, 10);
-    obj->getAllRecords(cout);
 
     get_expenses_aux(obj, 245);
-    obj->getAllRecords(cout);
 
     put_on_top_aux(obj, -1, 15);
     add_prize_aux(obj, 7, 2, 72);
