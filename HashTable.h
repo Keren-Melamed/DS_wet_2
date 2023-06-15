@@ -97,8 +97,10 @@ void HashTable<Costumer>::resize(){
 
     for(int i = 0; i < oldSize; i++)
     {
-        oldData[i]->setAllToNullptr(data[i]->getRoot());
-        delete oldData[i];
+        if(oldData[i] != nullptr){
+            oldData[i]->setAllToNullptr(data[i]->getRoot());
+            delete oldData[i];
+        }
     }
     delete[] oldData;
 }
