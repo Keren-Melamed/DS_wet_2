@@ -19,6 +19,8 @@ StatusType RecordsCompany::newMonth(int* records_stocks, int number_of_records)
     m_members.resetAllRanks(m_members.getRoot());
     resetAllExpenses(m_members.getRoot());
 
+    m_numberOfRecords = number_of_records;
+
     UFRecords records(records_stocks, number_of_records);
     m_UFrecords = records;
 
@@ -39,22 +41,25 @@ void RecordsCompany::resetAllExpenses(RankedNode<Costumer> *node)
 
 StatusType RecordsCompany::addCostumer(int c_id, int phone)
 {
+    //cout << "addCostumer was entered" << endl;
     if(c_id < 0 || phone < 0)
     {
         return StatusType::INVALID_INPUT;
     }
-    
     Node<Costumer>* newNode = m_costumers.getCostumer(c_id);
+    //cout << "getCostumer in AddCostumer has finished" << endl;
     if(newNode != nullptr)
     {
-        cout << "costumer already exists" << endl;
+        //cout << "the costumer already exists" << endl;
         return StatusType::ALREADY_EXISTS;
     }
     else
     {
+        //cout << "the else was entered" << endl;
         try
         {
             m_costumers.insert(c_id, phone);
+            //cout << "insert has finished" << endl;
             return StatusType::SUCCESS;
         }
         catch (BadAllocation &e)
@@ -106,7 +111,7 @@ StatusType RecordsCompany::makeMember(int c_id)
     }
 
     newMember->setMember(true);
-    
+
     try
     {
         m_members.insertValue(newMember);
@@ -149,12 +154,14 @@ StatusType RecordsCompany::buyRecord(int c_id, int r_id)
     }
     if(r_id >= m_numberOfRecords)
     {
+        //cout << "record id was to big" << endl;
         return StatusType::DOESNT_EXISTS;
     }
 
     Node<Costumer>* newCostumerNode = m_costumers.getCostumer(c_id);
     if(newCostumerNode == nullptr)
     {
+        //cout << "costumer doesnt exist" << endl;
         return StatusType::DOESNT_EXISTS;
     }
 
@@ -287,6 +294,13 @@ Output_t<double> RecordsCompany::getExpenses(int c_id)
         return Output_t<double>(StatusType::INVALID_INPUT);
     }
     Costumer* tmpCostumer = new Costumer(c_id, 0);
+    RankedNode<Costumer>* tmpNode = m_members.findObject(m_members.getRoot(), tmpCostumer);
+    if(tmpNode == nullptr)
+    {
+        Output_t<double> result(StatusType::DOESNT_EXISTS);
+        delete tmpCostumer;
+        return result;
+    }
     double extras = getExpensesHelper(m_members.getRoot(), tmpCostumer, 0);
     delete tmpCostumer;
     Output_t<double> result(extras);
@@ -333,13 +347,14 @@ StatusType RecordsCompany::getPlace(int r_id, int* column, int* height)
     if((r_id < 0) ||(r_id > m_numberOfRecords)){
         return StatusType::INVALID_INPUT;
     }
-    
-    int* tempColumn = new int(m_UFrecords.Find(r_id));
-    column = tempColumn;
 
-    int* tempHeight = new int(m_UFrecords.getRecordHeight(r_id));
-    height = tempHeight;
+    int tempColumn = m_UFrecords.Find(r_id);
+    column = &tempColumn;
+
+    int tempHeight = (m_UFrecords.getRecordHeight(r_id));
+    height = &tempHeight;
 
     return StatusType::SUCCESS;
-    
+
 }
+

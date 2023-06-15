@@ -468,18 +468,22 @@ Node<T>* AVLTree<T>::findObjectHelper(Node<T>* node, T* value)
 {
     if(node == nullptr )
     {
+        //cout <<"the node was nullptr" << endl;
         return nullptr;
     }
     else if(*(node->getValue()) == *value)
     {
+        //cout <<"the node was equal" << endl;
         return node;
     }
     else if(*value < *(node->getValue()))
     {
+        //cout <<"the node was bigger" << endl;
         return findObjectHelper(node->getLeftNode(), value);
     }
     else if(*value > *(node->getValue()))
     {
+        //cout <<"the node was smaller" << endl;
         return findObjectHelper(node->getRightNode(), value);
     }
     return nullptr;
