@@ -115,7 +115,7 @@ void test() {
     get_expenses_aux(obj, 245);
     put_on_top_aux(obj, -1, 15);
     add_prize_aux(obj, 7, 2, 72);
-    add_costumer_aux(obj, 163, 214);
+    add_costumer_aux(obj, 100000000, 214);
     add_costumer_aux(obj, 127, 42);
     obj->m_UFrecords.printParents(cout, 12);
     get_place_aux(obj, 12);

@@ -25,14 +25,6 @@ UFRecords::UFRecords(int *record_stocks, int num_of_records){
         m_sizes[i] = record_stocks[i];
     }
 
-    std::cout << "all records: \n" << std::endl;
-    for (int i = 0; i < num_of_records; i++)
-    {
-        m_records[i]->print(std::cout);
-        std::cout << "\n" << std::endl;
-    }
-
-
     MAX_SIZE = num_of_records;
    
 }
