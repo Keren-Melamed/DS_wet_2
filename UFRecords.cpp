@@ -20,8 +20,7 @@ UFRecords::UFRecords(int *record_stocks, int num_of_records){
 
     for (int i = 0; i < num_of_records; i++)
     {
-        Record* temp = new Record(i, 0, record_stocks[i]);
-        m_records[i] = *temp;
+        m_records[i] = Record(i, 0, record_stocks[i]);
         m_parents[i] = -1;
         m_sizes[i] = record_stocks[i];
     }
