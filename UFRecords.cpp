@@ -12,7 +12,7 @@ UFRecords::UFRecords(int *record_stocks, int num_of_records){
     int* sizes = new int[num_of_records];
     m_sizes = sizes;
 
-    Record** records = new Record*[num_of_records];
+    Record* records = new Record[num_of_records];
     m_records = records;
 
     int* parents = new int[num_of_records];
@@ -20,7 +20,7 @@ UFRecords::UFRecords(int *record_stocks, int num_of_records){
 
     for (int i = 0; i < num_of_records; i++)
     {
-        m_records[i] = new Record(i, 0, record_stocks[i]);
+        m_records[i] = Record(i, 0, record_stocks[i]);
         m_parents[i] = -1;
         m_sizes[i] = record_stocks[i];
     }
@@ -36,7 +36,7 @@ UFRecords::UFRecords(const UFRecords& other){
     int* sizes = new int[MAX_SIZE];
     this->m_sizes = sizes;
 
-    Record** records = new Record*[MAX_SIZE];
+    Record* records = new Record[MAX_SIZE];
     this->m_records = records;
 
     int* parents = new int[MAX_SIZE];
@@ -44,11 +44,8 @@ UFRecords::UFRecords(const UFRecords& other){
     
     for (int i = 0; i < MAX_SIZE; i++)
     {
-        std::cout << "record in place: " << i << " " << other.m_records[i] << std::endl;
         this->m_records[i] = other.m_records[i];
-        std::cout << "parent in place: " << i << " " << other.m_parents[i] << std::endl;
         this->m_parents[i] = other.m_parents[i];
-        std::cout << "size in place: " << i << " " << other.m_sizes[i] << std::endl;
         this->m_sizes[i] = other.m_sizes[i];
     }
     
@@ -59,7 +56,7 @@ UFRecords& UFRecords::operator=(const UFRecords& other){
         return *this;
     }
 
-    Record** tempRecords = new Record*[other.MAX_SIZE];
+    Record* tempRecords = new Record[other.MAX_SIZE];
     int* tempSizes = new int[other.MAX_SIZE];
     int* tempParents = new int[other.MAX_SIZE];
 
@@ -103,7 +100,7 @@ void UFRecords::Union(int child, int parent){
 
     m_parents[child] = parent;
 
-    m_records[parent]->UpdateHeight(m_sizes[child]);
+    m_records[parent].UpdateHeight(m_sizes[child]);
 
     m_sizes[child] += m_sizes[parent];
     m_sizes[parent] = 0;
@@ -127,13 +124,13 @@ bool UFRecords::isDisjoint(int r_id1, int r_id2){
 void UFRecords::printParents(std::ostream& os, int r_id){
 
     while(m_parents[r_id] != -1){
-        m_records[r_id]->print(os);
+        m_records[r_id].print(os);
         os << "\n";
         r_id = m_parents[r_id];
     }
     if(m_parents[r_id] == -1){
         os << "no parents, printing only the record: \n";
-        m_records[r_id]->print(os);
+        m_records[r_id].print(os);
         os << "\n \n";
 
     }
@@ -147,20 +144,17 @@ void UFRecords::printAllParents(std::ostream& os){
 }
 
 int UFRecords::getRecordHeight(int r_id) const{
-    return m_records[r_id]->getHeight();
+    return m_records[r_id].getHeight();
 }
     
-void UFRecords::deleteHelper(Record** records, int* parents, int* sizes){
-    for (int i = 0; i < MAX_SIZE; i++)
-    {
-        delete records[i];
-    }
+void UFRecords::deleteHelper(Record* records, int* parents, int* sizes){
+    delete[] records;
     delete[] parents;
     delete[] sizes;
 }
 
 Record* UFRecords::getRecord(int r_id) const
 {
-    return m_records[r_id];
+    return &m_records[r_id];
 }
     

@@ -366,7 +366,7 @@ void RecordsCompany::getAllRecords(ostream& os){
     os << "printing all records:\n" ;
     for (int i = 0; i < m_numberOfRecords; i++)
     {
-        m_UFrecords.m_records[i]->getId();
+        m_UFrecords.m_records[i].print(os);
         os << "\n";
     }
 }
