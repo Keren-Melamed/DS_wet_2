@@ -125,6 +125,7 @@ bool UFRecords::isDisjoint(int r_id1, int r_id2){
 }
 
 void UFRecords::printParents(std::ostream& os, int r_id){
+    std::cout<<"r_id in print parents: " << r_id << std::endl;
     while(m_parents[r_id] != -1){
         m_records[r_id]->print(os);
         os << "\n";
