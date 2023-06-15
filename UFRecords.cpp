@@ -34,11 +34,13 @@ UFRecords::UFRecords(const UFRecords& other){
     
     this->MAX_SIZE = other.MAX_SIZE;
     int* sizes = new int[MAX_SIZE];
+    m_sizes = sizes;
 
     Record* records = new Record[MAX_SIZE];
-
-    int* parents = new int[MAX_SIZE];
+    m_records = records;
     
+    int* parents = new int[MAX_SIZE];
+    m_parents = parents;
     
     for (int i = 0; i < MAX_SIZE; i++)
     {
