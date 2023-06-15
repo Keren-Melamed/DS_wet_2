@@ -8,7 +8,7 @@
 class UFRecords{
     private:
 
-        Record** m_records;
+        
         int* m_parents;
         int* m_sizes;
         int MAX_SIZE = 0;
