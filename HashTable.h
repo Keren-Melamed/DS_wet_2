@@ -5,7 +5,7 @@
 #include "Costumer.h"
 #include "exception.h"
 
-const int DEFAULT_TABLE_SIZE = 5;
+const int DEFAULT_TABLE_SIZE = 1000;
 
 template<class Costumer>
 class HashTable
@@ -75,7 +75,7 @@ void HashTable<Costumer>::addTo(AVLTree<Costumer>* tree, Node<Costumer>* node){
 
 template<class Costumer>
 void HashTable<Costumer>::resize(){
-    int newSize = this->size * 2;//don't add the plus 1, breaks it for some reason.....
+    int newSize = this->size * 2; //don't add the plus 1, breaks it for some reason.....
     int oldSize = this->size;
     this->size = newSize;
     AVLTree<Costumer>** oldData = data;
