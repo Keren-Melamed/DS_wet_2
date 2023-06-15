@@ -343,7 +343,7 @@ StatusType RecordsCompany::putOnTop(int r_id1, int r_id2)
     if((r_id1 < 0) || (r_id2 < 0) || (r_id1 > m_numberOfRecords) || (r_id2 > m_numberOfRecords)){
         return StatusType::INVALID_INPUT;
     }
-    m_UFrecords.Union(r_id2, r_id1);
+    m_UFrecords.Union(r_id1, r_id2);
     return StatusType::SUCCESS;
 }
 

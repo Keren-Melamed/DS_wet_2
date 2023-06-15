@@ -95,18 +95,18 @@ void put_on_top_aux(RecordsCompany *obj, int r_id1, int r_id2)
 
 void get_place_aux(RecordsCompany *obj, int r_id){
     std::cout << " getting place of record  "<< r_id << endl;
-    int temp = 0;
-    int* column = &temp;
-    int* height = &temp;
-    status_aux(obj->getPlace(r_id, column, height));
-    if((column != nullptr) && (height != nullptr)){
-        std::cout << "column: " << *column << " height: " << *height << endl;
-    }
+    int column = 0;
+    int height = 0;
+    status_aux(obj->getPlace(r_id, &column, &height));
+
+    std::cout << "column: " << column << " height: " << height << endl;
+    
 }
 
 void test() {
     RecordsCompany *obj = new RecordsCompany();
     int* stocks = new int[18]{18, 18, 13, 17, 18, 4, 18, 9, 11, 16, 8, 13, 8, 10, 20, 13, 4, 5};
+    
     new_month_aux(obj, 18, stocks);
 
     put_on_top_aux(obj, -1, 15);
@@ -114,10 +114,10 @@ void test() {
     get_place_aux(obj, 12);
 
     put_on_top_aux(obj, 3, 11);
-    obj->getAllRecords(cout);
-
     obj->m_UFrecords.printParents(cout, 3);
+
     get_place_aux(obj, 3);
+
     /*
     get_expenses_aux(obj, 206);
     is_member_aux(obj, 217);
@@ -205,6 +205,7 @@ void test() {
     get_phone_aux(obj, 160);
     get_expenses_aux(obj, 160);
     add_costumer_aux(obj, 80, 75);
+
 */
     delete obj;
 
