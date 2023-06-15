@@ -294,6 +294,16 @@ Output_t<double> RecordsCompany::getExpenses(int c_id)
         return Output_t<double>(StatusType::INVALID_INPUT);
     }
     Costumer* tmpCostumer = new Costumer(c_id, 0);
+
+    if(m_members.getRoot() == nullptr){
+        return StatusType::DOESNT_EXISTS;
+    }
+
+    if(m_members.findObject(m_members.getRoot(), tmpCostumer) == nullptr){
+        return StatusType::DOESNT_EXISTS;
+    }
+
+
     double extras = getExpensesHelper(m_members.getRoot(), tmpCostumer, 0);
     delete tmpCostumer;
     Output_t<double> result(extras);
