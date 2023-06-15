@@ -106,9 +106,6 @@ void get_place_aux(RecordsCompany *obj, int r_id){
 
 void test() {
     RecordsCompany *obj = new RecordsCompany();
-
-    int* record_stocks = new int[size]{ numbers};
-    
     
     delete obj;
 
