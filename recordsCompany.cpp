@@ -49,7 +49,7 @@ StatusType RecordsCompany::addCostumer(int c_id, int phone)
     Node<Costumer>* newNode = m_costumers.getCostumer(c_id);
     if(newNode != nullptr)
     {
-        cout << "costumer already exists" << endl;
+        //cout << "costumer already exists" << endl;
         return StatusType::ALREADY_EXISTS;
     }
     else
@@ -138,7 +138,7 @@ Output_t<bool> RecordsCompany::isMember(int c_id)
     }
     else
     {
-        cout << "the costumer: " << newNode->getValue()->getId() << endl;
+        //cout << "the costumer: " << newNode->getValue()->getId() << endl;
         bool isMember = newNode->getValue()->getIsMember();
         Output_t<bool> result(isMember);
         return result;
@@ -333,7 +333,7 @@ double RecordsCompany::getExpensesHelper(RankedNode<Costumer>* node, Costumer* t
         counter += node->getValue()->getExpenses();
         return getExpensesHelper(node->getRightNode(), tmpCostumer, counter);
     }
-    cout << "somehow no condition was entered in getExpensesHelper" << endl;
+    //cout << "somehow no condition was entered in getExpensesHelper" << endl;
     return counter;
 
 }
@@ -352,10 +352,9 @@ StatusType RecordsCompany::getPlace(int r_id, int* column, int* height)
     if((r_id < 0) ||(r_id >= m_numberOfRecords)){
         return StatusType::INVALID_INPUT;
     }
-    cout << "column in getplace " << m_UFrecords.Find(r_id);
     *column = m_UFrecords.Find(r_id);
 
-    *height = m_UFrecords.getRecordHeight(r_id);;
+    *height = m_UFrecords.getRecordHeight(r_id);
 
     return StatusType::SUCCESS;
     
