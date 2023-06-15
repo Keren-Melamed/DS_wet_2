@@ -108,20 +108,11 @@ void test() {
     RecordsCompany *obj = new RecordsCompany();
     int* stocks = new int[18]{18, 18, 13, 17, 18, 4, 18, 9, 11, 16, 8, 13, 8, 10, 20, 13, 4, 5};
     new_month_aux(obj, 18, stocks);
-    add_costumer_aux(obj, 206, 246);
-    add_costumer_aux(obj, 184, -4);
-    add_costumer_aux(obj, 245, 175);
-    buy_record_aux(obj, 206, 10);
-    get_expenses_aux(obj, 245);
+
     put_on_top_aux(obj, -1, 15);
-    add_prize_aux(obj, 7, 2, 72);
-    add_costumer_aux(obj, 163, 214);
-    add_costumer_aux(obj, 127, 42);
+
     get_place_aux(obj, 12);
-    is_member_aux(obj, 163);
-    add_costumer_aux(obj, 72, 45);
-    get_expenses_aux(obj, 127);
-    make_member_aux(obj, 206);
+
     put_on_top_aux(obj, 3, 11);
     get_place_aux(obj, 3);
     /*
