@@ -20,7 +20,8 @@ UFRecords::UFRecords(int *record_stocks, int num_of_records){
 
     for (int i = 0; i < num_of_records; i++)
     {
-        m_records[i] = Record(i, 0, record_stocks[i]);
+        Record temp(i, 0, record_stocks[i]);
+        m_records[i] = temp;
         m_parents[i] = -1;
         m_sizes[i] = record_stocks[i];
     }
@@ -32,15 +33,12 @@ UFRecords::UFRecords(int *record_stocks, int num_of_records){
 UFRecords::UFRecords(const UFRecords& other){
     
     this->MAX_SIZE = other.MAX_SIZE;
-    std::cout << "MAX_SIZE: " << this->MAX_SIZE << std::endl;
     int* sizes = new int[MAX_SIZE];
-    this->m_sizes = sizes;
 
     Record* records = new Record[MAX_SIZE];
-    this->m_records = records;
 
     int* parents = new int[MAX_SIZE];
-    this->m_parents = parents;
+    
     
     for (int i = 0; i < MAX_SIZE; i++)
     {
