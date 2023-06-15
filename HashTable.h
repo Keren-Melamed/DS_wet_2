@@ -123,29 +123,27 @@ void HashTable<Costumer>::insert(int c_id, int phone, double expenses, bool isMe
     int index = hashFunc(c_id);
     cout << "insert index: " << index << endl;
 
-    AVLTree<Costumer>* tree = data[index];//the tree we need to add to
-
     Costumer* newCostumer = new Costumer(c_id, phone);
     if(newCostumer == nullptr)
     {
         throw BadAllocation();
     }
 
-    if(tree == nullptr)
+    if(data[index] == nullptr)
     {
-        tree = new AVLTree<Costumer>();
-        tree->insertValue(newCostumer);
+        data[index] = new AVLTree<Costumer>();
+        data[index]->insertValue(newCostumer);
         currentSize++;
-        cout << "tree in insert " << tree->getRoot()->getValue()->getId();
+        cout << "data[index] in insert " << data[index]->getRoot()->getValue()->getId();
     }
 
     else
     {
-        Node<Costumer>* newCostumerNode = tree->findObject(tree->getRoot(), newCostumer);
+        Node<Costumer>* newCostumerNode = data[index]->findObject(data[index]->getRoot(), newCostumer);
 
         if(newCostumerNode == nullptr)
         {
-            tree->insertValue(newCostumer);
+            data[index]->insertValue(newCostumer);
             currentSize++;
         }
 
