@@ -148,11 +148,11 @@ Output_t<bool> RecordsCompany::isMember(int c_id)
 
 StatusType RecordsCompany::buyRecord(int c_id, int r_id)
 {
-    if(((c_id < 0) || (r_id < 0)) || (r_id >= m_numberOfRecords)) //maybe only >
+    if(((c_id < 0) || (r_id < 0))) //maybe only >
     {
         return StatusType ::INVALID_INPUT;
     }
-    if(r_id > m_numberOfRecords)
+    if(r_id >= m_numberOfRecords)
     {
         return StatusType::DOESNT_EXISTS;
     }
@@ -359,6 +359,10 @@ StatusType RecordsCompany::putOnTop(int r_id1, int r_id2)
 
     if((r_id1 >= m_numberOfRecords) || (r_id2 >= m_numberOfRecords)){
         return StatusType::DOESNT_EXISTS;
+    }
+
+    if(m_UFrecords.isDisjoint(r_id1, r_id2)){
+        return StatusType::FAILURE;
     }
 
     m_UFrecords.Union(r_id1, r_id2);
