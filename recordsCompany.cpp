@@ -313,10 +313,10 @@ Output_t<double> RecordsCompany::getExpenses(int c_id)
 
 
     double extras = getExpensesHelper(m_members.getRoot(), tmpCostumer, 0);
-    extras += costumerNode->getValue()->getExpenses();
+    double totalExpenses = costumerNode->getValue()->getExpenses() - extras;
     //extras += costumerNode->getExtraRank();
     delete tmpCostumer;
-    Output_t<double> result(extras);
+    Output_t<double> result(totalExpenses);
     return result;
 }
 
@@ -344,7 +344,7 @@ double RecordsCompany::getExpensesHelper(RankedNode<Costumer>* node, Costumer* t
         //counter += node->getValue()->getExpenses();
         return getExpensesHelper(node->getRightNode(), tmpCostumer, counter);
     }
-    //cout << "somehow no condition was entered in getExpensesHelper" << endl;
+    cout << "somehow no condition was entered in getExpensesHelper" << endl;
     return counter;
 
 }
