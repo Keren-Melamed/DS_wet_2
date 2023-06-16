@@ -81,6 +81,7 @@ void HashTable::insert(int c_id, int phone, double expenses, bool isMember){
     Costumer* newCostumer = new Costumer(c_id, phone);
     if(newCostumer == nullptr)
     {
+        delete newCostumer;
         throw BadAllocation();
     }
 
@@ -89,6 +90,7 @@ void HashTable::insert(int c_id, int phone, double expenses, bool isMember){
         //cout << "a new tree was made in hashTable insert" << endl;
         data[index] = new AVLTree<Costumer>();
         data[index]->insertValue(newCostumer);
+        delete newCostumer;
         currentSize++;
     }
 
@@ -99,6 +101,7 @@ void HashTable::insert(int c_id, int phone, double expenses, bool isMember){
         if(newCostumerNode == nullptr)
         {
             data[index]->insertValue(newCostumer);
+            delete newCostumer;
             currentSize++;
         }
 

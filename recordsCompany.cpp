@@ -45,12 +45,11 @@ StatusType RecordsCompany::addCostumer(int c_id, int phone)
     {
         return StatusType::INVALID_INPUT;
     }
-    Costumer newCostumer(c_id, phone);
+    
     Node<Costumer>* newNode = m_costumers.getCostumer(c_id);
     if(newNode != nullptr)
     {
         //cout << "costumer already exists" << endl;
-        delete newNode;
         return StatusType::ALREADY_EXISTS;
     }
     else
@@ -58,12 +57,10 @@ StatusType RecordsCompany::addCostumer(int c_id, int phone)
         try
         {
             m_costumers.insert(c_id, phone);
-            delete newNode;
             return StatusType::SUCCESS;
         }
         catch (BadAllocation &e)
         {
-            delete newNode;
             return StatusType::ALLOCATION_ERROR;
         }
     }
@@ -306,11 +303,13 @@ Output_t<double> RecordsCompany::getExpenses(int c_id)
     Costumer* tmpCostumer = new Costumer(c_id, 0);
 
     if(m_members.getRoot() == nullptr){
+        delete tmpCostumer;
         return StatusType::DOESNT_EXISTS;
     }
 
     RankedNode<Costumer>* costumerNode = m_members.findObject(m_members.getRoot(), tmpCostumer);
     if(costumerNode == nullptr){
+        delete tmpCostumer;
         return StatusType::DOESNT_EXISTS;
     }
 
