@@ -1,7 +1,5 @@
 #include "Record.h"
 
-Record::Record():m_id(0), m_number_of_buys(0), m_copies(0), m_height(0){}
-
 Record::Record() : m_id(-1), m_number_of_buys(0), m_copies(0), m_height(0)
 {}
 

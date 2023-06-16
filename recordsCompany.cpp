@@ -41,17 +41,6 @@ void RecordsCompany::resetAllExpenses(RankedNode<Costumer> *node)
     resetAllExpenses(node->getRightNode());
 }
 
-void RecordsCompany::resetAllExpenses(RankedNode<Costumer> *node)
-{
-    if(node == nullptr)
-    {
-        return;
-    }
-    resetAllExpenses(node->getLeftNode());
-    node->getValue()->updateExpenses(-(node->getValue()->getExpenses()));
-    resetAllExpenses(node->getRightNode());
-}
-
 StatusType RecordsCompany::addCostumer(int c_id, int phone)
 {
     if(c_id < 0 || phone < 0)
