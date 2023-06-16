@@ -30,6 +30,7 @@ public:
     ~HashTable();
 
     void insert(int c_id, int phone, double expenses = 0, bool isMember = false);
+    void insertOldCostumer(Costumer* costumer);
     Node<Costumer>* getCostumer(int c_id);
 
     ostream& print(ostream& os) const;

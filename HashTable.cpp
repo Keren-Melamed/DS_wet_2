@@ -68,17 +68,43 @@ void HashTable::addTreeToTable(Node<Costumer>* node)
     }
     addTreeToTable(node->getLeftNode());
     Costumer* costumer = node->getValue();
-    insert(costumer->getId(), costumer->getPhoneNumber(), costumer->getExpenses(), costumer->getIsMember());
+    insertOldCostumer(costumer);
     addTreeToTable(node->getRightNode());
+}
+
+void HashTable::insertOldCostumer(Costumer *costumer)
+{
+    int index = hashFunc(costumer->getId());
+
+    if(data[index] == nullptr)
+    {
+        data[index] = new AVLTree<Costumer>();
+        data[index]->insertValue(costumer);
+        currentSize++;
+    }
+
+    else
+    {
+        Node<Costumer>* newCostumerNode = data[index]->findObject(data[index]->getRoot(), costumer);
+
+        if(newCostumerNode == nullptr)//will always be true
+        {
+            data[index]->insertValue(costumer);
+            currentSize++;
+        }
+    }
 }
 
 void HashTable::insert(int c_id, int phone, double expenses, bool isMember){
 
     int index = hashFunc(c_id);
 
-    Costumer* newCostumer = new Costumer(c_id, phone);
+    //AVLTree<Costumer>* tree = data[index];//the tree we need to add to
+
+    Costumer* newCostumer = new Costumer(c_id, phone, expenses, isMember);
     if(newCostumer == nullptr)
     {
+        delete newCostumer;
         throw BadAllocation();
     }
 
@@ -153,4 +179,6 @@ ostream& HashTable::print(ostream& os) const
     }
     return os;
 }
+
+
 

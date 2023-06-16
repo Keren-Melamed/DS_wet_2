@@ -94,24 +94,28 @@ StatusType RecordsCompany::makeMember(int c_id)
         return StatusType ::INVALID_INPUT;
     }
 
-    Node<Costumer>* newNode = m_costumers.getCostumer(c_id);
+    Node<Costumer>* newCostumerNode = m_costumers.getCostumer(c_id);
 
 
-    if(newNode == nullptr)
+    if(newCostumerNode == nullptr)
     {
         return StatusType::DOESNT_EXISTS;
     }
 
-    Costumer* newMember = newNode->getValue();
-    if(m_members.findObject(m_members.getRoot(), newMember) != nullptr)
+    Costumer* theCostumer = newCostumerNode->getValue();
+    if(m_members.findObject(m_members.getRoot(), theCostumer) != nullptr)
     {
         return StatusType::ALREADY_EXISTS;
     }
-    newMember->setMember(true);
-    
+
+    newCostumerNode->getValue()->setMember(true);
+
     try
     {
-        m_members.insertValue(newMember);
+        /*Costumer* newMember = new Costumer(theCostumer->getId(), theCostumer->getPhoneNumber(),
+                                           theCostumer->getExpenses(), theCostumer->getIsMember());
+        m_members.insertValue(newMember);*/
+        m_members.insertValue(theCostumer);
         return StatusType::SUCCESS;
     }
 
@@ -132,7 +136,7 @@ Output_t<bool> RecordsCompany::isMember(int c_id)
     }
 
     Node<Costumer>* newNode = m_costumers.getCostumer(c_id);
-    
+
     if(newNode == nullptr)
     {
         return StatusType::DOESNT_EXISTS;
@@ -172,12 +176,13 @@ StatusType RecordsCompany::buyRecord(int c_id, int r_id)
 
     Costumer* tmpMember = new Costumer(c_id, 0);
     RankedNode<Costumer>* tmpMemberNode = m_members.findObject(m_members.getRoot(), tmpMember);
-    
+
     if(tmpMemberNode != nullptr) // else do nothing
     {
         tmpMemberNode->getValue()->updateExpenses(record->getPrice());
     }
     delete tmpMember;
+    record->updateNumberOfBuys();//////////////////////////////////////////////////////////////////////////////
     return StatusType::SUCCESS;
 }
 
@@ -192,7 +197,7 @@ StatusType RecordsCompany::addPrize(int c_id1, int c_id2, double amount)
         return StatusType::SUCCESS;
     }
     addPrizeHelper(c_id1, c_id2 - 1, amount, m_members.getRoot()); //upper limit shouldn't get the bonus,
-                                                                            // so instead of changing the function just make it one smaller
+    // so instead of changing the function just make it one smaller
     return StatusType::SUCCESS;
 }
 
@@ -385,8 +390,4 @@ StatusType RecordsCompany::getPlace(int r_id, int* column, int* height)
 
     return StatusType::SUCCESS;
 
-}
-
-void RecordsCompany::getAllRecords(ostream& os){
-    m_UFrecords.printAllRecords(os);
 }
