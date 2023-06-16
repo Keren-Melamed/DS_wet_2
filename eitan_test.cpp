@@ -4,7 +4,7 @@
 using namespace std;
 
 void status_aux(StatusType status) {
-        switch (status)
+    switch (status)
     {
         case StatusType::SUCCESS:
             cout<<"SUCCESS"<<endl;
@@ -18,7 +18,13 @@ void status_aux(StatusType status) {
         case StatusType::INVALID_INPUT:
             cout<<"INVALID_INPUT"<<endl;
             break;
-    }
+        case StatusType::ALREADY_EXISTS:
+            cout<<"ALREADY_EXISTS" << endl;
+    
+        case StatusType::DOESNT_EXISTS:
+            cout << "DOESNT_EXIST" << endl;
+
+        }
 
 }
 
@@ -47,8 +53,11 @@ void make_member_aux(RecordsCompany *obj, int c_id) {
 void is_member_aux(RecordsCompany *obj, int c_id) {
     std::cout<<"is  "<< c_id <<" a member " << endl;
     Output_t<bool> res = obj->isMember(c_id);
-    if((res.ans() == true)||(res.ans() == false)){
-        std::cout << res.ans() << std::endl;  
+    if(res.ans() == true){
+        std::cout << "true" << std::endl;  
+    }
+     if(res.ans() == false){
+        std::cout << "false" << std::endl;  
     }
     else{
         status_aux(res.status());
@@ -86,10 +95,11 @@ void put_on_top_aux(RecordsCompany *obj, int r_id1, int r_id2)
 
 void get_place_aux(RecordsCompany *obj, int r_id){
     std::cout << " getting place of record  "<< r_id << endl;
-    int* column;
-    int* height;
-    status_aux(obj->getPlace(r_id, column, height));
-    std::cout << "column: " << &column << " height: " << &height << endl;
+    int column = 0;
+    int height = 0;
+    status_aux(obj->getPlace(r_id, &column, &height));
+
+    std::cout << "column: " << column << " height: " << height << endl;
 }
 
 void test() {
