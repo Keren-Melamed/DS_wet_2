@@ -25,8 +25,6 @@ StatusType RecordsCompany::newMonth(int* records_stocks, int number_of_records)
 
     m_numberOfRecords = number_of_records;
 
-    m_numberOfRecords = number_of_records;
-
     return StatusType::SUCCESS;
 }
 
@@ -51,7 +49,6 @@ StatusType RecordsCompany::addCostumer(int c_id, int phone)
     Node<Costumer>* newNode = m_costumers.getCostumer(c_id);
     if(newNode != nullptr)
     {
-        //cout << "costumer already exists" << endl;
         //cout << "costumer already exists" << endl;
         return StatusType::ALREADY_EXISTS;
     }
@@ -125,7 +122,6 @@ StatusType RecordsCompany::makeMember(int c_id)
     }
     //if member is added after prizes were distributed than we need to adjust his expenses, can be done by subtracting
 // the accumulated ranks from his expenses ************* happens in tree.insertValue
-// the accumulated ranks from his expenses ************* happens in tree.insertValue
 }
 
 Output_t<bool> RecordsCompany::isMember(int c_id)
@@ -144,7 +140,6 @@ Output_t<bool> RecordsCompany::isMember(int c_id)
     else
     {
         //cout << "the costumer: " << newNode->getValue()->getId() << endl;
-        //cout << "the costumer: " << newNode->getValue()->getId() << endl;
         bool isMember = newNode->getValue()->getIsMember();
         Output_t<bool> result(isMember);
         return result;
@@ -154,11 +149,9 @@ Output_t<bool> RecordsCompany::isMember(int c_id)
 StatusType RecordsCompany::buyRecord(int c_id, int r_id)
 {
     if(((c_id < 0) || (r_id < 0)) || (r_id >= m_numberOfRecords)) //maybe only >
-    if(((c_id < 0) || (r_id < 0)) || (r_id >= m_numberOfRecords)) //maybe only >
     {
         return StatusType ::INVALID_INPUT;
     }
-    if(r_id > m_numberOfRecords)
     if(r_id > m_numberOfRecords)
     {
         return StatusType::DOESNT_EXISTS;
@@ -183,11 +176,7 @@ StatusType RecordsCompany::buyRecord(int c_id, int r_id)
     if(tmpMemberNode != nullptr) // else do nothing
     {
         tmpMemberNode->getValue()->updateExpenses(record->getPrice());
-
-        tmpMemberNode->getValue()->updateExpenses(record->getPrice());
-
     }
-    delete tmpMember;
     delete tmpMember;
     return StatusType::SUCCESS;
 }
