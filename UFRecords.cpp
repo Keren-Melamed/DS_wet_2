@@ -96,12 +96,12 @@ void UFRecords::Union(int child, int parent){
         return;
     }
 
-    m_parents[child] = parent;
+    m_parents[parent] = child;
 
-    m_records[child].UpdateHeight(m_sizes[parent]);
+    m_records[parent].UpdateHeight(m_sizes[child]);
 
-    m_sizes[child] += m_sizes[parent];
-    m_sizes[parent] = 0;
+    m_sizes[parent] += m_sizes[parent];
+    m_sizes[child] = 0;
 }
 
 int UFRecords::Find(int r_id){
