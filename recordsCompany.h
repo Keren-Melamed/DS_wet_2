@@ -8,18 +8,12 @@
 #include "UFRecords.h"
 #include <memory>
 
-
-
-
-
 using namespace std;
 
-
 class RecordsCompany {
-  private:
+private:
 
     int m_numberOfRecords;
-    UFRecords m_UFrecords;
 
     void addPrizeHelper(int c_id1, int c_id2, double amount, RankedNode<Costumer>* node);
     void addPrizeHelperLeft(int c_id1, int c_id2, double amount, RankedNode<Costumer>* node);
@@ -29,10 +23,11 @@ class RecordsCompany {
 
     double getExpensesHelper(RankedNode<Costumer>* node, Costumer* tmpCostumer, double counter);
 
-  public:
+public:
 
-    HashTable<Costumer> m_costumers;
+    HashTable m_costumers;
     RankedAVLTree<Costumer> m_members;
+    UFRecords m_UFrecords;
 
     RecordsCompany();
     ~RecordsCompany();

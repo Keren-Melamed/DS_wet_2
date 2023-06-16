@@ -1,5 +1,7 @@
 
 #include "recordsCompany.h"
+using namespace std;
+
 
 RecordsCompany::RecordsCompany() : m_numberOfRecords(0)
 {}
@@ -92,26 +94,31 @@ StatusType RecordsCompany::makeMember(int c_id)
         return StatusType ::INVALID_INPUT;
     }
 
-    Node<Costumer>* newNode = m_costumers.getCostumer(c_id);
+    Node<Costumer>* newCostumerNode = m_costumers.getCostumer(c_id);
 
-    if(newNode == nullptr)
+
+    if(newCostumerNode == nullptr)
     {
         return StatusType::DOESNT_EXISTS;
     }
 
-    Costumer* newMember = newNode->getValue();
-    if(m_members.findObject(m_members.getRoot(), newMember) != nullptr)
+    Costumer* theCostumer = newCostumerNode->getValue();
+    if(m_members.findObject(m_members.getRoot(), theCostumer) != nullptr)
     {
         return StatusType::ALREADY_EXISTS;
     }
 
-    newMember->setMember(true);
+    newCostumerNode->getValue()->setMember(true);
 
     try
     {
-        m_members.insertValue(newMember);
+        /*Costumer* newMember = new Costumer(theCostumer->getId(), theCostumer->getPhoneNumber(),
+                                           theCostumer->getExpenses(), theCostumer->getIsMember());
+        m_members.insertValue(newMember);*/
+        m_members.insertValue(theCostumer);
         return StatusType::SUCCESS;
     }
+
 
     catch(BadAllocation& e)
     {
@@ -145,11 +152,11 @@ Output_t<bool> RecordsCompany::isMember(int c_id)
 
 StatusType RecordsCompany::buyRecord(int c_id, int r_id)
 {
-    if(((c_id < 0) || (r_id < 0)) || (r_id >= m_numberOfRecords)) //maybe only >
+    if(((c_id < 0) || (r_id < 0))) //maybe only >
     {
         return StatusType ::INVALID_INPUT;
     }
-    if(r_id > m_numberOfRecords)
+    if(r_id >= m_numberOfRecords)
     {
         return StatusType::DOESNT_EXISTS;
     }
@@ -173,10 +180,9 @@ StatusType RecordsCompany::buyRecord(int c_id, int r_id)
     if(tmpMemberNode != nullptr) // else do nothing
     {
         tmpMemberNode->getValue()->updateExpenses(record->getPrice());
-
     }
-    record->updateNumberOfBuys();
     delete tmpMember;
+    record->updateNumberOfBuys();//////////////////////////////////////////////////////////////////////////////
     return StatusType::SUCCESS;
 }
 
@@ -191,7 +197,7 @@ StatusType RecordsCompany::addPrize(int c_id1, int c_id2, double amount)
         return StatusType::SUCCESS;
     }
     addPrizeHelper(c_id1, c_id2 - 1, amount, m_members.getRoot()); //upper limit shouldn't get the bonus,
-                                                                            // so instead of changing the function just make it one smaller
+    // so instead of changing the function just make it one smaller
     return StatusType::SUCCESS;
 }
 
@@ -302,11 +308,13 @@ Output_t<double> RecordsCompany::getExpenses(int c_id)
     Costumer* tmpCostumer = new Costumer(c_id, 0);
 
     if(m_members.getRoot() == nullptr){
+        delete tmpCostumer;
         return StatusType::DOESNT_EXISTS;
     }
 
     RankedNode<Costumer>* costumerNode = m_members.findObject(m_members.getRoot(), tmpCostumer);
     if(costumerNode == nullptr){
+        delete tmpCostumer;
         return StatusType::DOESNT_EXISTS;
     }
 
@@ -350,22 +358,35 @@ double RecordsCompany::getExpensesHelper(RankedNode<Costumer>* node, Costumer* t
 
 StatusType RecordsCompany::putOnTop(int r_id1, int r_id2)
 {
-    if((r_id1 < 0) || (r_id2 < 0) || (r_id1 > m_numberOfRecords) || (r_id2 > m_numberOfRecords)){
+    if((r_id1 < 0) || (r_id2 < 0)){
         return StatusType::INVALID_INPUT;
     }
-    m_UFrecords.Union(r_id2, r_id1);
+
+    if((r_id1 >= m_numberOfRecords) || (r_id2 >= m_numberOfRecords)){
+        return StatusType::DOESNT_EXISTS;
+    }
+
+    if(m_UFrecords.isDisjoint(r_id1, r_id2)){
+        return StatusType::FAILURE;
+    }
+
+    m_UFrecords.Union(r_id1, r_id2);
     return StatusType::SUCCESS;
 }
 
 StatusType RecordsCompany::getPlace(int r_id, int* column, int* height)
 {
-    if((r_id < 0) ||(r_id >= m_numberOfRecords)){
+    if((r_id < 0) ||(column == nullptr) || (height == nullptr)){
         return StatusType::INVALID_INPUT;
+    }
+
+    if(r_id >= m_numberOfRecords){
+        return StatusType::DOESNT_EXISTS;
     }
 
     *column = m_UFrecords.Find(r_id);
 
-    *height = m_UFrecords.getRecordHeight(r_id);;
+    *height = m_UFrecords.getRecordHeight(r_id);
 
     return StatusType::SUCCESS;
 
