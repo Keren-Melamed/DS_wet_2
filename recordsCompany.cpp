@@ -383,7 +383,6 @@ StatusType RecordsCompany::putOnTop(int r_id1, int r_id2)
 StatusType RecordsCompany::getPlace(int r_id, int* column, int* height)
 {
     if((r_id < 0) ||(r_id >= m_numberOfRecords)){
-    if((r_id < 0) ||(r_id >= m_numberOfRecords)){
         return StatusType::INVALID_INPUT;
     }
     *column = m_UFrecords.Find(r_id);

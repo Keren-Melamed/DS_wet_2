@@ -34,7 +34,7 @@ class RecordsCompany {
 
   public:
 
-    HashTable<Costumer> m_costumers;
+    HashTable m_costumers;
     RankedAVLTree<Costumer> m_members;
     UFRecords m_UFrecords;
     void getAllRecords(ostream& os);
