@@ -72,6 +72,8 @@ class RankedNode {
 
         double getRank() const;
 
+        //double getExtraRank() const;
+
         /*
         * setter for left node's pointer
         *
@@ -110,6 +112,8 @@ class RankedNode {
 
         void updateRank(double rank);
 
+        //void updateExtraRank(double rank);
+
     private:
 
         RankedNode* m_leftNode;
@@ -119,6 +123,7 @@ class RankedNode {
 
         int m_height;
         double m_rank;
+        //double m_extraRank;
 
 };
 
@@ -128,13 +133,13 @@ class RankedNode {
 
 template<class T>
 RankedNode<T>::RankedNode(T* value) :
-    m_leftNode(nullptr), m_rightNode(nullptr), m_value(value), m_height(0), m_rank(0)
+    m_leftNode(nullptr), m_rightNode(nullptr), m_value(value), m_height(0), m_rank(0)//, m_extraRank(0)
 {}
 
 template<class T>
 RankedNode<T>::RankedNode(const RankedNode& originalRankedNode) :
     m_leftNode(originalRankedNode.getLeftNode()), m_rightNode(originalRankedNode.getRightNode()), m_value(originalRankedNode.getValue()),
-    m_height(originalRankedNode.getHeight()), m_rank(originalRankedNode.getRank())
+    m_height(originalRankedNode.getHeight()), m_rank(originalRankedNode.getRank())//, m_extraRank(originalRankedNode.getExtraRank())
 {}
 
 
@@ -195,10 +200,22 @@ double RankedNode<T>::getRank() const
     return m_rank;
 }
 
+/*template<class T>
+double RankedNode<T>::getExtraRank() const
+{
+    return m_extraRank;
+}*/
+
 template<class T>
 void RankedNode<T>::updateRank(double rank)
 {
     m_rank += rank;
 }
+
+/*template<class T>
+void RankedNode<T>::updateExtraRank(double rank)
+{
+    m_extraRank += rank;
+}*/
 
 #endif // RANKEDNODE_H

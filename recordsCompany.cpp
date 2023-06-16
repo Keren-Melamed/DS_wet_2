@@ -43,11 +43,11 @@ StatusType RecordsCompany::addCostumer(int c_id, int phone)
     {
         return StatusType::INVALID_INPUT;
     }
-    
+
     Node<Costumer>* newNode = m_costumers.getCostumer(c_id);
     if(newNode != nullptr)
     {
-        cout << "costumer already exists" << endl;
+        //cout << "costumer already exists" << endl;
         return StatusType::ALREADY_EXISTS;
     }
     else
@@ -106,7 +106,7 @@ StatusType RecordsCompany::makeMember(int c_id)
     }
 
     newMember->setMember(true);
-    
+
     try
     {
         m_members.insertValue(newMember);
@@ -129,14 +129,14 @@ Output_t<bool> RecordsCompany::isMember(int c_id)
     }
 
     Node<Costumer>* newNode = m_costumers.getCostumer(c_id);
-    
+
     if(newNode == nullptr)
     {
         return StatusType::DOESNT_EXISTS;
     }
     else
     {
-        cout << "the costumer: " << newNode->getValue()->getId() << endl;
+        //cout << "the costumer: " << newNode->getValue()->getId() << endl;
         bool isMember = newNode->getValue()->getIsMember();
         Output_t<bool> result(isMember);
         return result;
@@ -166,10 +166,11 @@ StatusType RecordsCompany::buyRecord(int c_id, int r_id)
 
         return StatusType::DOESNT_EXISTS;
     }
+    record->updateNumberOfBuys();
 
     Costumer* tmpMember = new Costumer(c_id, 0);
     RankedNode<Costumer>* tmpMemberNode = m_members.findObject(m_members.getRoot(), tmpMember);
-    
+
     if(tmpMemberNode != nullptr) // else do nothing
     {
         tmpMemberNode->getValue()->updateExpenses(record->getPrice());
@@ -185,7 +186,12 @@ StatusType RecordsCompany::addPrize(int c_id1, int c_id2, double amount)
     {
         return StatusType::INVALID_INPUT;
     }
-    addPrizeHelper(c_id1, c_id2, amount, m_members.getRoot());
+    if(c_id1 == c_id2)// don't actually need this but why even call addPrizeHelper and risk a problem?
+    {
+        return StatusType::SUCCESS;
+    }
+    addPrizeHelper(c_id1, c_id2 - 1, amount, m_members.getRoot()); //upper limit shouldn't get the bonus,
+                                                                            // so instead of changing the function just make it one smaller
     return StatusType::SUCCESS;
 }
 
@@ -294,7 +300,20 @@ Output_t<double> RecordsCompany::getExpenses(int c_id)
         return Output_t<double>(StatusType::INVALID_INPUT);
     }
     Costumer* tmpCostumer = new Costumer(c_id, 0);
+
+    if(m_members.getRoot() == nullptr){
+        return StatusType::DOESNT_EXISTS;
+    }
+
+    RankedNode<Costumer>* costumerNode = m_members.findObject(m_members.getRoot(), tmpCostumer);
+    if(costumerNode == nullptr){
+        return StatusType::DOESNT_EXISTS;
+    }
+
+
     double extras = getExpensesHelper(m_members.getRoot(), tmpCostumer, 0);
+    extras += costumerNode->getValue()->getExpenses();
+    //extras += costumerNode->getExtraRank();
     delete tmpCostumer;
     Output_t<double> result(extras);
     return result;
@@ -309,16 +328,19 @@ double RecordsCompany::getExpensesHelper(RankedNode<Costumer>* node, Costumer* t
     }
     else if(*(node->getValue()) == *tmpCostumer)
     {
-        return counter + node->getValue()->getExpenses();
+        return counter + node->getRank();
+        //return counter + node->getValue()->getExpenses();
     }
     else if(*tmpCostumer < *(node->getValue()))
     {
-        counter += node->getValue()->getExpenses();
+        counter += node->getRank();
+        //counter += node->getValue()->getExpenses();
         return getExpensesHelper(node->getLeftNode(), tmpCostumer, counter);
     }
     else if(*tmpCostumer > *(node->getValue()))
     {
-        counter += node->getValue()->getExpenses();
+        counter += node->getRank();
+        //counter += node->getValue()->getExpenses();
         return getExpensesHelper(node->getRightNode(), tmpCostumer, counter);
     }
     cout << "somehow no condition was entered in getExpensesHelper" << endl;
@@ -340,11 +362,11 @@ StatusType RecordsCompany::getPlace(int r_id, int* column, int* height)
     if((r_id < 0) ||(r_id >= m_numberOfRecords)){
         return StatusType::INVALID_INPUT;
     }
-    
+
     *column = m_UFrecords.Find(r_id);
 
     *height = m_UFrecords.getRecordHeight(r_id);;
 
     return StatusType::SUCCESS;
-    
+
 }

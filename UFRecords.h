@@ -6,40 +6,42 @@
 
 
 class UFRecords{
-    private:
+private:
 
-        Record** m_records;
-        int* m_parents;
-        int* m_sizes;
-        int MAX_SIZE = 0;
-        
-    public:
-        UFRecords();
-        UFRecords(int *record_stocks, int num_of_records);
-        UFRecords(const UFRecords& other);
-        UFRecords& operator=(const UFRecords& other);
-        ~UFRecords();
+    Record* m_records;
+    int* m_parents;
+    int* m_sizes;
+    int MAX_SIZE = 0;
 
-        void addRecords(int *record_stocks);
+public:
 
-        int getSize(int index) const;
+    UFRecords();
+    UFRecords(int *record_stocks, int num_of_records);
+    UFRecords(const UFRecords& other);
+    UFRecords& operator=(const UFRecords& other);
+    ~UFRecords();
 
-        void updateSize(int index, int size);
+    void addRecords(int *record_stocks);
 
-        void Union(int below, int above);
+    int getSize(int index) const;
 
-        int Find(int r_id);
+    void updateSize(int index, int size);
 
-        bool isDisjoint(int r_id1, int r_id2);
+    void Union(int below, int above);
 
-        void printParents(std::ostream& os, int r_id);
-        void printAllParents(std::ostream& os);
+    int Find(int r_id);
 
-        int getRecordHeight(int r_id) const;
-        Record* getRecord(int r_id) const;
+    bool isDisjoint(int r_id1, int r_id2);
 
+    void printParents(std::ostream& os, int r_id);
+    void printAllParents(std::ostream& os);
 
-        void deleteHelper(Record** records, int* parents, int* sizes);
+    int getRecordHeight(int r_id) const;
+    Record* getRecord(int r_id) const;
+
+    void printAllRecords(std::ostream& os);
+
+    void deleteHelper(Record* records, int* parents, int* sizes);
 };
 
 #endif

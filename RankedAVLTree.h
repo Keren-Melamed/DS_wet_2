@@ -114,6 +114,8 @@ class RankedAVLTree
 
         void setRoot(RankedNode<T>* root);
 
+        void balanceUpdateRank(RankedNode<T>* node);
+
         /*
         * different methods for balancing an RankedAVLTree
         */
@@ -404,6 +406,40 @@ void RankedAVLTree<T>::insertValue(T* value)
     m_root = insertValueHelper(m_root, value, 0);
 }
 
+template<class T>//but why
+void RankedAVLTree<T>::balanceUpdateRank(RankedNode<T> *node)
+{
+    double rootRank = node->getRank();
+    if(node->getRightNode() != nullptr)
+    {
+        double rootRightRank = node->getRightNode()->getRank();
+        if(node->getRightNode()->getRightNode() != nullptr)
+        {
+            node->getRightNode()->getRightNode()->updateRank(rootRank + rootRightRank);
+        }
+        if(node->getRightNode()->getLeftNode() != nullptr)
+        {
+            node->getRightNode()->getLeftNode()->updateRank(rootRank + rootRightRank);
+        }
+        node->getRightNode()->updateExtraRank(rootRank + rootRightRank);
+        node->getRightNode()->updateRank(-rootRightRank);
+    }
+    if(node->getLeftNode() != nullptr)
+    {
+        double rootLeftRank = node->getLeftNode()->getRank();
+        if(node->getLeftNode()->getRightNode() != nullptr)
+        {
+            node->getRightNode()->getLeftNode()->updateRank(rootRank + rootLeftRank);
+        }
+        if(node->getLeftNode()->getLeftNode() != nullptr)
+        {
+            node->getLeftNode()->getLeftNode()->updateRank(rootRank + rootLeftRank);
+        }
+        node->getRightNode()->updateExtraRank(rootRank + rootLeftRank);
+        node->getRightNode()->updateRank(-rootLeftRank);
+    }
+}
+
 template<class T>
 RankedNode<T>* RankedAVLTree<T>::balance(RankedNode<T>* node)
 {
@@ -412,14 +448,18 @@ RankedNode<T>* RankedAVLTree<T>::balance(RankedNode<T>* node)
         return nullptr;
     }
     int balance = balanceFactor(node);
+
+
     if(balance > 1)
     {
         if(balanceFactor(node->getLeftNode()) > -1)
         {
+            //balanceUpdateRank(node);//??????????????????????????????????????????????????????
             return (rotateRight(node));
         }
         else if(balanceFactor(node->getLeftNode()) == -1)
         {
+            //balanceUpdateRank(node);//??????????????????????????????????????????????????????
             node->setLeftNode(rotateLeft(node->getLeftNode()));
             return rotateRight(node);
         }
@@ -432,10 +472,12 @@ RankedNode<T>* RankedAVLTree<T>::balance(RankedNode<T>* node)
     {
         if(balanceFactor(node->getRightNode()) < 1)
         {
+            //balanceUpdateRank(node);//??????????????????????????????????????????????????????
             return rotateLeft(node);
         }
         else if(balanceFactor(node->getRightNode()) == 1)
         {
+            //balanceUpdateRank(node);//??????????????????????????????????????????????????????
             node->setRightNode(rotateRight(node->getRightNode()));
             return rotateLeft(node);
         }
@@ -495,13 +537,12 @@ RankedNode<T>* RankedAVLTree<T>::rotateLeft(RankedNode<T>* parent)
     parentRight->setHeight(calculateHeight(parentRight));
 
     double parentRank = parent->getRank(), parentRightRank = parentRight->getRank();
-    parent->updateRank(-parentRank -parentRightRank/*maybe*/);
+    parent->updateRank(-parentRank -parentRightRank); //maybe
     parentRight->updateRank(parentRank);
     if(parentRightLeft != nullptr)//also maybe
     {
         parentRightLeft->updateRank(parentRightRank);
     }
-
 
     return parentRight;
 }
@@ -523,7 +564,7 @@ RankedNode<T>* RankedAVLTree<T>::rotateRight(RankedNode<T>* parent)
     parentLeft->setHeight(calculateHeight(parentLeft));
 
     double parentRank = parent->getRank(), parentLeftRank = parentLeft->getRank();
-    parent->updateRank(-parentRank -parentLeftRank/*maybe*/);
+    parent->updateRank(-parentRank -parentLeftRank);//maybe
     parentLeft->updateRank(parentRank);
     if(parentLeftRight != nullptr)//also maybe
     {

@@ -13,7 +13,7 @@ private:
 
 public:
 
-    Record();
+    Record() /*= delete*/;
     Record(int id, int number_of_buys, int copies);
 
     Record(const Record& other) = default;
@@ -34,17 +34,13 @@ public:
 
     void setNumberOfCopies(int copies);
 
-
     void setNumberOfBuys(int number_of_buys);
 
     void UpdateHeight(int height);
-    void updateNumberOfBuys();
-    
 
     void updateNumberOfBuys();
     
-    void setNumberOfBuys(int number_of_buys);
 
-    void UpdateHeight(int height);
+
 };
 #endif
