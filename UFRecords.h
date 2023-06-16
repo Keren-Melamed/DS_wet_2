@@ -6,7 +6,7 @@
 
 
 class UFRecords{
-    private:
+private:
 
         Record* m_records;
         int* m_parents;
@@ -21,20 +21,20 @@ class UFRecords{
         UFRecords& operator=(const UFRecords& other);
         ~UFRecords();
 
-        void addRecords(int *record_stocks);
+    void addRecords(int *record_stocks);
 
         int getSize(int index) const;
 
-        void updateSize(int index, int size);
+    void updateSize(int index, int size);
 
-        void Union(int below, int above);
+    void Union(int below, int above);
 
-        int Find(int r_id);
+    int Find(int r_id);
 
-        bool isDisjoint(int r_id1, int r_id2);
+    bool isDisjoint(int r_id1, int r_id2);
 
-        void printParents(std::ostream& os, int r_id);
-        void printAllParents(std::ostream& os);
+    void printParents(std::ostream& os, int r_id);
+    void printAllParents(std::ostream& os);
 
         int getRecordHeight(int r_id) const;
         Record* getRecord(int r_id) const;

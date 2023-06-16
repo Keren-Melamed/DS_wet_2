@@ -25,7 +25,20 @@ StatusType RecordsCompany::newMonth(int* records_stocks, int number_of_records)
 
     m_numberOfRecords = number_of_records;
 
+    m_numberOfRecords = number_of_records;
+
     return StatusType::SUCCESS;
+}
+
+void RecordsCompany::resetAllExpenses(RankedNode<Costumer> *node)
+{
+    if(node == nullptr)
+    {
+        return;
+    }
+    resetAllExpenses(node->getLeftNode());
+    node->getValue()->updateExpenses(-(node->getValue()->getExpenses()));
+    resetAllExpenses(node->getRightNode());
 }
 
 void RecordsCompany::resetAllExpenses(RankedNode<Costumer> *node)
@@ -45,10 +58,11 @@ StatusType RecordsCompany::addCostumer(int c_id, int phone)
     {
         return StatusType::INVALID_INPUT;
     }
-    
+    Costumer newCostumer(c_id, phone);
     Node<Costumer>* newNode = m_costumers.getCostumer(c_id);
     if(newNode != nullptr)
     {
+        //cout << "costumer already exists" << endl;
         //cout << "costumer already exists" << endl;
         return StatusType::ALREADY_EXISTS;
     }
@@ -96,6 +110,7 @@ StatusType RecordsCompany::makeMember(int c_id)
 
     Node<Costumer>* newNode = m_costumers.getCostumer(c_id);
 
+
     if(newNode == nullptr)
     {
         return StatusType::DOESNT_EXISTS;
@@ -106,7 +121,6 @@ StatusType RecordsCompany::makeMember(int c_id)
     {
         return StatusType::ALREADY_EXISTS;
     }
-
     newMember->setMember(true);
     
     try
@@ -115,11 +129,13 @@ StatusType RecordsCompany::makeMember(int c_id)
         return StatusType::SUCCESS;
     }
 
+
     catch(BadAllocation& e)
     {
         return StatusType::ALLOCATION_ERROR;
     }
     //if member is added after prizes were distributed than we need to adjust his expenses, can be done by subtracting
+// the accumulated ranks from his expenses ************* happens in tree.insertValue
 // the accumulated ranks from his expenses ************* happens in tree.insertValue
 }
 
@@ -139,6 +155,7 @@ Output_t<bool> RecordsCompany::isMember(int c_id)
     else
     {
         //cout << "the costumer: " << newNode->getValue()->getId() << endl;
+        //cout << "the costumer: " << newNode->getValue()->getId() << endl;
         bool isMember = newNode->getValue()->getIsMember();
         Output_t<bool> result(isMember);
         return result;
@@ -148,9 +165,11 @@ Output_t<bool> RecordsCompany::isMember(int c_id)
 StatusType RecordsCompany::buyRecord(int c_id, int r_id)
 {
     if(((c_id < 0) || (r_id < 0)) || (r_id >= m_numberOfRecords)) //maybe only >
+    if(((c_id < 0) || (r_id < 0)) || (r_id >= m_numberOfRecords)) //maybe only >
     {
         return StatusType ::INVALID_INPUT;
     }
+    if(r_id > m_numberOfRecords)
     if(r_id > m_numberOfRecords)
     {
         return StatusType::DOESNT_EXISTS;
@@ -176,7 +195,10 @@ StatusType RecordsCompany::buyRecord(int c_id, int r_id)
     {
         tmpMemberNode->getValue()->updateExpenses(record->getPrice());
 
+        tmpMemberNode->getValue()->updateExpenses(record->getPrice());
+
     }
+    delete tmpMember;
     delete tmpMember;
     return StatusType::SUCCESS;
 }
@@ -187,7 +209,12 @@ StatusType RecordsCompany::addPrize(int c_id1, int c_id2, double amount)
     {
         return StatusType::INVALID_INPUT;
     }
-    addPrizeHelper(c_id1, c_id2 - 1, amount, m_members.getRoot());
+    if(c_id1 == c_id2)// don't actually need this but why even call addPrizeHelper and risk a problem?
+    {
+        return StatusType::SUCCESS;
+    }
+    addPrizeHelper(c_id1, c_id2 - 1, amount, m_members.getRoot()); //upper limit shouldn't get the bonus,
+                                                                            // so instead of changing the function just make it one smaller
     return StatusType::SUCCESS;
 }
 
@@ -301,12 +328,15 @@ Output_t<double> RecordsCompany::getExpenses(int c_id)
         return StatusType::DOESNT_EXISTS;
     }
 
-    if(m_members.findObject(m_members.getRoot(), tmpCostumer) == nullptr){
+    RankedNode<Costumer>* costumerNode = m_members.findObject(m_members.getRoot(), tmpCostumer);
+    if(costumerNode == nullptr){
         return StatusType::DOESNT_EXISTS;
     }
 
 
     double extras = getExpensesHelper(m_members.getRoot(), tmpCostumer, 0);
+    extras += costumerNode->getValue()->getExpenses();
+    //extras += costumerNode->getExtraRank();
     delete tmpCostumer;
     Output_t<double> result(extras);
     return result;
@@ -321,16 +351,19 @@ double RecordsCompany::getExpensesHelper(RankedNode<Costumer>* node, Costumer* t
     }
     else if(*(node->getValue()) == *tmpCostumer)
     {
-        return counter + node->getValue()->getExpenses();
+        return counter + node->getRank();
+        //return counter + node->getValue()->getExpenses();
     }
     else if(*tmpCostumer < *(node->getValue()))
     {
-        counter += node->getValue()->getExpenses();
+        counter += node->getRank();
+        //counter += node->getValue()->getExpenses();
         return getExpensesHelper(node->getLeftNode(), tmpCostumer, counter);
     }
     else if(*tmpCostumer > *(node->getValue()))
     {
-        counter += node->getValue()->getExpenses();
+        counter += node->getRank();
+        //counter += node->getValue()->getExpenses();
         return getExpensesHelper(node->getRightNode(), tmpCostumer, counter);
     }
     //cout << "somehow no condition was entered in getExpensesHelper" << endl;
@@ -350,6 +383,7 @@ StatusType RecordsCompany::putOnTop(int r_id1, int r_id2)
 StatusType RecordsCompany::getPlace(int r_id, int* column, int* height)
 {
     if((r_id < 0) ||(r_id >= m_numberOfRecords)){
+    if((r_id < 0) ||(r_id >= m_numberOfRecords)){
         return StatusType::INVALID_INPUT;
     }
     *column = m_UFrecords.Find(r_id);
@@ -357,7 +391,7 @@ StatusType RecordsCompany::getPlace(int r_id, int* column, int* height)
     *height = m_UFrecords.getRecordHeight(r_id);
 
     return StatusType::SUCCESS;
-    
+
 }
 
 

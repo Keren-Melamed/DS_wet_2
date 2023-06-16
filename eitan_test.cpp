@@ -4,7 +4,7 @@
 using namespace std;
 
 void status_aux(StatusType status) {
-    switch (status)
+        switch (status)
     {
         case StatusType::SUCCESS:
             cout<<"SUCCESS"<<endl;
@@ -18,13 +18,7 @@ void status_aux(StatusType status) {
         case StatusType::INVALID_INPUT:
             cout<<"INVALID_INPUT"<<endl;
             break;
-        case StatusType::ALREADY_EXISTS:
-            cout<<"ALREADY_EXISTS" << endl;
-    
-        case StatusType::DOESNT_EXISTS:
-            cout << "DOESNT_EXIST" << endl;
-
-        }
+    }
 
 }
 
@@ -53,11 +47,8 @@ void make_member_aux(RecordsCompany *obj, int c_id) {
 void is_member_aux(RecordsCompany *obj, int c_id) {
     std::cout<<"is  "<< c_id <<" a member " << endl;
     Output_t<bool> res = obj->isMember(c_id);
-    if(res.ans() == true){
-        std::cout << "true" << std::endl;  
-    }
-     if(res.ans() == false){
-        std::cout << "false" << std::endl;  
+    if((res.ans() == true)||(res.ans() == false)){
+        std::cout << res.ans() << std::endl;  
     }
     else{
         status_aux(res.status());
@@ -95,30 +86,32 @@ void put_on_top_aux(RecordsCompany *obj, int r_id1, int r_id2)
 
 void get_place_aux(RecordsCompany *obj, int r_id){
     std::cout << " getting place of record  "<< r_id << endl;
-    int column = 0;
-    int height = 0;
-    status_aux(obj->getPlace(r_id, &column, &height));
-
-    std::cout << "column: " << column << " height: " << height << endl;
-    
+    int* column;
+    int* height;
+    status_aux(obj->getPlace(r_id, column, height));
+    std::cout << "column: " << &column << " height: " << &height << endl;
 }
 
 void test() {
     RecordsCompany *obj = new RecordsCompany();
-    int* stocks = new int[18]{18, 18, 13, 17, 18, 4, 18, 9, 11, 16, 8, 13, 8, 10, 20, 13, 4, 5};
-    
-    new_month_aux(obj, 18, stocks);
 
+    new_month_aux(obj, 18, new int [18, 18, 13, 17, 18, 4, 18, 9, 11, 16, 8, 13, 8, 10, 20, 13, 4, 5]);
+    add_costumer_aux(obj, 206, 246);
+    add_costumer_aux(obj, 184, -4);
+    add_costumer_aux(obj, 245, 175);
+    buy_record_aux(obj, 206, 10);
+    get_expenses_aux(obj, 245);
     put_on_top_aux(obj, -1, 15);
-
+    add_prize_aux(obj, 7, 2, 72);
+    add_costumer_aux(obj, 163, 214);
+    add_costumer_aux(obj, 127, 42);
     get_place_aux(obj, 12);
-
+    is_member_aux(obj, 163);
+    add_costumer_aux(obj, 72, 45);
+    get_expenses_aux(obj, 127);
+    make_member_aux(obj, 206);
     put_on_top_aux(obj, 3, 11);
-    obj->m_UFrecords.printParents(cout, 3);
-
     get_place_aux(obj, 3);
-
-    /*
     get_expenses_aux(obj, 206);
     is_member_aux(obj, 217);
     is_member_aux(obj, 72);
@@ -206,7 +199,8 @@ void test() {
     get_expenses_aux(obj, 160);
     add_costumer_aux(obj, 80, 75);
 
-*/
+
+
     delete obj;
 
 }

@@ -8,7 +8,7 @@ UFRecords::UFRecords(){
 }
 
 UFRecords::UFRecords(int *record_stocks, int num_of_records){
-    
+
     int* sizes = new int[num_of_records];
     m_sizes = sizes;
 
@@ -26,11 +26,11 @@ UFRecords::UFRecords(int *record_stocks, int num_of_records){
     }
 
     MAX_SIZE = num_of_records;
-   
+
 }
 
 UFRecords::UFRecords(const UFRecords& other){
-    
+
     this->MAX_SIZE = other.MAX_SIZE;
     int* sizes = new int[MAX_SIZE];
     m_sizes = sizes;
@@ -47,7 +47,6 @@ UFRecords::UFRecords(const UFRecords& other){
         this->m_parents[i] = other.m_parents[i];
         this->m_sizes[i] = other.m_sizes[i];
     }
-    
 }
 
 UFRecords& UFRecords::operator=(const UFRecords& other){
@@ -65,8 +64,8 @@ UFRecords& UFRecords::operator=(const UFRecords& other){
             tempParents[i] = other.m_parents[i];
             tempSizes[i] = other.m_sizes[i];
         }
-    } 
-    
+    }
+
     catch(...) {
         deleteHelper(tempRecords, tempParents, tempSizes);
         throw;
@@ -110,7 +109,7 @@ int UFRecords::Find(int r_id){
         return r_id;
     }
     return m_parents[r_id] = Find(m_parents[r_id]);
-    
+
 }
 
 bool UFRecords::isDisjoint(int r_id1, int r_id2){
