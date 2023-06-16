@@ -50,6 +50,7 @@ StatusType RecordsCompany::addCostumer(int c_id, int phone)
     if(newNode != nullptr)
     {
         //cout << "costumer already exists" << endl;
+        delete newNode;
         return StatusType::ALREADY_EXISTS;
     }
     else
@@ -57,10 +58,12 @@ StatusType RecordsCompany::addCostumer(int c_id, int phone)
         try
         {
             m_costumers.insert(c_id, phone);
+            delete newNode;
             return StatusType::SUCCESS;
         }
         catch (BadAllocation &e)
         {
+            delete newNode;
             return StatusType::ALLOCATION_ERROR;
         }
     }
