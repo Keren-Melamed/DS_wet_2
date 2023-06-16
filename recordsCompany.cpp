@@ -351,18 +351,28 @@ double RecordsCompany::getExpensesHelper(RankedNode<Costumer>* node, Costumer* t
 
 StatusType RecordsCompany::putOnTop(int r_id1, int r_id2)
 {
-    if((r_id1 < 0) || (r_id2 < 0) || (r_id1 > m_numberOfRecords) || (r_id2 > m_numberOfRecords)){
+    if((r_id1 < 0) || (r_id2 < 0)){
         return StatusType::INVALID_INPUT;
     }
+
+    if((r_id1 > m_numberOfRecords) || (r_id2 > m_numberOfRecords)){
+        return StatusType::DOESNT_EXISTS;
+    }
+
     m_UFrecords.Union(r_id1, r_id2);
     return StatusType::SUCCESS;
 }
 
 StatusType RecordsCompany::getPlace(int r_id, int* column, int* height)
 {
-    if((r_id < 0) ||(r_id >= m_numberOfRecords)){
+    if((r_id < 0) ||(column == nullptr) || (height == nullptr)){
         return StatusType::INVALID_INPUT;
     }
+
+    if(r_id >= m_numberOfRecords){
+        return StatusType::DOESNT_EXISTS;
+    }
+
     *column = m_UFrecords.Find(r_id);
 
     *height = m_UFrecords.getRecordHeight(r_id);
