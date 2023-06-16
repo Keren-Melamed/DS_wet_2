@@ -98,7 +98,7 @@ void UFRecords::Union(int child, int parent){
 
     m_parents[child] = parent;
 
-    m_records[child].UpdateHeight(m_sizes[child]);
+    m_records[child].UpdateHeight(m_sizes[parent]);
 
     m_sizes[child] += m_sizes[parent];
     m_sizes[parent] = 0;
