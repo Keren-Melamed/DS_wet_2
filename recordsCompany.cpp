@@ -166,7 +166,6 @@ StatusType RecordsCompany::buyRecord(int c_id, int r_id)
 
         return StatusType::DOESNT_EXISTS;
     }
-    record->updateNumberOfBuys();
 
     Costumer* tmpMember = new Costumer(c_id, 0);
     RankedNode<Costumer>* tmpMemberNode = m_members.findObject(m_members.getRoot(), tmpMember);
@@ -176,6 +175,7 @@ StatusType RecordsCompany::buyRecord(int c_id, int r_id)
         tmpMemberNode->getValue()->updateExpenses(record->getPrice());
 
     }
+    record->updateNumberOfBuys();
     delete tmpMember;
     return StatusType::SUCCESS;
 }
@@ -312,10 +312,10 @@ Output_t<double> RecordsCompany::getExpenses(int c_id)
 
 
     double extras = getExpensesHelper(m_members.getRoot(), tmpCostumer, 0);
-    extras += costumerNode->getValue()->getExpenses();
+    double totalExpenses = costumerNode->getValue()->getExpenses() - extras;
     //extras += costumerNode->getExtraRank();
     delete tmpCostumer;
-    Output_t<double> result(extras);
+    Output_t<double> result(totalExpenses);
     return result;
 }
 
