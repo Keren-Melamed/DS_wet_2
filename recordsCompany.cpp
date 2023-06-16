@@ -45,7 +45,7 @@ StatusType RecordsCompany::addCostumer(int c_id, int phone)
     {
         return StatusType::INVALID_INPUT;
     }
-    
+
     Node<Costumer>* newNode = m_costumers.getCostumer(c_id);
     if(newNode != nullptr)
     {
@@ -357,7 +357,7 @@ StatusType RecordsCompany::putOnTop(int r_id1, int r_id2)
         return StatusType::INVALID_INPUT;
     }
 
-    if((r_id1 > m_numberOfRecords) || (r_id2 > m_numberOfRecords)){
+    if((r_id1 >= m_numberOfRecords) || (r_id2 >= m_numberOfRecords)){
         return StatusType::DOESNT_EXISTS;
     }
 
