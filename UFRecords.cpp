@@ -91,17 +91,17 @@ void UFRecords::updateSize(int index, int size){
     m_sizes[index] += size;
 }
 
-void UFRecords::Union(int child, int parent){
-    if(child == parent){
+void UFRecords::Union(int r_id1, int r_id2){
+    if(r_id2 == r_id1){
         return;
     }
 
-    m_parents[parent] = child;
+    m_parents[r_id1] = r_id2;
 
-    m_records[parent].UpdateHeight(m_sizes[child]);
+    m_records[r_id1].UpdateHeight(m_sizes[r_id2]);
 
-    m_sizes[parent] += m_sizes[parent];
-    m_sizes[child] = 0;
+    m_sizes[r_id1] += m_sizes[r_id1];
+    m_sizes[r_id2] = 0;
 }
 
 int UFRecords::Find(int r_id){
