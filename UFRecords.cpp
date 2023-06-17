@@ -82,18 +82,24 @@ void UFRecords::Union(int r_id1, int r_id2){
         throw InTheSameGroup();
     }
 
-    int p1 = Find(r_id1);
-    int p2 = Find(r_id2);
+    int p1 = FindToStack(r_id1);
+    int p2 = FindToStack(r_id2);
 
     m_parents[p1] = p2;
 
-    int help = r_id2;
-    while(help != -1){
-        m_records[help].UpdateHeight(m_records[help].getHeight());
-        help = m_parents[help];
-    }
+    m_records[r_id1].UpdateHeight(m_records[r_id2].getHeight());
+
+}
 
     //m_records[r_id1].UpdateHeight(m_records[r_id2].getHeight());
+
+
+int UFRecords::FindToStack(int r_id){
+    if (m_parents[r_id] == -1){
+        return r_id;
+    }
+    m_records[r_id].UpdateHeight(m_records[m_parents[r_id]].getHeight());
+    return m_parents[r_id] = Find(m_parents[r_id]);
 }
 
 int UFRecords::Find(int r_id){
