@@ -41,6 +41,8 @@ public:
     Output_t<double> getExpenses(int c_id);
     StatusType putOnTop(int r_id1, int r_id2);
     StatusType getPlace(int r_id, int* column, int* height);
+
+    void printRecords(ostream& os);
 };
 
 #endif

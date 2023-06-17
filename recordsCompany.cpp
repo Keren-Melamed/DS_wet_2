@@ -397,3 +397,7 @@ StatusType RecordsCompany::getPlace(int r_id, int* column, int* height)
     return StatusType::SUCCESS;
 
 }
+
+void RecordsCompany::printRecords(ostream& os){
+    m_UFrecords.printAllRecords(os);
+}

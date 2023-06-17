@@ -138,6 +138,8 @@ void test() {
     
     put_on_top_aux(obj, 4, 8);
     
+    obj->printRecords(cout);
+
     cout << "HERE - SHOULD BE C = 8 H = 12" <<endl;
     get_place_aux(obj, 2);
 
