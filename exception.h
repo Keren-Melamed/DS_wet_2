@@ -28,4 +28,6 @@ class InvalidKey : public std::exception {};
 
 class InvalidNode : public std::exception {};
 
+class InTheSameGroup : public std::exception {};
+
 #endif

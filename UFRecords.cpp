@@ -73,10 +73,12 @@ UFRecords::~UFRecords(){
     deleteHelper(m_records, m_parents);
 }
 
-
 void UFRecords::Union(int r_id1, int r_id2){
     if(r_id2 == r_id1){
         return;
+    }
+    if(isInSameGroup(r_id1, r_id2)){
+        throw InTheSameGroup();
     }
 
     m_parents[r_id1] = r_id2;
