@@ -10,6 +10,7 @@ private:
 
         Record* m_records;
         int* m_parents;
+        int* m_sizes;
         int MAX_SIZE = 0;
         
     public:
@@ -22,11 +23,13 @@ private:
 
     void addRecords(int *record_stocks);
 
+    int getSize(int index) const;
+
+    void updateSize(int index, int size);
+
     void Union(int below, int above);
 
     int Find(int r_id);
-
-    int FindToStack(int r_id1);
 
     bool isInSameGroup(int r_id1, int r_id2);
 
@@ -38,7 +41,7 @@ private:
 
     void printAllRecords(std::ostream& os);
 
-    void deleteHelper(Record* records, int* parents);
+    void deleteHelper(Record* records, int* parents, int* sizes);
 };
 
 #endif

@@ -4,10 +4,13 @@
 UFRecords::UFRecords(){
     m_records = nullptr;
     m_parents = nullptr;
+    m_sizes = nullptr;
 }
 
 UFRecords::UFRecords(int *record_stocks, int num_of_records){
 
+    int* sizes = new int[num_of_records];
+    m_sizes = sizes;
 
     Record* records = new Record[num_of_records];
     m_records = records;
@@ -19,6 +22,7 @@ UFRecords::UFRecords(int *record_stocks, int num_of_records){
     {
         m_records[i] = Record(i, 0, record_stocks[i]);
         m_parents[i] = -1;
+        m_sizes[i] = record_stocks[i];
     }
 
     MAX_SIZE = num_of_records;
@@ -28,6 +32,8 @@ UFRecords::UFRecords(int *record_stocks, int num_of_records){
 UFRecords::UFRecords(const UFRecords& other){
 
     this->MAX_SIZE = other.MAX_SIZE;
+    int* sizes = new int[MAX_SIZE];
+    m_sizes = sizes;
 
     Record* records = new Record[MAX_SIZE];
     m_records = records;
@@ -39,6 +45,7 @@ UFRecords::UFRecords(const UFRecords& other){
     {
         this->m_records[i] = other.m_records[i];
         this->m_parents[i] = other.m_parents[i];
+        this->m_sizes[i] = other.m_sizes[i];
     }
 }
 
@@ -48,53 +55,57 @@ UFRecords& UFRecords::operator=(const UFRecords& other){
     }
 
     Record* tempRecords = new Record[other.MAX_SIZE];
+    int* tempSizes = new int[other.MAX_SIZE];
     int* tempParents = new int[other.MAX_SIZE];
 
     try {
         for(int i=0; i < other.MAX_SIZE; i++) {
             tempRecords[i] = other.m_records[i];
             tempParents[i] = other.m_parents[i];
+            tempSizes[i] = other.m_sizes[i];
         }
     }
 
     catch(...) {
-        deleteHelper(tempRecords, tempParents);
+        deleteHelper(tempRecords, tempParents, tempSizes);
         throw;
     }
-    deleteHelper(m_records, m_parents);
+    deleteHelper(m_records, m_parents, m_sizes);
     MAX_SIZE = other.MAX_SIZE;
     this->m_records = tempRecords;
     this->m_parents = tempParents;
+    this->m_sizes = tempSizes;
 
     return *this;
 }
 
 UFRecords::~UFRecords(){
-    deleteHelper(m_records, m_parents);
+    deleteHelper(m_records, m_parents, m_sizes);
+}
+
+int UFRecords::getSize(int index) const{
+    return m_sizes[index];
+}
+
+void UFRecords::updateSize(int index, int size){
+    m_sizes[index] += size;
 }
 
 void UFRecords::Union(int r_id1, int r_id2){
     if(r_id2 == r_id1){
         return;
     }
-
-    if(isInSameGroup(r_id1, r_id2)){
-        throw InTheSameGroup();
-    }
-
     int p1 = Find(r_id1);
     int p2 = Find(r_id2);
 
     m_parents[p1] = p2;
 
-    //m_records[r_id1].UpdateHeight(m_records[r_id1].getNumOfCopies() + m_records[r_id2].getHeight());
-    int help = r_id1;
-    while(help != -1){
-        m_records[help].UpdateHeight(m_records[r_id2].getNumOfCopies() + (m_records[r_id2].getHeight()));
-        help = m_parents[help];
-    }
-}
+    m_records[r_id1].UpdateHeight(m_sizes[p2]);
 
+    m_sizes[p2] += m_sizes[p1];
+
+    
+}
 
 int UFRecords::Find(int r_id){
     if (m_parents[r_id] == -1){
@@ -137,9 +148,10 @@ int UFRecords::getRecordHeight(int r_id) const{
     return m_records[r_id].getHeight();
 }
     
-void UFRecords::deleteHelper(Record* records, int* parents){
+void UFRecords::deleteHelper(Record* records, int* parents, int* sizes){
     delete[] records;
     delete[] parents;
+    delete[] sizes;
 }
 
 Record* UFRecords::getRecord(int r_id) const
