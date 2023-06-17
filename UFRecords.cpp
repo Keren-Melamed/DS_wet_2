@@ -112,7 +112,7 @@ int UFRecords::Find(int r_id){
 
 }
 
-bool UFRecords::isDisjoint(int r_id1, int r_id2){
+bool UFRecords::isInSameGroup(int r_id1, int r_id2){
     if(Find(r_id1) == Find(r_id2)){
         return true;
     }
