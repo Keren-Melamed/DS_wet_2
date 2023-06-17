@@ -366,7 +366,7 @@ StatusType RecordsCompany::putOnTop(int r_id1, int r_id2)
         return StatusType::DOESNT_EXISTS;
     }
 
-    if(m_UFrecords.isDisjoint(r_id1, r_id2)){
+    if(m_UFrecords.isInSameGroup(r_id1, r_id2)){
         return StatusType::FAILURE;
     }
 
