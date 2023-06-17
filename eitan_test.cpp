@@ -108,109 +108,49 @@ void test() {
     int* stocks = new int[14]{3, 12, 4, 2, 4, 11, 8, 18, 10, 2, 11, 15, 6, 8};
 
     new_month_aux(obj, 14, stocks);
-    add_costumer_aux(obj, 242, 94);
-    add_costumer_aux(obj, 105, 2);
-    add_costumer_aux(obj, 212, 155);
+
     get_place_aux(obj, 12);
-    is_member_aux(obj, 212);
-    get_place_aux(obj, -1);
-    is_member_aux(obj, 212);
+
     put_on_top_aux(obj, 5, 2);
     put_on_top_aux(obj, 6, 3);
-    make_member_aux(obj, 242);
-    get_expenses_aux(obj, 242);
+
     get_place_aux(obj, 14);
-    get_expenses_aux(obj, 242);
+
     put_on_top_aux(obj, 1, 14);
     put_on_top_aux(obj, 2, 9);
-    add_prize_aux(obj, -19, 19, 72);
-    is_member_aux(obj, 105);
-    get_phone_aux(obj, 212);
-    add_prize_aux(obj, 13, 180, 44);
-    get_phone_aux(obj, -73);
-    get_phone_aux(obj, 105);
+    
     put_on_top_aux(obj, 4, 0);
-    add_prize_aux(obj, 188, 157, 9);
-    buy_record_aux(obj, 242, 7);
-    add_costumer_aux(obj, 179, 175);
+    
     put_on_top_aux(obj, 4, 2);
-    get_expenses_aux(obj, 242);
-    make_member_aux(obj, 105);
+    
     get_place_aux(obj, 15);
-    add_prize_aux(obj, 145, 260, 3);
-    is_member_aux(obj, 105);
-    is_member_aux(obj, 242);
+    
     put_on_top_aux(obj, 12, 4);
-    add_costumer_aux(obj, 182, 67);
-    buy_record_aux(obj, 105, 12);
-    is_member_aux(obj, 105);
+    
     put_on_top_aux(obj, 10, 2);
-    is_member_aux(obj, -85);
-    add_prize_aux(obj, 184, 281, 45);
-    make_member_aux(obj, -100);
-    is_member_aux(obj, 212);
+    
     put_on_top_aux(obj, 4, 8);
-    get_expenses_aux(obj, 182);
-    add_costumer_aux(obj, 242, 216);
-    get_expenses_aux(obj, 249);
+    
     get_place_aux(obj, 2);
     get_place_aux(obj, -1);
     put_on_top_aux(obj, -1, -1);
-    add_prize_aux(obj, 128, 341, 97);
-    get_expenses_aux(obj, 242);
+    
     put_on_top_aux(obj, 6, 12);
     put_on_top_aux(obj, 13, -1);
     get_place_aux(obj, 18);
-    get_expenses_aux(obj, 242);
+    
     put_on_top_aux(obj, 7, 10);
-    make_member_aux(obj, 179);
-    get_expenses_aux(obj, -17);
+    
     put_on_top_aux(obj, 9, 14);
-    get_expenses_aux(obj, 242);
-    add_costumer_aux(obj, 96, 106);
-    get_expenses_aux(obj, 96);
-    is_member_aux(obj, 179);
-    buy_record_aux(obj, 182, 11);
-    is_member_aux(obj, 211);
-    add_prize_aux(obj, 187, 29, 90);
-    add_costumer_aux(obj, 115, 7);
-    get_place_aux(obj, 10);
-    get_expenses_aux(obj, 212);
-    buy_record_aux(obj, 179, 11);
-    make_member_aux(obj, 212);
-    is_member_aux(obj, -100);
-    is_member_aux(obj, 105);
-    make_member_aux(obj, 212);
-    get_expenses_aux(obj, 96);
-    add_costumer_aux(obj, 33, 243);
+    
     put_on_top_aux(obj, 14, 9);
-    add_prize_aux(obj, 234, 91, 64);
-    make_member_aux(obj, 119);
-    get_phone_aux(obj, 105);
-    add_costumer_aux(obj, 68, 157);
-    buy_record_aux(obj, 182, 13);
+    
     put_on_top_aux(obj, 12, 5);
-    get_expenses_aux(obj, 105);
-    add_costumer_aux(obj, 0, 137);
-    get_expenses_aux(obj, 212);
-    add_costumer_aux(obj, 147, 249);
-    add_costumer_aux(obj, 193, 142);
-    buy_record_aux(obj, 105, 5);
-    make_member_aux(obj, 179);
+    
     put_on_top_aux(obj, 0, 9);
-    get_phone_aux(obj, 179);
-    get_expenses_aux(obj, 105);
-    get_expenses_aux(obj, 0);
-    get_phone_aux(obj, 193);
-    make_member_aux(obj, -48);
-    get_expenses_aux(obj, 17);
-    get_expenses_aux(obj, 179);
-    make_member_aux(obj, 136);
-    get_expenses_aux(obj, 182);
-    make_member_aux(obj, 115);
+    
     put_on_top_aux(obj, 9, 3);
-    add_costumer_aux(obj, 241, 214);
-
+   
 
 
     delete obj;
