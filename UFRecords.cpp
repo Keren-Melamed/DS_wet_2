@@ -112,6 +112,7 @@ int UFRecords::Find(int r_id){
     if (m_parents[r_id] == -1){
         return r_id;
     }
+    m_records[m_parents[r_id]].UpdateHeight(m_records[r_id].getHeight());
     return m_parents[r_id] = Find(m_parents[r_id]);
 
 }

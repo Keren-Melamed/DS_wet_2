@@ -157,8 +157,6 @@ void test() {
     get_place_aux(obj, 2);
     
     put_on_top_aux(obj, 6, 12);
-    put_on_top_aux(obj, 13, -1);
-    //get_place_aux(obj, 18);
     
     put_on_top_aux(obj, 7, 10);
 
