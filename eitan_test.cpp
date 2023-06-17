@@ -97,9 +97,14 @@ void get_place_aux(RecordsCompany *obj, int r_id){
     std::cout << " getting place of record  "<< r_id << endl;
     int column = 0;
     int height = 0;
-    status_aux(obj->getPlace(r_id, &column, &height));
-
-    std::cout << "column: " << column << " height: " << height << endl;
+    StatusType a = obj->getPlace(r_id, &column, &height);
+    if((a != StatusType::DOESNT_EXISTS) || (a != StatusType::FAILURE)||(a != StatusType::INVALID_INPUT)){
+        std::cout << "column: " << column << " height: " << height << endl;
+    }
+    
+    else{
+        status_aux(a);
+    }
     
 }
 
@@ -110,6 +115,7 @@ void test() {
     new_month_aux(obj, 14, stocks);
 
     get_place_aux(obj, 12);
+    get_place_aux(obj, -1);
 
     put_on_top_aux(obj, 5, 2);
     put_on_top_aux(obj, 6, 3);
