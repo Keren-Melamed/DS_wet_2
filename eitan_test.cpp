@@ -114,58 +114,66 @@ void test() {
 
     new_month_aux(obj, 14, stocks);
 
-    get_place_aux(obj, 12);
+    //get_place_aux(obj, 12);
     
-    get_place_aux(obj, -1);
+    //get_place_aux(obj, -1);
     
     put_on_top_aux(obj, 5, 2);
-    put_on_top_aux(obj, 6, 3);
-    
-    get_place_aux(obj, 14);
-    
-    put_on_top_aux(obj, 1, 14);
-    put_on_top_aux(obj, 2, 9);
-    
-    put_on_top_aux(obj, 4, 0);
-    
-    put_on_top_aux(obj, 4, 2);
-    
-    get_place_aux(obj, 15);
-    
-    put_on_top_aux(obj, 12, 4);
-
-    put_on_top_aux(obj, 10, 2);
-    
-    put_on_top_aux(obj, 4, 8);
-    
     obj->printRecords(cout);
 
-    cout << "HERE - SHOULD BE C = 8 H = 12" <<endl;
-    get_place_aux(obj, 2);
+    put_on_top_aux(obj, 6, 3);
+    obj->printRecords(cout);
 
-    get_place_aux(obj, -1);
+    //get_place_aux(obj, 14);
+    
+    put_on_top_aux(obj, 1, 14);
+    obj->printRecords(cout);
+    
+    put_on_top_aux(obj, 2, 9);
+    obj->printRecords(cout);
+    
+    put_on_top_aux(obj, 4, 0);
+    obj->printRecords(cout);
+    
+    put_on_top_aux(obj, 4, 2);
+    obj->printRecords(cout);
+    //get_place_aux(obj, 15);
+    
+    put_on_top_aux(obj, 12, 4);
+    obj->printRecords(cout);
+
+    put_on_top_aux(obj, 10, 2);
+    obj->printRecords(cout);
+
+    put_on_top_aux(obj, 4, 8);
+    obj->printRecords(cout);
+
+    //cout << "HERE - SHOULD BE C = 8 H = 12" <<endl;
+    //get_place_aux(obj, 2);
+
+    //get_place_aux(obj, -1);
     put_on_top_aux(obj, -1, -1);
     
     put_on_top_aux(obj, 6, 12);
     put_on_top_aux(obj, 13, -1);
-    get_place_aux(obj, 18);
+    //get_place_aux(obj, 18);
     
     put_on_top_aux(obj, 7, 10);
 
     put_on_top_aux(obj, 9, 14);
 
-    cout << "HERE - SHOULD BE C = 8 H = 40" <<endl;
-    get_place_aux(obj, 10);
+    //cout << "HERE - SHOULD BE C = 8 H = 40" <<endl;
+    //get_place_aux(obj, 10);
 
     put_on_top_aux(obj, 14, 9);
 
-    cout << "HERE - SHOULD BE FAILURE" <<endl;
+    //cout << "HERE - SHOULD BE FAILURE" <<endl;
     put_on_top_aux(obj, 12, 5);
 
-    cout << "HERE - SHOULD BE FAILURE" <<endl;
+    //cout << "HERE - SHOULD BE FAILURE" <<endl;
     put_on_top_aux(obj, 0, 9);
 
-    cout << "HERE - SHOULD BE FAILURE" <<endl;
+    //cout << "HERE - SHOULD BE FAILURE" <<endl;
     put_on_top_aux(obj, 9, 3);
 
 

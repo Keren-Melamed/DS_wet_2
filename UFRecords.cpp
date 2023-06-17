@@ -165,7 +165,7 @@ void UFRecords::printAllRecords(std::ostream& os){
     for (int i = 0; i < MAX_SIZE; i++)
     {
         m_records[i].print(os);
-        os << "height: " << m_records[i].getHeight();
+        os << " height: " << m_records[i].getHeight();
         os << "\n";
     }
 }
