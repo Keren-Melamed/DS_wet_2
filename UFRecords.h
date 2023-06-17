@@ -26,6 +26,8 @@ private:
 
     int Find(int r_id);
 
+    int FindToStack(int r_id1);
+
     bool isInSameGroup(int r_id1, int r_id2);
 
     void printParents(std::ostream& os, int r_id);
