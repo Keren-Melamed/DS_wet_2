@@ -122,7 +122,7 @@ void UFRecords::updateHeights(int r_id){
     if(root == r_id){
         return;
     }
-    m_records[r_id].UpdateHeight(m_sizes[root] - m_records[r_id].getNumOfCopies());
+    m_records[r_id].setHeight(m_sizes[root] - m_records[r_id].getNumOfCopies());
 }
 
 bool UFRecords::isInSameGroup(int r_id1, int r_id2){
