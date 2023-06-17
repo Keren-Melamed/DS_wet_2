@@ -376,6 +376,7 @@ StatusType RecordsCompany::putOnTop(int r_id1, int r_id2)
 
 StatusType RecordsCompany::getPlace(int r_id, int* column, int* height)
 {
+    cout << "in getPlace, r_id = " << r_id << endl;
     if((r_id < 0) ||(column == nullptr) || (height == nullptr)){
         return StatusType::INVALID_INPUT;
     }
