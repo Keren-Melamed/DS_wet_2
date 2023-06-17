@@ -77,13 +77,18 @@ void UFRecords::Union(int r_id1, int r_id2){
     if(r_id2 == r_id1){
         return;
     }
+
     if(isInSameGroup(r_id1, r_id2)){
         throw InTheSameGroup();
     }
 
-    m_parents[r_id1] = r_id2;
+    int p1 = Find(r_id1);
+    int p2 = Find(r_id2);
 
-    m_records[r_id1].UpdateHeight(m_records[r_id2].getHeight());
+
+    m_parents[p1] = p2;
+
+    m_records[p1].UpdateHeight(m_records[p2].getHeight());
 }
 
 int UFRecords::Find(int r_id){

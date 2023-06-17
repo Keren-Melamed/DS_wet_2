@@ -167,11 +167,6 @@ void test() {
     put_on_top_aux(obj, 9, 3);
 
 
-
-
-    cout << "HERE - SHOULD BE C = 8 H = 12" <<endl;
-
-
     delete obj;
 
 }
