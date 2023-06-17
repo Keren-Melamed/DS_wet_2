@@ -50,7 +50,9 @@ int Record::getPrice() const
     return (100 + getNumberOfBuys());
 }
 
-
+void Record::setHeight(int height){
+    m_height = height;
+}
 
 
 

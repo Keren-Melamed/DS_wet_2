@@ -35,6 +35,7 @@ public:
     void setNumberOfCopies(int copies);
 
     void setNumberOfBuys(int number_of_buys);
+    void setHeight(int height);
 
     void UpdateHeight(int height);
     void updateNumberOfBuys();
