@@ -4,7 +4,7 @@ Record::Record() : m_id(-1), m_number_of_buys(0), m_copies(0), m_height(0)
 {}
 
 Record::Record(int id, int number_of_buys, int copies) : m_id(id), m_number_of_buys(number_of_buys), m_copies(copies),
-                                                        m_height(0)
+                                                        m_height(copies)
 {}
 
 int Record::getId() const{
