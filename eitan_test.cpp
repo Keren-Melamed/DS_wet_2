@@ -153,11 +153,8 @@ void test() {
     obj->printSizes(cout);
 
 
-    //cout << "HERE - SHOULD BE C = 8 H = 12" <<endl;
-    //get_place_aux(obj, 2);
-
-    //get_place_aux(obj, -1);
-    put_on_top_aux(obj, -1, -1);
+    cout << "HERE - SHOULD BE C = 8 H = 12" <<endl;
+    get_place_aux(obj, 2);
     
     put_on_top_aux(obj, 6, 12);
     put_on_top_aux(obj, 13, -1);
@@ -167,19 +164,8 @@ void test() {
 
     put_on_top_aux(obj, 9, 14);
 
-    //cout << "HERE - SHOULD BE C = 8 H = 40" <<endl;
-    //get_place_aux(obj, 10);
-
-    put_on_top_aux(obj, 14, 9);
-
-    //cout << "HERE - SHOULD BE FAILURE" <<endl;
-    put_on_top_aux(obj, 12, 5);
-
-    //cout << "HERE - SHOULD BE FAILURE" <<endl;
-    put_on_top_aux(obj, 0, 9);
-
-    //cout << "HERE - SHOULD BE FAILURE" <<endl;
-    put_on_top_aux(obj, 9, 3);
+    cout << "HERE - SHOULD BE C = 8 H = 40" <<endl;
+    get_place_aux(obj, 10);
 
 
     delete obj;
