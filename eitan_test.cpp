@@ -157,10 +157,16 @@ void test() {
     get_place_aux(obj, 2);
     
     put_on_top_aux(obj, 6, 12);
+    obj->printRecords(cout);
+    obj->printSizes(cout);
     
     put_on_top_aux(obj, 7, 10);
+    obj->printRecords(cout);
+    obj->printSizes(cout);
 
     put_on_top_aux(obj, 9, 14);
+    obj->printRecords(cout);
+    obj->printSizes(cout);
 
     cout << "HERE - SHOULD BE C = 8 H = 40" <<endl;
     get_place_aux(obj, 10);
