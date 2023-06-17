@@ -100,15 +100,14 @@ void UFRecords::Union(int r_id1, int r_id2){
 
     m_parents[p1] = p2;
 
-    int help = r_id1;
-    do{
-        m_records[help].UpdateHeight(m_sizes[p2]);
+   // m_records[r_id1].UpdateHeight(m_sizes[p2]);
+    int height = 0;
+    int help = r_id2;
+    while(help != -1){
+        height += m_records[help].getNumOfCopies();
         help = m_parents[help];
     }
-    while(help != -1);
-
-   // m_records[r_id1].UpdateHeight(m_sizes[p2]);
-
+    m_records[r_id1].UpdateHeight(height);
     m_sizes[p2] += m_sizes[p1];
     //m_sizes[p1] = 0;
 
@@ -154,7 +153,10 @@ void UFRecords::printAllParents(std::ostream& os){
 
 int UFRecords::getRecordHeight(int r_id){
     int root = Find(r_id);
-    return m_sizes[root] - m_sizes[r_id] - m_records[r_id].getNumOfCopies() - m_records[root].getNumOfCopies();
+    if(root == r_id){
+        return 0;
+    }
+    return m_records[r_id].getHeight();
 }
     
 void UFRecords::deleteHelper(Record* records, int* parents, int* sizes){
