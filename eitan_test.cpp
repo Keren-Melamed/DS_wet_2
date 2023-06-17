@@ -89,9 +89,8 @@ void get_expenses_aux(RecordsCompany *obj, int c_id) {
 
 void put_on_top_aux(RecordsCompany *obj, int r_id1, int r_id2)
 {
-    //std::cout << "putting record " << r_id1 << " on top of  " << r_id2 << endl;
-    //status_aux(
-        obj->putOnTop(r_id1, r_id2);
+    std::cout << "putting record " << r_id1 << " on top of  " << r_id2 << endl;
+    status_aux(obj->putOnTop(r_id1, r_id2));
 }
 
 void get_place_aux(RecordsCompany *obj, int r_id){
