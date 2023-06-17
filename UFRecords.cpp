@@ -118,11 +118,11 @@ int UFRecords::Find(int r_id){
 }
 
 void UFRecords::updateHeights(int r_id){
-    if (m_parents[r_id] == -1){
+    int root = Find(r_id);
+    if(root == r_id){
         return;
     }
-    m_records[m_parents[r_id]].UpdateHeight(m_records[r_id].getNumOfCopies());
-    return updateHeights(m_parents[r_id]);
+    m_records[r_id].UpdateHeight(m_sizes[root] - m_records[r_id].getNumOfCopies());
 }
 
 bool UFRecords::isInSameGroup(int r_id1, int r_id2){
