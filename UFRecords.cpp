@@ -146,11 +146,12 @@ void UFRecords::printAllParents(std::ostream& os){
 }
 
 int UFRecords::getRecordHeight(int r_id){
-    int root = Find(r_id);
-    if(r_id == root){
-        return 0;
+    int height = 0;
+    while(m_parents[r_id] != -1){
+        height += m_records[r_id].getNumOfCopies();
+        r_id = m_parents[r_id];
     }
-    return m_sizes[root] - m_records[r_id].getHeight();
+    return height;
 }
     
 void UFRecords::deleteHelper(Record* records, int* parents, int* sizes){
