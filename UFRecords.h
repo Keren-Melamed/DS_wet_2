@@ -36,7 +36,7 @@ private:
     void printParents(std::ostream& os, int r_id);
     void printAllParents(std::ostream& os);
 
-    int getRecordHeight(int r_id) const;
+    int getRecordHeight(int r_id);
     Record* getRecord(int r_id) const;
 
     void printAllRecords(std::ostream& os);
