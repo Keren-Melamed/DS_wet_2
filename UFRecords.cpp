@@ -119,7 +119,7 @@ int UFRecords::Find(int r_id){
 
 void UFRecords::updateHeights(int r_id){
     int root = Find(r_id);
-    if(root == r_id){
+    if(m_parents[r_id] == -1){
         return;
     }
     m_records[r_id].setHeight(m_sizes[root] - m_records[r_id].getNumOfCopies());
