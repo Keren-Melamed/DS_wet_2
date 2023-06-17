@@ -100,9 +100,8 @@ void UFRecords::Union(int r_id1, int r_id2){
 
     m_parents[p1] = p2;
 
-   m_records[r_id1].UpdateHeight(m_sizes[p2]);
-
     m_sizes[p2] += m_sizes[p1];
+     m_records[r_id1].UpdateHeight(m_sizes[p1] - m_records[r_id1].getNumOfCopies());
     //m_sizes[p1] = 0;
 
     
@@ -112,7 +111,7 @@ int UFRecords::Find(int r_id){
     if (m_parents[r_id] == -1){
         return r_id;
     }
-    m_records[m_parents[r_id]].UpdateHeight(m_records[r_id].getHeight());
+    //m_records[m_parents[r_id]].UpdateHeight(m_records[r_id].getHeight());
     return m_parents[r_id] = Find(m_parents[r_id]);
 
 }
@@ -151,7 +150,7 @@ int UFRecords::getRecordHeight(int r_id){
     if(r_id == root){
         return 0;
     }
-    return m_sizes[r_id] - m_records[r_id].getHeight();
+    return m_sizes[root] - m_records[r_id].getHeight();
 }
     
 void UFRecords::deleteHelper(Record* records, int* parents, int* sizes){
