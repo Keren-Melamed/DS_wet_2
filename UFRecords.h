@@ -40,7 +40,7 @@ private:
     Record* getRecord(int r_id) const;
 
     void printAllRecords(std::ostream& os);
-
+    void printAllSizes(std::ostream& os);
     void deleteHelper(Record* records, int* parents, int* sizes);
 };
 

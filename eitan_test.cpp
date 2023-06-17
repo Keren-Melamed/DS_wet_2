@@ -120,27 +120,38 @@ void test() {
     
     put_on_top_aux(obj, 5, 2);
     obj->printRecords(cout);
-
+    obj->printSizes(cout);
     //get_place_aux(obj, 14);
     
     put_on_top_aux(obj, 2, 9);
     obj->printRecords(cout);
+    obj->printSizes(cout);
     
     put_on_top_aux(obj, 4, 0);
     obj->printRecords(cout);
+    obj->printSizes(cout);
+
     
     put_on_top_aux(obj, 4, 2);
     obj->printRecords(cout);
+    obj->printSizes(cout);
+
     //get_place_aux(obj, 15);
     
     put_on_top_aux(obj, 12, 4);
     obj->printRecords(cout);
+    obj->printSizes(cout);
+
 
     put_on_top_aux(obj, 10, 2);
     obj->printRecords(cout);
+    obj->printSizes(cout);
+
 
     put_on_top_aux(obj, 4, 8);
     obj->printRecords(cout);
+    obj->printSizes(cout);
+
 
     //cout << "HERE - SHOULD BE C = 8 H = 12" <<endl;
     //get_place_aux(obj, 2);

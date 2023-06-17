@@ -43,6 +43,7 @@ public:
     StatusType getPlace(int r_id, int* column, int* height);
 
     void printRecords(ostream& os);
+    void printSizes(ostream& os);
 };
 
 #endif
