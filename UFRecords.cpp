@@ -102,7 +102,7 @@ void UFRecords::Union(int r_id1, int r_id2){
 
     m_sizes[p2] += m_sizes[p1];
     updateHeights(r_id1);
-    updateHeights(r_id2);
+    //updateHeights(r_id2);
     //m_records[r_id1].setHeight(m_sizes[p2] - m_records[r_id1].getNumOfCopies());
     //m_sizes[p1] = 0;
 
