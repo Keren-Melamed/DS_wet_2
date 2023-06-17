@@ -31,17 +31,17 @@ private:
 
     int Find(int r_id);
 
-    bool isDisjoint(int r_id1, int r_id2);
+    bool isInSameGroup(int r_id1, int r_id2);
 
     void printParents(std::ostream& os, int r_id);
     void printAllParents(std::ostream& os);
 
-        int getRecordHeight(int r_id) const;
-        Record* getRecord(int r_id) const;
+    int getRecordHeight(int r_id) const;
+    Record* getRecord(int r_id) const;
 
-        void printAllRecords(std::ostream& os);
+    void printAllRecords(std::ostream& os);
 
-        void deleteHelper(Record* records, int* parents, int* sizes);
+    void deleteHelper(Record* records, int* parents, int* sizes);
 };
 
 #endif
