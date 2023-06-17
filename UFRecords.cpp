@@ -111,7 +111,7 @@ int UFRecords::Find(int r_id){
     if (m_parents[r_id] == -1){
         return r_id;
     }
-    //m_records[m_parents[r_id]].UpdateHeight(m_records[r_id].getHeight());
+    m_records[m_parents[r_id]].UpdateHeight(m_records[r_id].getNumOfCopies());
     return m_parents[r_id] = Find(m_parents[r_id]);
 
 }
@@ -146,12 +146,7 @@ void UFRecords::printAllParents(std::ostream& os){
 }
 
 int UFRecords::getRecordHeight(int r_id){
-    int height = 0;
-    while(m_parents[r_id] != -1){
-        height += m_records[r_id].getNumOfCopies();
-        r_id = m_parents[r_id];
-    }
-    return height;
+    return m_records[r_id].getHeight();
 }
     
 void UFRecords::deleteHelper(Record* records, int* parents, int* sizes){
