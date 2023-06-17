@@ -87,15 +87,13 @@ void UFRecords::Union(int r_id1, int r_id2){
 
     m_parents[p1] = p2;
 
-    m_records[r_id1].UpdateHeight(m_records[r_id2].getHeight());
+    m_records[r_id1].UpdateHeight(m_records[r_id2].getNumOfCopies() + m_records[r_id2].getHeight());
 
 }
 
-    //m_records[r_id1].UpdateHeight(m_records[r_id2].getHeight());
-
-
 int UFRecords::FindToStack(int r_id){
     if (m_parents[r_id] == -1){
+        
         return r_id;
     }
     m_records[r_id].UpdateHeight(m_records[m_parents[r_id]].getHeight());
