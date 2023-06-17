@@ -103,6 +103,7 @@ void UFRecords::Union(int r_id1, int r_id2){
     int help = r_id1;
     while(m_parents[help] != -1){
         m_records[help].UpdateHeight(m_sizes[p2]);
+        help = m_parents[help];
     }
     //m_records[r_id1].UpdateHeight(m_sizes[p2]);
 
