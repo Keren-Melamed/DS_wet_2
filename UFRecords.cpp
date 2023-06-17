@@ -102,7 +102,7 @@ void UFRecords::Union(int r_id1, int r_id2){
 
    m_records[r_id1].UpdateHeight(m_sizes[p2]);
 
-    m_sizes[p2] += m_sizes[p1];
+    m_sizes[p2] += m_records[p1].getHeight();
     //m_sizes[p1] = 0;
 
     
