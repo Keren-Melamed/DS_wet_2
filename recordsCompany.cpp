@@ -369,14 +369,9 @@ StatusType RecordsCompany::putOnTop(int r_id1, int r_id2)
     if(m_UFrecords.isInSameGroup(r_id1, r_id2)){
         return StatusType::FAILURE;
     }
-    try{
-        m_UFrecords.Union(r_id1, r_id2);
-        return StatusType::SUCCESS;
-    }
-    catch(InTheSameGroup& a){
-        return StatusType::FAILURE;
-    }
-    
+
+    m_UFrecords.Union(r_id1, r_id2);
+    return StatusType::SUCCESS;
     
 }
 

@@ -21,8 +21,6 @@ private:
         UFRecords& operator=(const UFRecords& other);
         ~UFRecords();
 
-    void addRecords(int *record_stocks);
-
     int getSize(int index) const;
 
     void updateSize(int index, int size);
@@ -38,8 +36,6 @@ private:
 
     int getRecordHeight(int r_id);
     Record* getRecord(int r_id) const;
-
-    void updateHeights(int r_id);
 
     void printAllRecords(std::ostream& os);
     void printAllSizes(std::ostream& os);
