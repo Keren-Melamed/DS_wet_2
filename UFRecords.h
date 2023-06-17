@@ -10,7 +10,6 @@ private:
 
         Record* m_records;
         int* m_parents;
-        int* m_sizes;
         int MAX_SIZE = 0;
         
     public:
@@ -22,10 +21,6 @@ private:
         ~UFRecords();
 
     void addRecords(int *record_stocks);
-
-        int getSize(int index) const;
-
-    void updateSize(int index, int size);
 
     void Union(int below, int above);
 
@@ -41,7 +36,7 @@ private:
 
     void printAllRecords(std::ostream& os);
 
-    void deleteHelper(Record* records, int* parents, int* sizes);
+    void deleteHelper(Record* records, int* parents);
 };
 
 #endif

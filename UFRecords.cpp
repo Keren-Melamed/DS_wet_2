@@ -4,13 +4,10 @@
 UFRecords::UFRecords(){
     m_records = nullptr;
     m_parents = nullptr;
-    m_sizes = nullptr;
 }
 
 UFRecords::UFRecords(int *record_stocks, int num_of_records){
 
-    int* sizes = new int[num_of_records];
-    m_sizes = sizes;
 
     Record* records = new Record[num_of_records];
     m_records = records;
@@ -22,7 +19,6 @@ UFRecords::UFRecords(int *record_stocks, int num_of_records){
     {
         m_records[i] = Record(i, 0, record_stocks[i]);
         m_parents[i] = -1;
-        m_sizes[i] = record_stocks[i];
     }
 
     MAX_SIZE = num_of_records;
@@ -32,8 +28,6 @@ UFRecords::UFRecords(int *record_stocks, int num_of_records){
 UFRecords::UFRecords(const UFRecords& other){
 
     this->MAX_SIZE = other.MAX_SIZE;
-    int* sizes = new int[MAX_SIZE];
-    m_sizes = sizes;
 
     Record* records = new Record[MAX_SIZE];
     m_records = records;
@@ -45,7 +39,6 @@ UFRecords::UFRecords(const UFRecords& other){
     {
         this->m_records[i] = other.m_records[i];
         this->m_parents[i] = other.m_parents[i];
-        this->m_sizes[i] = other.m_sizes[i];
     }
 }
 
@@ -62,48 +55,31 @@ UFRecords& UFRecords::operator=(const UFRecords& other){
         for(int i=0; i < other.MAX_SIZE; i++) {
             tempRecords[i] = other.m_records[i];
             tempParents[i] = other.m_parents[i];
-            tempSizes[i] = other.m_sizes[i];
         }
     }
 
     catch(...) {
-        deleteHelper(tempRecords, tempParents, tempSizes);
+        deleteHelper(tempRecords, tempParents);
         throw;
     }
-    deleteHelper(m_records, m_parents, m_sizes);
+    deleteHelper(m_records, m_parents);
     MAX_SIZE = other.MAX_SIZE;
     this->m_records = tempRecords;
     this->m_parents = tempParents;
-    this->m_sizes = tempSizes;
 
     return *this;
 }
 
 UFRecords::~UFRecords(){
-    deleteHelper(m_records, m_parents, m_sizes);
+    deleteHelper(m_records, m_parents);
 }
 
-int UFRecords::getSize(int index) const{
-    return m_sizes[index];
-}
-
-void UFRecords::updateSize(int index, int size){
-    m_sizes[index] += size;
-}
 
 void UFRecords::Union(int r_id1, int r_id2){
     if(r_id2 == r_id1){
         return;
     }
-/*
-    int help = r_id1;
-    while(m_parents[help] != -1){
-        m_sizes[m_parents[help]] +=m_sizes[r_id2];
-        help = m_parents[help];
-    }
 
-    m_sizes[r_id2] += m_sizes[r_id1];
-*/
     m_parents[r_id1] = r_id2;
 
     m_records[r_id1].UpdateHeight(m_records[r_id2].getHeight());
@@ -150,10 +126,9 @@ int UFRecords::getRecordHeight(int r_id) const{
     return m_records[r_id].getHeight();
 }
     
-void UFRecords::deleteHelper(Record* records, int* parents, int* sizes){
+void UFRecords::deleteHelper(Record* records, int* parents){
     delete[] records;
     delete[] parents;
-    delete[] sizes;
 }
 
 Record* UFRecords::getRecord(int r_id) const
