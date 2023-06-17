@@ -85,10 +85,15 @@ void UFRecords::Union(int r_id1, int r_id2){
     int p1 = Find(r_id1);
     int p2 = Find(r_id2);
 
-
     m_parents[p1] = p2;
 
-    m_records[r_id1].UpdateHeight(m_records[r_id2].getHeight());
+    int help = r_id2;
+    while(m_parents[help] != -1){
+        m_records[help].UpdateHeight(m_records[m_parents[help]].getHeight());
+        help = m_parents[help];
+    }
+
+    //m_records[r_id1].UpdateHeight(m_records[r_id2].getHeight());
 }
 
 int UFRecords::Find(int r_id){
