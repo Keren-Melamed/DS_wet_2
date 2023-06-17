@@ -88,7 +88,7 @@ void UFRecords::Union(int r_id1, int r_id2){
 
     m_parents[p1] = p2;
 
-    m_records[p1].UpdateHeight(m_records[p2].getHeight());
+    m_records[r_id1].UpdateHeight(m_records[r_id2].getHeight());
 }
 
 int UFRecords::Find(int r_id){
