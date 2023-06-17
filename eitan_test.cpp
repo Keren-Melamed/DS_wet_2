@@ -121,13 +121,7 @@ void test() {
     put_on_top_aux(obj, 5, 2);
     obj->printRecords(cout);
 
-    put_on_top_aux(obj, 6, 3);
-    obj->printRecords(cout);
-
     //get_place_aux(obj, 14);
-    
-    put_on_top_aux(obj, 1, 14);
-    obj->printRecords(cout);
     
     put_on_top_aux(obj, 2, 9);
     obj->printRecords(cout);
