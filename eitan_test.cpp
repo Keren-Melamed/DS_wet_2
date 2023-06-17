@@ -98,7 +98,7 @@ void get_place_aux(RecordsCompany *obj, int r_id){
     int column = 0;
     int height = 0;
     StatusType a = obj->getPlace(r_id, &column, &height);
-    if((a != StatusType::DOESNT_EXISTS) || (a != StatusType::FAILURE)||(a != StatusType::INVALID_INPUT)){
+    if((a != StatusType::DOESNT_EXISTS) && (a != StatusType::FAILURE) && (a != StatusType::INVALID_INPUT)){
         std::cout << "column: " << column << " height: " << height << endl;
     }
     
