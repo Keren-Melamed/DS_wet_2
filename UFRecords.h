@@ -39,6 +39,8 @@ private:
     int getRecordHeight(int r_id);
     Record* getRecord(int r_id) const;
 
+    void updateHeights(int r_id);
+
     void printAllRecords(std::ostream& os);
     void printAllSizes(std::ostream& os);
     void deleteHelper(Record* records, int* parents, int* sizes);
