@@ -48,7 +48,6 @@ UFRecords& UFRecords::operator=(const UFRecords& other){
     }
 
     Record* tempRecords = new Record[other.MAX_SIZE];
-    int* tempSizes = new int[other.MAX_SIZE];
     int* tempParents = new int[other.MAX_SIZE];
 
     try {
