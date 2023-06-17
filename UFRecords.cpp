@@ -172,7 +172,7 @@ void UFRecords::printAllRecords(std::ostream& os){
 void UFRecords::printAllSizes(std::ostream& os){
     for (int i = 0; i < MAX_SIZE; i++)
     {
-        os << "record: " << i << " size: " << m_sizes[i];
+        os << "record: " << i << " size: " << m_sizes[i] << "\n";
     }
     
 }
