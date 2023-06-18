@@ -20,8 +20,7 @@ StatusType RecordsCompany::newMonth(int* records_stocks, int number_of_records)
     m_members.resetAllRanks(m_members.getRoot());
     resetAllExpenses(m_members.getRoot());
 
-    UFRecords records(records_stocks, number_of_records);
-    m_UFrecords = records;
+    m_UFRecords.resetRecords(records_stocks, number_of_records);
 
     m_numberOfRecords = number_of_records;
 
@@ -166,23 +165,16 @@ StatusType RecordsCompany::buyRecord(int c_id, int r_id)
     {
         return StatusType::DOESNT_EXISTS;
     }
-
-    Record* record = m_UFrecords.getRecord(r_id);
-
-    if(record == nullptr){
-
-        return StatusType::DOESNT_EXISTS;
-    }
-
+    
     Costumer* tmpMember = new Costumer(c_id, 0);
     RankedNode<Costumer>* tmpMemberNode = m_members.findObject(m_members.getRoot(), tmpMember);
 
     if(tmpMemberNode != nullptr) // else do nothing
     {
-        tmpMemberNode->getValue()->updateExpenses(record->getPrice());
+        tmpMemberNode->getValue()->updateExpenses(m_UFRecords.getRecordPrice(r_id));
     }
     delete tmpMember;
-    record->updateNumberOfBuys();//////////////////////////////////////////////////////////////////////////////
+    m_UFRecords.updateRecordSales(r_id);
     return StatusType::SUCCESS;
 }
 
@@ -358,35 +350,53 @@ double RecordsCompany::getExpensesHelper(RankedNode<Costumer>* node, Costumer* t
 
 StatusType RecordsCompany::putOnTop(int r_id1, int r_id2)
 {
-    if((r_id1 < 0) || (r_id2 < 0)){
+    if((r_id1 < 0) || (r_id2 < 0))
+    {
         return StatusType::INVALID_INPUT;
     }
 
-    if((r_id1 >= m_numberOfRecords) || (r_id2 >= m_numberOfRecords)){
+    if((r_id1 >= m_numberOfRecords) || (r_id2 >= m_numberOfRecords))
+    {
         return StatusType::DOESNT_EXISTS;
+    } 
+    
+    if(m_UFRecords.sameStackRoot(r_id1, r_id2))
+    {
+        return StatusType::FAILURE; 
     }
-
-    if(m_UFrecords.isDisjoint(r_id1, r_id2)){
-        return StatusType::FAILURE;
-    }
-
-    m_UFrecords.Union(r_id1, r_id2);
+    
+    m_UFRecords.unify(r_id2, r_id1);
     return StatusType::SUCCESS;
+    
+ 
+
+
+    /*try{
+        m_UFRecords.Union(r_id1, r_id2);
+        return StatusType::SUCCESS;
+    }
+    catch(InTheSameGroup& a){
+        return StatusType::FAILURE;
+    }*/
+
+
 }
 
 StatusType RecordsCompany::getPlace(int r_id, int* column, int* height)
 {
-    if((r_id < 0) ||(column == nullptr) || (height == nullptr)){
+    if((r_id < 0) || (column == nullptr) || (height == nullptr))
+    {
         return StatusType::INVALID_INPUT;
     }
 
-    if(r_id >= m_numberOfRecords){
+    if(r_id >= m_numberOfRecords)
+    {
         return StatusType::DOESNT_EXISTS;
     }
 
-    *column = m_UFrecords.Find(r_id);
+    *column = m_UFRecords.getRecordColumn(r_id);
 
-    *height = m_UFrecords.getRecordHeight(r_id);
+    *height = m_UFRecords.getRecordHeight(r_id);
 
     return StatusType::SUCCESS;
 

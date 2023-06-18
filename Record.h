@@ -4,43 +4,40 @@
 #include <iostream>
 #include "exception.h"
 
-class Record{
-private:
-    int m_id;
-    int m_number_of_buys;
-    int m_copies;
-    int m_height;
+class Record {
 
-public:
+    public:
 
-    Record() /*= delete*/;
-    Record(int id, int number_of_buys, int copies);
+        Record(int recordId, int Copies);
 
-    Record(const Record& other) = default;
-    Record& operator=(const Record& other) = default;
-    ~Record() = default;
+        int getStackParentId() const;
+        int getColumn() const;
+        int getStackHeight() const;
+        int getExtra() const;
+        int getStackSize() const;
+        int getPrice() const;
+        bool getIsParent() const;
 
-    void print(std::ostream& os);
+        void setExtra(int extra);
+        void setStackParent(int Parent);
+        void setColumn(int Column);
+        void updateNumberOfBuys();
 
-    int getId() const;
+        void increaseStack(int additionalSize, int additionalHeight);
 
-    int getNumOfCopies() const;
+        void resetRecord();
 
-    int getNumberOfBuys() const;
+        static const int INVALID = -2;
 
-    int getHeight() const;
+    private:
 
-    int getPrice() const;
-
-    void setNumberOfCopies(int copies);
-
-    void setNumberOfBuys(int number_of_buys);
-
-    void UpdateHeight(int height);
-
-    void updateNumberOfBuys();
-    
-
-
+        bool m_isParent;
+        int m_stackParent;
+        int m_stackSize;
+        int m_stackHeight;
+        int m_column;
+        int m_extra;
+        int m_numberOfBuys;
 };
-#endif
+
+#endif//RECORD_H_

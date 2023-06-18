@@ -1,166 +1,184 @@
 # include "UFRecords.h"
 #include <iostream>
 
-UFRecords::UFRecords(){
-    m_records = nullptr;
-    m_parents = nullptr;
-    m_sizes = nullptr;
+
+
+
+UFRecords::UFRecords() : m_records(nullptr), m_numOfRecords(0)
+{}
+
+UFRecords::~UFRecords() 
+{
+    clearRecords();
 }
 
-UFRecords::UFRecords(int *record_stocks, int num_of_records){
+UFRecords::UFRecords(const UFRecords &other) {
 
-    int* sizes = new int[num_of_records];
-    m_sizes = sizes;
+    m_numOfRecords = other.m_numOfRecords;
 
-    Record* records = new Record[num_of_records];
-    m_records = records;
-
-    int* parents = new int[num_of_records];
-    m_parents = parents;
-
-    for (int i = 0; i < num_of_records; i++)
+    if (other.m_records == nullptr)
     {
-        m_records[i] = Record(i, 0, record_stocks[i]);
-        m_parents[i] = -1;
-        m_sizes[i] = record_stocks[i];
+        m_records = nullptr;
+        return;
     }
 
-    MAX_SIZE = num_of_records;
+    m_records = new Record*[m_numOfRecords];
 
-}
-
-UFRecords::UFRecords(const UFRecords& other){
-
-    this->MAX_SIZE = other.MAX_SIZE;
-    int* sizes = new int[MAX_SIZE];
-    m_sizes = sizes;
-
-    Record* records = new Record[MAX_SIZE];
-    m_records = records;
-
-    int* parents = new int[MAX_SIZE];
-    m_parents = parents;
-
-    for (int i = 0; i < MAX_SIZE; i++)
+    for (int i = 0; i < m_numOfRecords; ++i)
     {
-        this->m_records[i] = other.m_records[i];
-        this->m_parents[i] = other.m_parents[i];
-        this->m_sizes[i] = other.m_sizes[i];
+        m_records[i] = new Record(*other.m_records[i]);
     }
+
 }
 
-UFRecords& UFRecords::operator=(const UFRecords& other){
+UFRecords &UFRecords::operator=(const UFRecords &other)
+        {
+
     if (this == &other) {
         return *this;
     }
 
-    Record* tempRecords = new Record[other.MAX_SIZE];
-    int* tempSizes = new int[other.MAX_SIZE];
-    int* tempParents = new int[other.MAX_SIZE];
+    clearRecords();
 
-    try {
-        for(int i=0; i < other.MAX_SIZE; i++) {
-            tempRecords[i] = other.m_records[i];
-            tempParents[i] = other.m_parents[i];
-            tempSizes[i] = other.m_sizes[i];
-        }
+    m_numOfRecords = other.m_numOfRecords;
+
+    if (other.m_records == nullptr) {
+        m_records = nullptr;
+        return *this;
     }
 
-    catch(...) {
-        deleteHelper(tempRecords, tempParents, tempSizes);
-        throw;
+    m_records = new Record*[m_numOfRecords];
+
+    for (int i = 0; i < m_numOfRecords; ++i) {
+        m_records[i] = new Record(*other.m_records[i]);
     }
-    deleteHelper(m_records, m_parents, m_sizes);
-    MAX_SIZE = other.MAX_SIZE;
-    this->m_records = tempRecords;
-    this->m_parents = tempParents;
-    this->m_sizes = tempSizes;
 
     return *this;
 }
 
-UFRecords::~UFRecords(){
-    deleteHelper(m_records, m_parents, m_sizes);
-}
-
-int UFRecords::getSize(int index) const{
-    return m_sizes[index];
-}
-
-void UFRecords::updateSize(int index, int size){
-    m_sizes[index] += size;
-}
-
-void UFRecords::Union(int r_id1, int r_id2){
-    if(r_id2 == r_id1){
-        return;
-    }
-
-    m_parents[r_id1] = r_id2;
-
-    m_records[r_id1].UpdateHeight(m_sizes[r_id2]);
-
-    m_sizes[r_id1] += m_sizes[r_id1];
-    m_sizes[r_id2] = 0;
-}
-
-int UFRecords::Find(int r_id){
-    if (m_parents[r_id] == -1){
-        return r_id;
-    }
-    return m_parents[r_id] = Find(m_parents[r_id]);
-
-}
-
-bool UFRecords::isDisjoint(int r_id1, int r_id2){
-    if(Find(r_id1) == Find(r_id2)){
-        return true;
-    }
-    return false;
-}
-
-void UFRecords::printParents(std::ostream& os, int r_id){
-
-    while(m_parents[r_id] != -1){
-        m_records[r_id].print(os);
-        os << "\n";
-        r_id = m_parents[r_id];
-    }
-    if(m_parents[r_id] == -1){
-        os << "no parents, printing only the record: \n";
-        m_records[r_id].print(os);
-        os << "\n \n";
-
-    }
-}
-
-void UFRecords::printAllParents(std::ostream& os){
-    for (int i = 0; i < MAX_SIZE; i++)
-    {
-        printParents(os, i);
-    }
-}
-
-int UFRecords::getRecordHeight(int r_id) const{
-    return m_records[r_id].getHeight();
-}
-
-void UFRecords::deleteHelper(Record* records, int* parents, int* sizes){
-    delete[] records;
-    delete[] parents;
-    delete[] sizes;
-}
-
-Record* UFRecords::getRecord(int r_id) const
+int UFRecords::getRecordColumn(int recordId)
 {
-    return &m_records[r_id];
+    return getRoot(recordId)->getColumn();
 }
 
-void UFRecords::printAllRecords(std::ostream& os){
-    os << "printing all records:\n" ;
-    for (int i = 0; i < MAX_SIZE; i++)
+int UFRecords::getRecordHeight(int recordId)
+{
+    int extrasExcludingRoot = getExtrasExcludingRoot(m_records[recordId]);
+    int recordHeight = extrasExcludingRoot + getRoot(recordId)->getExtra();
+    return recordHeight;
+}
+
+int UFRecords::getRecordPrice(int recordId)
+{
+    return m_records[recordId]->getPrice();
+}
+
+int UFRecords::getExtrasExcludingRoot(Record *record)
+{
+
+    int extrasExcludingRoot = 0;
+
+    while (record->getIsParent() == false)
     {
-        m_records[i].print(os);
-        os << "\n";
+        extrasExcludingRoot += record->getExtra();
+        record = m_records[record->getStackParentId()];
     }
+    return extrasExcludingRoot;
+}
+
+void UFRecords::resetRecords(int *recordsStocks, int numOfRecords)
+{
+    if (m_records != nullptr)
+    {
+        clearRecords();
+    }
+
+    m_numOfRecords = numOfRecords;
+    m_records = new Record*[numOfRecords];
+
+    for(int i = 0 ; i < numOfRecords; ++i)
+    {
+        m_records[i] = new Record(i, recordsStocks[i]);
+    }
+}
+
+void UFRecords::unify(int recordA , int recordB)
+{
+    Record* rootA = getRoot(recordA);
+    int sizeA = rootA->getStackSize();
+    Record* rootB = getRoot(recordB);
+    int sizeB = rootB->getStackSize();
+
+    int heightRecordA = rootA->getStackHeight();
+    int oldExtraStockB = rootB->getExtra();
+    int oldExtraStockA = rootA->getExtra();
+
+    if (sizeB <= sizeA)
+    {
+        rootB->setExtra(oldExtraStockB + heightRecordA - oldExtraStockA);
+        rootA->increaseStack(rootB->getStackSize(), rootB->getStackHeight());
+        rootB->setStackParent(rootA->getStackParentId());
+
+        rootB->resetRecord();
+    }
+
+    else
+    {
+        rootB->setExtra(oldExtraStockB + heightRecordA);
+        int newExtraStockB = rootB->getExtra();
+        rootA->setExtra(oldExtraStockA - newExtraStockB);
+
+        rootB->increaseStack(rootA->getStackSize(), rootA->getStackHeight());
+        rootB->setColumn(rootA->getColumn());
+        rootA->setStackParent(rootB->getStackParentId());
+        rootA->resetRecord();
+    }
+}
+
+void UFRecords::clearRecords()
+{
+    for (int i = 0; i < m_numOfRecords; ++i)
+    {
+        delete m_records[i];
+    }
+    delete[] m_records;
+    m_numOfRecords = 0;
+}
+
+void UFRecords::updateRecordSales(int recordId)
+{
+    m_records[recordId]->updateNumberOfBuys();
+}
+
+void UFRecords::compressPath(Record* record, Record* rootRecord)
+{
+    Record* currentRecord = record;
+    int heightWithoutRoot = getExtrasExcludingRoot(record);
+    int ExtraToReduce = 0;
+
+    while (currentRecord != rootRecord)
+    {
+        int tmpExtra = currentRecord->getExtra();
+        currentRecord->setExtra(heightWithoutRoot - ExtraToReduce);
+        ExtraToReduce += tmpExtra;
+        currentRecord->setStackParent(rootRecord->getStackParentId());
+        currentRecord = m_records[currentRecord->getStackParentId()];
+    }
+}
+
+bool UFRecords::sameStackRoot(int recordId1, int recordId2)
+{
+    return getRoot(recordId1)->getColumn() == getRoot(recordId2)->getColumn();
+}
+
+Record* UFRecords::getRoot(int recordId)
+{
+//    assert(recordId < m_numOfRecords);
+    Record* currRecord = m_records[recordId];
+    while (currRecord->getIsParent() == false)
+    {
+        currRecord = m_records[currRecord->getStackParentId()];
+    }
+    compressPath(m_records[recordId], currRecord);
+    return currRecord;
 }

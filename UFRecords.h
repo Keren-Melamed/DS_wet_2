@@ -4,44 +4,81 @@
 #include "Record.h"
 #include "exception.h"
 
+class UFRecords {
 
-class UFRecords{
+    public:
+
+        UFRecords();
+        ~UFRecords();
+        UFRecords(const UFRecords& other);
+
+        UFRecords& operator=(const UFRecords& other);
+
+        int getRecordColumn(int recordId);
+        int getRecordHeight(int recordId);
+        int getRecordPrice(int recordId);
+
+        int getExtrasExcludingRoot(Record* record);
+
+        void resetRecords(int *recordsStocks, int numOfRecords);
+
+        void unify(int recordA , int recordB);
+
+        void clearRecords();
+
+        void updateRecordSales(int recordId);
+
+        void compressPath(Record* record, Record* rootRecord);
+
+        bool sameStackRoot(int recordId1, int recordId2);
+
+        Record* getRoot(int recordId);
+
+    private:
+
+        Record** m_records;
+        int m_numOfRecords;
+};
+
+
+
+
+/*class UFRecords{
 private:
 
-    Record* m_records;
-    int* m_parents;
-    int* m_sizes;
-    int MAX_SIZE = 0;
+    Record** m_records;
+    int m_numOfRecords;
 
 public:
 
     UFRecords();
-    UFRecords(int *record_stocks, int num_of_records);
     UFRecords(const UFRecords& other);
-    UFRecords& operator=(const UFRecords& other);
     ~UFRecords();
 
-    void addRecords(int *record_stocks);
+    void clearRecords();
 
-    int getSize(int index) const;
+    void resetRecords(int *records, int numOfRecords);
 
-    void updateSize(int index, int size);
+    void unify(int recordA, int recordB);
 
-    void Union(int below, int above);
+    void compressPath(Record* record, Record* rootRecord);
 
-    int Find(int r_id);
+    void updateRecordSells(int recordId);
 
-    bool isDisjoint(int r_id1, int r_id2);
+    int getExtrasExcludeRoot(Record* record);
 
-    void printParents(std::ostream& os, int r_id);
-    void printAllParents(std::ostream& os);
+    int getRecordColumn(int recordId);
 
-    int getRecordHeight(int r_id) const;
-    Record* getRecord(int r_id) const;
+    int getRecordHeight(int recordId);
 
-    void printAllRecords(std::ostream& os);
+    int getRecordPrice(int recordId);
 
-    void deleteHelper(Record* records, int* parents, int* sizes);
-};
+    bool sameStackRoots(int recordIdA, int recordIdB);
 
-#endif
+    Record* getRoot(int recordId);
+
+    UFRecords& operator=(const UFRecords &other);
+
+};*/
+
+#endif //UFRECORDS_H_

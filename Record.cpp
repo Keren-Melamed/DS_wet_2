@@ -1,57 +1,76 @@
 #include "Record.h"
 
-
-Record::Record() : m_id(-1), m_number_of_buys(0), m_copies(0), m_height(0)
+Record::Record(int recordId, int Copies) : m_isParent(true), m_stackParent(recordId), m_stackSize(1),
+                                           m_stackHeight(Copies), m_column(recordId), m_extra(0), m_numberOfBuys(0)
 {}
 
-Record::Record(int id, int number_of_buys, int copies) : m_id(id), m_number_of_buys(number_of_buys), m_copies(copies),
-                                                        m_height(0)
-{}
-
-int Record::getId() const{
-    return m_id;
+int Record::getStackParentId() const
+{
+    return m_stackParent;
 }
 
-int Record::getNumOfCopies() const{
-    return m_copies;
+int Record::getColumn() const
+{
+    return m_column;
 }
 
-int Record::getNumberOfBuys() const{
-    return m_number_of_buys;
+int Record::getExtra() const
+{
+    return m_extra;
 }
 
-int Record::getHeight() const{
-    return m_height;
+int Record::getStackHeight() const
+{
+    return m_stackHeight;
 }
 
-void Record::setNumberOfCopies(int copies){
-    m_copies = copies;
+void Record::setExtra(int extra) 
+{
+    m_extra = extra;
 }
 
-void Record::setNumberOfBuys(int number_of_buys){
-    m_number_of_buys = number_of_buys;
+void Record::setStackParent(int parent)
+{
+    m_stackParent = parent;
+    m_isParent = false;
 }
 
-void Record::UpdateHeight(int height){
-    m_height += height;
+int Record::getStackSize() const
+{
+    return m_stackSize;
 }
 
-void Record::print(std::ostream& os){
-    os << "record id: " << m_id;
-    os << " copies: " << m_copies;
-    os << " buys: " << m_number_of_buys;
+
+void Record::setColumn(int Column)
+{
+    m_column = Column;
 }
 
-void Record::updateNumberOfBuys(){
-    m_number_of_buys += 1;
+void Record::resetRecord()
+{
+    m_column = INVALID;
+    m_stackHeight = INVALID;
+    m_stackSize = INVALID;
+}
+
+void Record::increaseStack(int additionalSize, int additionalHeight)
+{
+    m_stackSize += additionalSize;
+    m_stackHeight += additionalHeight;
+}
+
+void Record::updateNumberOfBuys()
+{
+    m_numberOfBuys += 1;
 }
 
 int Record::getPrice() const
 {
-    return (100 + getNumberOfBuys());
+    int price = m_numberOfBuys + 100;
+    return price;
 }
 
-
-
-
-
+bool Record::getIsParent() const
+{
+    return m_isParent;
+}
